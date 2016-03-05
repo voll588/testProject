@@ -3,8 +3,57 @@
  */
 
 App.controller("AdminListController",['$rootScope','$scope','$filter','$http',function($rootScope,$scope,$filter,$http){
+
+    $scope.editRowVisible = false;
+    //显示编辑状态
+    $scope.showEditRow=function(e){
+        e.$show();
+        $scope.editRowVisible = true;
+    };
+    //取消编辑状态
+    $scope.cancelEditRow=function(e){
+        e.$cancel();
+        $scope.editRowVisible = false;
+    };
+    //保存编辑
+    $scope.saveEditRow=function(admin,index) {
+        if ($scope.newUserForm.$valid) {
+            $http({
+                method: 'POST',
+                url: $scope.serviceUrl + '/adminMge',
+                params: {
+                    adminId: $rootScope.loginUser.adminId,
+                    adminEntity: {
+                        adminUserName: $scope.newAdmin.adminUserName,
+                        adminName: $scope.newAdmin.adminName,
+                        adminPassword: $scope.newAdmin.adminPassword,
+                        adminRoleId: $scope.roleSelected.value
+                    },
+                    opType: 'add'
+                }
+            })
+                .success(
+                    function () {
+                        $scope.newAdmin = [];
+                        //getNewlsit
+                        $scope.newAdmin = '';
+                        $scope.roleSelected = '';
+                    })
+                .error(
+                    function (e) {
+                        alert(e);
+                        $scope.adminList = adminTable;
+                        //$scope.newAdmin='';
+                        //$scope.roleSelected='';
+                    });
+        }
+    };
+
+
+
+
     //新增
-    $scope.newAdmin={};
+    $scope.newAdmin='';
 
     $scope.addPerson = function(){
         if($scope.newUserForm.$valid){
@@ -23,21 +72,22 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http',fu
                         opType:'add'
                         }
             })
-                .success(
+            .success(
+                function(){
+                    $scope.newAdmin=[];
                     //getNewlsit
-                    //$adminList.add()
-                )
-                .error(function(e){alert(e)});
-            //alert(11111);
+                    $scope.newAdmin='';
+                    $scope.roleSelected='';
+                })
+            .error(
+                function(e){
+                    alert(e);
+                    //$scope.newAdmin='';
+                    //$scope.roleSelected='';
+            });
         }else{
             $scope.newUserForm.adminUserName.$dirty=true;
         }
-
-
-    };
-//修改
-    $scope.modifyPerson=function(index){
-        alert(index);
     };
 
     //删除
@@ -59,7 +109,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http',fu
     };
 
 
-    $scope.adminList = [{
+    var adminTable = [{
         "adminId": 860,
         "adminUserName": "Superman",
         "adminName": "Yoda",
@@ -117,4 +167,6 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http',fu
         "cTime":"2016-1-1"
     }
     ];
+
+    $scope.adminList = adminTable;
 }]);
