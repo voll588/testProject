@@ -1,6 +1,7 @@
 <div ng-controller="DashBoardController">
 <h3>
    综合信息
+   <small>{{ app.description }} !</small>
 </h3>
 <!-- START widgets box-->
 <div class="row">
@@ -12,8 +13,8 @@
                <em class="icon-cloud-upload fa-3x"></em>
             </div>
             <div class="col-xs-8 pv-lg">
-               <div class="h2 mt0">1700</div>
-               <div class="text-uppercase">Uploads</div>
+               <div class="h2 mt0">{{infos.stuCount}}</div>
+               <div class="text-uppercase">学生总数</div>
             </div>
          </div>
       </div>
@@ -26,10 +27,8 @@
          <em class="icon-globe fa-3x"></em>
       </div>
       <div class="col-xs-8 pv-lg">
-         <div class="h2 mt0">700
-            <small>GB</small>
-         </div>
-         <div class="text-uppercase">Quota</div>
+         <div class="h2 mt0">{{infos.parentCount}}</div>
+         <div class="text-uppercase">家长总数</div>
       </div>
    </div>
 </div>
@@ -42,8 +41,8 @@
             <em class="icon-bubbles fa-3x"></em>
          </div>
          <div class="col-xs-8 pv-lg">
-            <div class="h2 mt0">500</div>
-            <div class="text-uppercase">Reviews</div>
+            <div class="h2 mt0">{{infos.classCount}}</div>
+            <div class="text-uppercase">班级总数</div>
          </div>
       </div>
    </div>
@@ -56,8 +55,8 @@
             <em class="icon-bubbles fa-3x"></em>
          </div>
          <div class="col-xs-8 pv-lg">
-            <div class="h2 mt0">500</div>
-            <div class="text-uppercase">Reviews</div>
+            <div class="h2 mt0">{{infos.deviceCount}}</div>
+            <div class="text-uppercase">设备总数</div>
          </div>
       </div>
    </div>
@@ -72,23 +71,23 @@
       <div class="panel-body">
          <button type="button" class="btn btn-labeled btn-info">
                <span class="btn-label">系统版本
-               </span>v 1.0.0.1
+               </span>{{infos.sysVersio}}
          </button>
          <button type="button" class="btn btn-labeled btn-info">
                <span class="btn-label">操作系统
-               </span>Window Server 2008
+               </span>{{infos.sysName}}
          </button>
          <button type="button" class="btn btn-labeled btn-info">
                <span class="btn-label">网站域名
-               </span>http://www.baidu.com
+               </span>{{infos.webAddress}}
          </button>
          <button type="button" class="btn btn-labeled btn-info">
                <span class="btn-label">数据库版本
-               </span>MySql 5.0
+               </span>{{infos.dbVersion}}
          </button>
          <button type="button" class="btn btn-labeled btn-info">
                <span class="btn-label">服务器时间
-               </span>2016.3.1
+               </span>{{infos.serverTime}}
          </button>
       </div>
    </div>

@@ -18,6 +18,9 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http',fu
     //保存编辑
     $scope.saveEditRow=function(admin,index) {
         if ($scope.newUserForm.$valid) {
+
+            $scope.editRowVisible = false;
+
             $http({
                 method: 'POST',
                 url: $scope.serviceUrl + '/adminMge',
@@ -29,7 +32,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http',fu
                         adminPassword: $scope.newAdmin.adminPassword,
                         adminRoleId: $scope.roleSelected.value
                     },
-                    opType: 'add'
+                    opType: 'update'
                 }
             })
                 .success(
