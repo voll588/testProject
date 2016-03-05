@@ -1,0 +1,94 @@
+<h3>管理员信息
+</h3>
+<div class="row" ng-controller="AdminListController">
+
+   <!-- Chaning data-->
+   <div class="panel panel-default">
+      <div class="panel-body">
+            <form name="newUserForm" ng-submit="addPerson()" novalidate="" class="form-inline">
+               <table class="table table-striped hover">
+                  <thead>
+                  <tr>
+                     <th>
+                        <div class="form-group">
+                           <label>
+                              <input type="text" name="adminUserName" ng-model="newAdmin.adminName" value="" placeholder="姓名" class="form-control" />
+                              <span ng-show="newUserForm.adminUserName.$dirty &amp;&amp; newUserForm.adminUserName.$error.required" class="text-danger">请输入用户姓名</span>
+                           </label>
+                        </div>
+                     </th>
+                     <th>
+                        <div class="form-group">
+                           <label>
+                              <input type="text" name="adminName" ng-model="newAdmin.adminUserName" value="" placeholder="登录名" class="form-control" />
+                           </label>
+                        </div>
+                     </th>
+                     <th>
+                        <div class="form-group">
+                           <label>
+                              <input type="text" name="adminPwd" ng-model="newAdmin.adminPassword" value="" placeholder="登录密码" class="form-control" />
+                           </label>
+                        </div>
+                     </th>
+                     <th>
+                        <div class="form-group">
+                           <label>
+                              <select name="inputeRole" ng-model="roleSelected" ng-options="s.name for s in roleSelecter" class="form-control">
+                              </select>
+                           </label>
+                        </div>
+                     </th>
+                     <th>
+                        <div class="form-group">
+                           <button type="submit" class="btn btn-labeled btn-success">
+                              <span class="btn-label">
+                                 <em class="fa fa-plus"></em>
+                              </span>新增</button>
+                        </div>
+                     </th>
+                  </tr>
+                  </thead>
+                  </table>
+               </form>
+                <table class="table table-striped hover">
+                  <thead>
+                  <tr>
+                     <th style="width:35%">姓名</th>
+                     <th style="width:20%">登录名</th>
+                     <th style="width:20%">角色</th>
+                     <th style="width:25%">创建时间</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="admin in adminList">
+                     <td e-form="rowform" ng-show="false">{{ admin.adminId }}</td>
+                     <td><span e-form="rowform" editable-text="admin.adminName" e-name="adminName" e-required="">{{ admin.adminName }}</span></td>
+                     <td><span  e-form="rowform" editable-text="admin.adminUserName" e-name="adminUserName" e-required="">{{ admin.adminUserName }}</span></td>
+                     <td><span  e-form="rowform" editable-select="admin.adminRoleId" e-name="adminRoleId" e-ng-options="s.value as s.name for s in roleSelecter" e-required="">{{ showRoleName(admin) }}</span></td>
+                     <td><span  e-form="rowform" editable-text="admin.cTime" e-name="cTime" e-required="">{{ admin.cTime }}</span></td>
+                     <td style="white-space: nowrap">
+                        <!--form-->
+                        <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline">
+                           <button type="submit" ng-disabled="rowform.$waiting" title="保存" class="btn btn-sm btn-info">
+                              <em class="fa fa-save"></em>
+                           </button>
+                           <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" title="取消" class="btn btn-sm btn-default">
+                              <em class="fa fa-times"></em>
+                           </button>
+                        </form>
+                        <div ng-show="!rowform.$visible" class="buttons">
+                           <button type="button" ng-click="rowform.$show()" title="编辑" class="btn btn-sm btn-info">
+                              <em class="fa fa-pencil"></em>
+                           </button>
+                           <button type="button" ng-click="removePerson($index)" title="删除" class="btn btn-sm btn-danger">
+                              <em class="fa fa-trash-o"></em>
+                           </button>
+                        </div>
+                     </td>
+                  </tr>
+                  </tbody>
+               </table>
+      </div>
+   </div>
+</div>
