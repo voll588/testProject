@@ -36,8 +36,9 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
 
 
   //$rootScope.serviceUrl = "http://voll588.imwork.net:15296/NJService/api/admin";
-  $rootScope.serviceUrl = "http://192.168.1.129:8080/NJService/api/admin";
-
+  //$rootScope.serviceUrl = "http://192.168.1.129:8080/NJService/api/admin";
+  //$rootScope.serviceUrl = "http://voll588.imwork.net:16536/NJService/api/
+    $rootScope.serviceUrl = "http://172.16.2.107:8080/NJService/api/admin";
     // Scope Globals
     // ----------------------------------- 
     $rootScope.app = {
@@ -59,23 +60,28 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
       viewAnimation: 'ng-fadeInUp'
     };
 
-  //检测用户登录情况 和 cookies
-  /*
-   if($rootScope.loginUser.adminId == '')
-   $state.go('login');
-   */
-  if ($cookies['loginCookie']) {
-    $rootScope.loginUser = {
-      adminId:     '',
-      nickname:      '',
-      roulId:  '',
-      menus:{}
+    $rootScope.getErMsge=function(code){
+        var strMsg ='';
+        switch (code) {
+            case "1":
+                strMsg = '系统错误,请求数据信息错误,请稍后再试.';
+                break;
+            case "2":
+                strMsg = '登录信息验证失败,请重新登录';
+                break;
+            case "8":
+                strMsg='用户名或密码错误.';
+                break;
+            case "30":
+                strMsg='权限验证失败,请勿尝试非法操作.';
+                break;
+            default:
+                strMsg='未知错误.';
+                break;
+        }
+
+        return strMsg;
     };
-  }
-  else{
-    $rootScope.loginUser=[];
-    $state.go('login');
-  }
 
 
 }]);

@@ -45,7 +45,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http',fu
                 .error(
                     function (e) {
                         alert(e);
-                        $scope.adminList = adminTable;
+                        //$scope.adminList = [];
                         //$scope.newAdmin='';
                         //$scope.roleSelected='';
                     });

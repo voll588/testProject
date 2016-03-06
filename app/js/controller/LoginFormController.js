@@ -6,7 +6,9 @@
  * Demo for login api
  =========================================================*/
 
-App.controller('LoginFormController', ['$rootScope','$scope', '$http', '$state', '$cookieStore',function($rootScope,$scope, $http, $state, $cookieStore) {
+App.controller('LoginFormController', ['$rootScope','$scope', '$http', '$state', '$cookieStore','$cookies',function($rootScope,$scope, $http, $state, $cookieStore,$cookies) {
+
+    $rootScope.loginUser=[];
 
     // bind here all data from the form
     $scope.account = {};
@@ -19,28 +21,34 @@ App.controller('LoginFormController', ['$rootScope','$scope', '$http', '$state',
         if($scope.loginForm.$valid) {
             $http({
                 method: 'POST',
-                url: $scope.serviceUrl+'/login',
+                url: $scope.serviceUrl + '/login',
                 params: {userName: $scope.account.username, password: $scope.account.password}
-            })
-                .then(function(response) {
+                })
+                .success(function (response) {
                     // assumes if ok, response is an object with some data, if not, a string with error
                     // customize according to your api
-                    if ( response && response.status == 200 &&  response.data.code==0 ) {
-                        $rootScope.loginUser.adminId =  response.data.adminId;
-                        $rootScope.loginUser.nickName = response.data.nickName;
-                        $rootScope.loginUser.roleId = response.data.roleId;
-                        $rootScope.loginUser.roleList=response.data.roleList;
+                    if (response && response.code == 0) {
+                        $rootScope.loginUser.adminId = response.adminId;
+                        $rootScope.loginUser.nickName = response.nickName;
+                        $rootScope.loginUser.roleId = response.roleId;
+                        $rootScope.loginUser.roleList = response.roleList;
+                        //$rootScope.loginUser.token = response.token;
 
-                        var expireDate = new Date();
-                        expireDate.setDate(expireDate.getHours()+8);
-                        $cookieStore.put('loginCookie',$scope.loginUser.adminId,{'expires': expireDate});
+                        //var expireDate = new Date();
+                        //expireDate.setDate(expireDate.getHours()+8);
+                        //$cookieStore.put('loginCookie',$scope.loginUser,{'expires': expireDate});
+                        $cookieStore.put('loginUser', {adminId:$scope.loginUser.adminId,token:'a'});
                         $state.go('app.dashboard');
-                    }else{
-                        $scope.authMsg = '用户名或密码不正确,请重新登录.';
                     }
-                }, function(x) {
+                    else {
+                        $scope.authMsg = $rootScope.getErMsge(response.code);
+                    }
+                })
+                .error(function (x) {
                     $scope.authMsg = '服务请求失败,请稍后再试.';
-                    $state.go('app.dashboard');
+                    //$cookieStore.put('loginUser',{name:'a',id:2});
+                    //var tsc =  $cookieStore.get('loginUser');
+                    //$state.go('app.dashboard');
                 });
         }
         else {
