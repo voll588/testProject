@@ -2,7 +2,9 @@
  * Created by lost on 2016/3/5.
  */
 
-App.controller("AdminListController",['$rootScope','$scope','$filter','$http',function($rootScope,$scope,$filter,$http){
+App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$cookieStore',function($rootScope,$scope,$filter,$http,$cookieStore){
+
+    $scope.loginUser = $cookieStore.get('loginUser');
 
     $scope.editRowVisible = false;
     //显示编辑状态
@@ -25,7 +27,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http',fu
                 method: 'POST',
                 url: $scope.serviceUrl + '/adminMge',
                 params: {
-                    adminId: $rootScope.loginUser.adminId,
+                    adminId: $scope.loginUser.adminId,
                     adminEntity: {
                         adminUserName: $scope.newAdmin.adminUserName,
                         adminName: $scope.newAdmin.adminName,
@@ -64,7 +66,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http',fu
                 method: 'POST',
                 url: $scope.serviceUrl+'/adminMge',
                 params: {
-                        adminId:$rootScope.loginUser.adminId,
+                        adminId:$scope.loginUser.adminId,
                         adminEntity:
                             {
                                 adminUserName: $scope.newAdmin.adminUserName,

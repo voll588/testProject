@@ -8,7 +8,7 @@
 
 App.controller('LoginFormController', ['$rootScope','$scope', '$http', '$state', '$cookieStore','$cookies',function($rootScope,$scope, $http, $state, $cookieStore,$cookies) {
 
-    $rootScope.loginUser=[];
+    //$rootScope.loginUser=[];
 
     // bind here all data from the form
     $scope.account = {};
@@ -28,16 +28,16 @@ App.controller('LoginFormController', ['$rootScope','$scope', '$http', '$state',
                     // assumes if ok, response is an object with some data, if not, a string with error
                     // customize according to your api
                     if (response && response.code == 0) {
-                        $rootScope.loginUser.adminId = response.adminId;
-                        $rootScope.loginUser.nickName = response.nickName;
-                        $rootScope.loginUser.roleId = response.roleId;
-                        $rootScope.loginUser.roleList = response.roleList;
+                        //$rootScope.loginUser.adminId = response.adminId;
+                        //$rootScope.loginUser.nickName = response.nickName;
+                        //$rootScope.loginUser.roleId = response.roleId;
+                        //$rootScope.loginUser.roleList = response.roleList;
                         //$rootScope.loginUser.token = response.token;
 
                         //var expireDate = new Date();
                         //expireDate.setDate(expireDate.getHours()+8);
                         //$cookieStore.put('loginCookie',$scope.loginUser,{'expires': expireDate});
-                        $cookieStore.put('loginUser', {adminId:$scope.loginUser.adminId,token:'a'});
+                        $cookieStore.put('loginUser', {adminId:response.adminId,token:'a'});
                         $state.go('app.dashboard');
                     }
                     else {
