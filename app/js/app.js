@@ -860,3 +860,5 @@ App.service('Utils', ["$window", "APP_MEDIAQUERY", function($window, APP_MEDIAQU
     };
 }]);
 
+
+

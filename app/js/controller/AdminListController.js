@@ -2,7 +2,8 @@
  * Created by lost on 2016/3/5.
  */
 
-App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$cookieStore',function($rootScope,$scope,$filter,$http,$cookieStore){
+App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$cookieStore','Notify',function($rootScope,$scope,$filter,$http,$cookieStore,Notify){
+
 
     $scope.loginUser = $cookieStore.get('loginUser');
 
@@ -40,6 +41,10 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
             .success(
                 function (respon) {
                     if (respon.code == 0) {
+                        Notify.alert(
+                            '<em class="fa fa-check"></em>更新用户成功!',
+                            {status: 'info', pos:'bottom-center'}
+                        );
                         $scope.loadUserList();
                     }
                 })
@@ -74,6 +79,10 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
             .success(
                 function(respon) {
                     if (respon&&respon.code == 0) {
+                        Notify.alert(
+                            '<em class="fa fa-check"></em>新增用户成功!',
+                            {status: 'info', pos:'bottom-center'}
+                        );
                         $scope.newAdmin = '';
                         $scope.roleSelected = '';
                         $scope.loadUserList();

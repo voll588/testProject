@@ -3,7 +3,7 @@
  */
 App.controller("DashBoardController",['$rootScope','$scope','$filter','$http','$cookieStore','$state',function($rootScope,$scope,$filter,$http,$cookieStore,$state){
 
-    var uCookie = $cookieStore.get('loginUser');
+  var uCookie = $cookieStore.get('loginUser');
 
     $http({
         method: 'POST',
