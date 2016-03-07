@@ -20,7 +20,6 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
     };
     //保存编辑
     $scope.saveEditRow=function(admin) {
-        if ($scope.newUserForm.$valid) {
 
             $scope.editRowVisible = false;
 
@@ -31,6 +30,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
                     adminId: $scope.loginUser.adminId,
                     adminRoleId:$scope.loginUser.adminRoleId,
                     adminEntity: {
+                        adminId:admin.adminId,
                         adminUserName: admin.adminUserName,
                         adminName: admin.adminName,
                         adminPassword: admin.adminPassword,
@@ -52,7 +52,6 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
                         //$scope.newAdmin='';
                         //$scope.roleSelected='';
                     });
-        }
     };
 
 
@@ -101,8 +100,35 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
     };
 
     //删除
-    $scope.removePerson=function(admin){
-        alert(admin);
+    $scope.removePerson=function(admin) {
+        $http({
+            method: 'POST',
+            url: $scope.serviceUrl + '/adminMge',
+            params: {
+                adminId: $scope.loginUser.adminId,
+                adminRoleId: $scope.loginUser.adminRoleId,
+                adminEntity: {
+                    adminUserName: admin.adminUserName,
+                    adminName: admin.adminName,
+                    adminPassword: admin.adminPassword,
+                    roleId: admin.adminRoleId
+                },
+                opType: 'del'
+            }
+        })
+            .success(
+                function (respon) {
+                    if (respon.code == 0) {
+                        $scope.loadUserList();
+                    }
+                })
+            .error(
+                function (e) {
+                    alert(e);
+                    //$scope.adminList = [];
+                    //$scope.newAdmin='';
+                    //$scope.roleSelected='';
+                });
     };
 
 
