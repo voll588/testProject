@@ -21,7 +21,5 @@ App.controller("DashBoardController",['$rootScope','$scope','$filter','$http','$
         .error(
             function (e) {
                 alert(e);
-                //$scope.newAdmin='';
-                //$scope.roleSelected='';
             });
 }]);
