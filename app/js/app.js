@@ -115,7 +115,8 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
     .state('app.dashboard', {
         url: '/dashboard',
         title: 'Dashboard View',
-        templateUrl: helper.basepath('dashboard.html')
+        templateUrl: helper.basepath('dashboard.html'),
+        resolve: helper.resolveFor('loaders.css')
     })
     .state('app.submenu', {
         url: '/submenu',
@@ -132,7 +133,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url:'/admin',
         title:"Admin",
         templateUrl:helper.basepath('adminList.html'),
-        resolve: helper.resolveFor('xeditable')
+        resolve: helper.resolveFor('xeditable','loaders.css')
       })
     // 
     // CUSTOM RESOLVES
@@ -233,7 +234,8 @@ App
     scripts: {
       'modernizr':          ['vendor/modernizr/modernizr.js'],
       'icons':              ['vendor/fontawesome/css/font-awesome.min.css',
-                             'vendor/simple-line-icons/css/simple-line-icons.css']
+                             'vendor/simple-line-icons/css/simple-line-icons.css'],
+        'loaders.css':          ['vendor/loaders.css/loaders.css']
     },
     // Angular based script (use the right module name)
     modules: [

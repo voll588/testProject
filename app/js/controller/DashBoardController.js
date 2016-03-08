@@ -3,6 +3,7 @@
  */
 App.controller("DashBoardController",['$rootScope','$scope','$filter','$http','$cookieStore','$state',function($rootScope,$scope,$filter,$http,$cookieStore,$state){
 
+    $scope.isLoading = true;
   var uCookie = $cookieStore.get('loginUser');
 
     $http({
@@ -17,6 +18,7 @@ App.controller("DashBoardController",['$rootScope','$scope','$filter','$http','$
                     $state.go("login");
                 }
                 $scope.infos = response;
+                $scope.isLoading = false;
             })
         .error(
             function (e) {

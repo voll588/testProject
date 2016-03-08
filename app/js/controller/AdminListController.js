@@ -4,6 +4,7 @@
 
 App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$cookieStore','Notify',function($rootScope,$scope,$filter,$http,$cookieStore,Notify){
 
+    $scope.isLoading = true;
 
     $scope.loginUser = $cookieStore.get('loginUser');
 
@@ -27,6 +28,8 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
     $scope.saveEditRow=function(admin) {
 
         $scope.editRowVisible = false;
+
+        $scope.isLoading = true;
 
         $http({
             method: 'POST',
@@ -64,6 +67,8 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
 
         if($scope.newUserForm.$valid){
 
+            $scope.isLoading = true;
+
             $scope.newAdmin.adminRoleId =  $scope.roleSelected.value;
 
             $http({
@@ -85,6 +90,12 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
                         );
                         $scope.newAdmin = '';
                         $scope.roleSelected = '';
+
+                        $scope.newUserForm.adminUserName.$dirty=false;
+                        $scope.newUserForm.adminName.$dirty=false;
+                        $scope.newUserForm.adminPwd.$dirty=false;
+                        $scope.newUserForm.inputeRole.$dirty=false;
+
                         $scope.loadUserList();
                     }
                     else{
@@ -97,11 +108,17 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
             });
         }else{
             $scope.newUserForm.adminUserName.$dirty=true;
+            $scope.newUserForm.adminName.$dirty=true;
+            $scope.newUserForm.adminPwd.$dirty=true;
+            $scope.newUserForm.inputeRole.$dirty=true;
         }
     };
 
     //删除
     $scope.removePerson=function(admin) {
+
+        $scope.isLoading = true;
+
         $http({
             method: 'POST',
             url: $scope.serviceUrl + '/adminMge',
@@ -152,6 +169,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
                 function(response){
                     if(response && response.code==0){
                         $scope.adminList=response.adminList;
+                        $scope.isLoading = false;
                     }
                 })
             .error(

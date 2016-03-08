@@ -5,37 +5,45 @@
    <!-- Chaning data-->
    <div class="panel panel-default">
       <div class="panel-body">
-         <form name="newUserForm" ng-submit="addPerson()" novalidate="" class="form-inline">
+         <form name="newUserForm" ng-submit="addPerson()" novalidate= class="form-inline">
             <table class="table table-striped hover">
                <thead>
                <tr>
                   <th>
-                     <div class="form-group">
+                     <div class="form-group has-feedback">
                         <label>
-                           <input type="text" name="adminUserName" ng-model="newAdmin.adminName" value="" placeholder="姓名" class="form-control" />
-                           <!--<span ng-show="newUserForm.adminUserName.$dirty &amp;&amp; newUserForm.adminUserName.$error.required" class="text-danger">请输入用户姓名</span>-->
+                        <input type="text" name="adminUserName" ng-model="newAdmin.adminUserName" value="" placeholder="用户名" class="form-control" required />
+                        <br>
+                        <small ng-show="newUserForm.adminUserName.$dirty && newUserForm.adminUserName.$error.required" class="text-danger">用户名不能为空</small>
                         </label>
                      </div>
                   </th>
                   <th>
                      <div class="form-group">
                         <label>
-                           <input type="text" name="adminName" ng-model="newAdmin.adminUserName" value="" placeholder="登录名" class="form-control" />
+                           <input type="text" name="adminName" ng-model="newAdmin.adminName" value="" placeholder="姓名" class="form-control" required />
+                           <br>
+                           <small  ng-show="newUserForm.adminName.$dirty && newUserForm.adminName.$error.required" class="text-danger">姓名不能为空</small>
                         </label>
                      </div>
                   </th>
                   <th>
                      <div class="form-group">
                         <label>
-                           <input type="text" name="adminPwd" ng-model="newAdmin.adminPassword" value="" placeholder="登录密码" class="form-control" />
+                           <input type="text" name="adminPwd" ng-pattern="/^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]/" ng-model="newAdmin.adminPassword" value="" placeholder="登录密码" class="form-control" required />
+                           <br>
+                           <div ng-show="newUserForm.adminPwd.$dirty && newUserForm.adminPwd.$error.required" class="text-danger">密码不能为空</div>
+                           <div ng-show="newUserForm.adminPwd.$error.pattern" class="text-danger">密码格式不正确</div>
                         </label>
                      </div>
                   </th>
                   <th>
                      <div class="form-group">
                         <label>
-                           <select name="inputeRole" ng-model="roleSelected" ng-options="s.name for s in roleSelecter" class="form-control">
+                           <select name="inputeRole" ng-model="roleSelected" ng-options="s.name for s in roleSelecter" class="form-control" required>
                            </select>
+                           <br>
+                           <small ng-show="newUserForm.inputeRole.$dirty && newUserForm.inputeRole.$error.required" class="text-danger">请选择角色</small>
                         </label>
                      </div>
                   </th>
@@ -55,7 +63,7 @@
             <thead>
             <tr>
                <th style="width:20%">姓名</th>
-               <th style="width:20%">登录名</th>
+               <th style="width:20%">登录账号</th>
                <th style="width:20%" ng-show="editRowVisible">密码</th>
                <th style="width:20%">角色</th>
                <!--<th ng-show="!editRowVisible">创建时间</th>-->
@@ -65,10 +73,10 @@
             <tbody>
             <tr ng-repeat="admin in adminList">
                <td e-form="rowform" ng-show="false">{{ admin.adminId }}</td>
-               <td><span e-form="rowform" editable-text="admin.adminName" e-name="adminName" e-required="">{{ admin.adminName }}</span></td>
-               <td><span  e-form="rowform" editable-text="admin.adminUserName" e-name="adminUserName" e-required="">{{ admin.adminUserName }}</span></td>
-               <td ng-show="editRowVisible"><span  e-form="rowform" editable-text="admin.adminPassword" e-name="adminPassword" e-placeholder="密码" >{{admin.adminPassword}}</span></td>
-               <td><span  e-form="rowform" editable-select="admin.adminRoleId" e-name="adminRoleId" e-ng-options="s.value as s.name for s in roleSelecter" e-required="">{{ showRoleName(admin) }}</span></td>
+               <td><span e-form="rowform" editable-text="admin.adminUserName" e-name="adminUserName" e-required="">{{ admin.adminUserName }}</span></td>
+               <td><span  e-form="rowform" editable-text="admin.adminName" e-name="adminName" e-required  e-ng-pattern="/^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]/">{{ admin.adminName }}</span></td>
+               <td ng-show="editRowVisible"><span  e-form="rowform" editable-text="admin.adminPassword" e-name="adminPassword" e-placeholder="密码" e-ng-pattern="/^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]/" >{{admin.adminPassword}}</span></td>
+               <td><span  e-form="rowform" editable-select="admin.adminRoleId" e-name="adminRoleId" e-ng-options="s.value as s.name for s in roleSelecter" e-required>{{ showRoleName(admin) }}</span></td>
                <!--<td><span  e-form="rowform" editable-text="admin.cTime" e-name="cTime" e-required="">{{ admin.cTime }}</span></td>-->
                <!--<td ng-show="!editRowVisible"><span>{{ admin.cTime }}</span></td>-->
                <td><span>{{ admin.cTime }}</span></td>
@@ -94,6 +102,22 @@
             </tr>
             </tbody>
          </table>
+      </div>
+   </div>
+   <div class="loading" ng-show="isLoading">
+      <div class="loading-center">
+         <div class="loading-center-absolute">
+            <div class="ball-spin-fade-loader">
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+            </div>
+         </div>
       </div>
    </div>
 </div>
