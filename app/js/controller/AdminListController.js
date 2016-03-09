@@ -2,7 +2,7 @@
  * Created by lost on 2016/3/5.
  */
 
-App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$cookieStore','Notify',function($rootScope,$scope,$filter,$http,$cookieStore,Notify){
+App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$cookieStore','Notify','$state',function($rootScope,$scope,$filter,$http,$cookieStore,Notify,$state){
 
     $scope.isLoading = true;
 
@@ -23,6 +23,36 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
         $scope.editRowVisible = false;
     };
 
+    //check Name
+    $scope.checkName=function(data){
+        if(!data) {
+            return "姓名不能为空";
+        }
+    };
+
+    //check UserName
+    $scope.checkUserName=function(data){
+        if(!data) {
+            return "登录账号不能为空";
+        }
+    };
+
+    //check Pwd
+    $scope.checkPwd=function(data){
+        if(data){
+            var regx =new RegExp("^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]");
+            if(!regx.exec(data)) {
+                return "密码格式不正确";
+            }
+        }
+    };
+
+    //check Role
+    $scope.checkRole=function(data){
+        if(!data){
+            return "请选择角色";
+        }
+    };
 
     //保存编辑
     $scope.saveEditRow=function(admin) {

@@ -4,12 +4,16 @@
 App.controller("DashBoardController",['$rootScope','$scope','$filter','$http','$cookieStore','$state',function($rootScope,$scope,$filter,$http,$cookieStore,$state){
 
     $scope.isLoading = true;
-  var uCookie = $cookieStore.get('loginUser');
+
+    $scope.loginUser = $cookieStore.get('loginUser');
+    if(!$scope.loginUser) {
+        $state.go("login");
+    }
 
     $http({
         method: 'POST',
         url: $scope.serviceUrl + '/landingInfo',
-        params: { adminId: uCookie.adminId }
+        params: { adminId: $scope.loginUser.adminId }
         })
         .success(
             function (response) {
