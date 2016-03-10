@@ -4,6 +4,72 @@
 
 App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$cookieStore','Notify','$state',function($rootScope,$scope,$filter,$http,$cookieStore,Notify,$state){
 
+
+    ///*  TestCode
+    var adminTable = [{
+        "adminId": 860,
+        "adminUserName": "Superman",
+        "adminName": "Yoda",
+        "adminRoleId":4,
+        "adminRoulName":"aaa",
+        "cTime":"2016-1-1"
+    }, {
+        "adminId": 861,
+        "adminUserName": "Superman",
+        "adminName": "Yoda",
+        "adminRoleId":3,
+        "adminRoulName":"aaa",
+        "cTime":"2016-1-1"
+    }, {
+        "adminId": 862,
+        "adminUserName": "Superman",
+        "adminName": "Yoda",
+        "adminRoleId":2,
+        "adminRoulName":"aaa",
+        "cTime":"2016-1-1"
+    }, {
+        "adminId": 863,
+        "adminUserName": "Superman",
+        "adminName": "Yoda",
+        "adminRoleId":4,
+        "adminRoulName":"aaa",
+        "cTime":"2016-1-1"
+    }, {
+        "adminId": 864,
+        "adminUserName": "Superman",
+        "adminName": "Yoda",
+        "adminRoleId":1,
+        "adminRoulName":"aaa",
+        "cTime":"2016-1-1"
+    }, {
+        "adminId": 865,
+        "adminUserName": "Superman",
+        "adminName": "Yoda",
+        "adminRoleId":1,
+        "adminRoulName":"aaa",
+        "cTime":"2016-1-1"
+    }, {
+        "adminId": 866,
+        "adminUserName": "Superman",
+        "adminName": "Yoda",
+        "adminRoleId":2,
+        "adminRoulName":"aaa",
+        "cTime":"2016-1-1"
+    }, {
+        "adminId": 867,
+        "adminUserName": "Superman",
+        "adminName": "Yoda",
+        "adminRoleId":3,
+        "adminRoulName":"aaa",
+        "cTime":"2016-1-1"
+    }
+    ];
+    $scope.adminList = adminTable;
+    return;
+    //*/
+
+
+
     $scope.isLoading = true;
 
     $scope.loginUser = $cookieStore.get('loginUser');
@@ -209,68 +275,6 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
                     //$scope.roleSelected='';
                 });
     };
-
-
-    var adminTable = [{
-        "adminId": 860,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":4,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 861,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":3,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 862,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":2,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 863,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":4,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 864,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":1,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 865,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":1,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 866,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":2,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 867,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":3,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }
-    ];
-
-    //$scope.adminList = adminTable;
 
     $scope.loadUserList();
 }]);

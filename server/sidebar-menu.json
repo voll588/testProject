@@ -13,7 +13,7 @@
     "submenu": [
       { "menu_id": 21,
         "text": "学生信息管理",
-        "sref": "app.submenu"
+        "sref": "app.studentList"
       }
     ]
   },

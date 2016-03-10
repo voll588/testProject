@@ -39,6 +39,7 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
   //$rootScope.serviceUrl = "http://192.168.1.129:8080/NJService/api/admin";
   $rootScope.serviceUrl = "http://voll588.imwork.net:29860/NJService/api/admin";
     //$rootScope.serviceUrl = "http://172.16.2.107:8080/NJService/api/admin";
+
     // Scope Globals
     // ----------------------------------- 
     $rootScope.app = {
@@ -132,8 +133,19 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
     .state('app.adminList',{
         url:'/admin',
         title:"Admin",
-        templateUrl:helper.basepath('adminList.html'),
+        templateUrl:helper.basepath('user/adminList.html'),
         resolve: helper.resolveFor('xeditable','loaders.css')
+      })
+      .state('app.studentList',{
+          url:'/student',
+          title:'Student',
+          templateUrl:helper.basepath('student/studentList.html'),
+          resolve: helper.resolveFor('xeditable')
+      })
+      .state('app.stuentDetail',{
+          url:'/student/detail/{stuNum}',
+          title:'student.detail',
+          templateUrl:helper.basepath('student/studentDetail.html')
       })
     // 
     // CUSTOM RESOLVES

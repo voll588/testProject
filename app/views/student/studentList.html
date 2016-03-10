@@ -1,0 +1,73 @@
+<h3>学生信息</h3>
+<div class="row" ng-controller="studentListController">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>#学号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>班级</th>
+                    <th>缴费</th>
+                    <th>班主任</th>
+                    <th>家长</th>
+                    <th>联系方式</th>
+                    <th>状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="stu in studentList">
+                    <td><a class="ng-scope ng-binding editable editable-click" href="#" ng-click="showStuDetail(stu.stuNum)">{{ stu.stuNum }}</a></td>
+                    <td>{{ stu.stuName }}</td>
+                    <td>{{ stu.stuGender }}</td>
+                    <td>{{stu.stuClassId}}</span></td>
+                    <td>{{stu.stuIsPay}}</td>
+                    <td>{{ stu.stuMasterName }}</td>
+                    <td>{{ stu.stuParent}}</td>
+                    <td>{{ stu.stuTel }}</td>
+                    <td>{{ stu.stuStatus }}</td>
+                    <td style="white-space: nowrap">
+                        <div class="buttons">
+                            <button type="button" ng-click="" title="注销" class="btn btn-sm btn-info">
+                                <em class="fa fa-pencil"></em>
+                            </button>
+                            <button type="button" ng-click="" title="暂停" class="btn btn-sm btn-info">
+                                <em class="fa fa-pencil"></em>
+                            </button>
+                            <button type="button" ng-click="" title="降级" class="btn btn-sm btn-info">
+                                <em class="fa fa-pencil"></em>
+                            </button>
+                            <button type="button" ng-click="" title="删除" class="btn btn-sm btn-danger">
+                                <em class="fa fa-trash-o"></em>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="dataTables_paginate paging_full_numbers">
+                <a class="paginate_button first">首页</a>
+                <a class="paginate_button previous">上一页</a>
+                <span><a class="paginate_button current">1</a></span>
+                <a class="paginate_button next">下一页</a>
+                <a class="paginate_button last">尾页</a></div>
+        </div>
+    </div>
+    <div class="loading" ng-show="isLoading">
+        <div class="loading-center">
+            <div class="loading-center-absolute">
+                <div class="ball-spin-fade-loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

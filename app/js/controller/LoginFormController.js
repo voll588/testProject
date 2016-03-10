@@ -9,6 +9,12 @@
 App.controller('LoginFormController', ['$rootScope','$scope', '$http', '$state', '$cookieStore','$cookies',function($rootScope,$scope, $http, $state, $cookieStore,$cookies) {
 
     //$rootScope.loginUser=[];
+    ///*  TestCode
+
+    $cookieStore.put('loginUser', {adminId:1,adminRoleId:1,token:'a'});
+    $state.go('app.dashboard');
+    return;
+    //*/
 
     // bind here all data from the form
     $scope.account = {};
@@ -48,7 +54,6 @@ App.controller('LoginFormController', ['$rootScope','$scope', '$http', '$state',
                     $scope.authMsg = '服务请求失败,请稍后再试.';
                     //$cookieStore.put('loginUser',{name:'a',id:2});
                     //var tsc =  $cookieStore.get('loginUser');
-                    //$state.go('app.dashboard');
                 });
         }
         else {
