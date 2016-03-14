@@ -23,63 +23,87 @@
   },
   {
     "menu_id": 3,
-    "text": "教学管理",
+    "text": "家长信息管理",
     "sref": "#",
     "icon": "icon-folder",
     "submenu": [
       { "menu_id": 31,
+        "text": "家长信息管理",
+        "sref": "app.submenu"
+      }
+    ]
+  },
+  {
+    "menu_id": 9,
+    "text": "班级管理",
+    "sref": "#",
+    "icon": "icon-folder",
+    "submenu": [
+      { "menu_id": 91,
+        "text": "班级管理",
+        "sref": "app.classList"
+      }
+    ]
+  },
+  {
+    "menu_id": 4,
+    "text": "教学管理",
+    "sref": "#",
+    "icon": "icon-folder",
+    "submenu": [
+      { "menu_id": 41,
         "text": "教学信息管理",
         "sref": "app.submenu"
       }
     ]
   },
   {
-    "menu_id": 4,
+    "menu_id": 5,
     "text": "监控设备管理",
     "sref": "#",
     "icon": "icon-folder",
     "submenu": [
-      { "menu_id": 41,
+      { "menu_id": 51,
         "text": "设备信息管理",
         "sref": "app.submenu"
       }
     ]
   },
   {
-    "menu_id": 5,
+    "menu_id": 6,
     "text": "费用管理",
     "sref": "#",
     "icon": "icon-folder",
     "submenu": [
-      { "menu_id": 51,
+      { "menu_id": 61,
         "text": "收费管理",
         "sref": "app.submenu"
       }
     ]
   },
   {
-    "menu_id": 6,
+    "menu_id": 7,
     "text": "通知管理",
     "sref": "#",
     "icon": "icon-folder",
     "submenu": [
-      { "menu_id": 61,
+      { "menu_id": 71,
         "text": "通知信息管理",
         "sref": "app.submenu"
       }
     ]
   },
   {
-    "menu_id": 7,
+    "menu_id": 8,
     "text": "系统设置",
     "sref": "#",
     "icon": "icon-folder",
     "submenu": [
-      { "menu_id": 71,
+      { "menu_id": 81,
         "text": "管理员信息",
         "sref": "app.adminList"
       },
-      { "menu_id": 72,
+      { "menu_id": 82,
         "text": "系统信息设置",
         "sref": "app.submenu"
       }

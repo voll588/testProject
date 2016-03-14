@@ -152,6 +152,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           title:'student.add',
           templateUrl:helper.basepath('student/studentAdd.html')
       })
+      .state('app.classList',{
+          url:'/classList',
+          title:'classList',
+          templateUrl:helper.basepath('class/classList.html'),
+          resolve: helper.resolveFor('xeditable')
+      })
+
     // 
     // CUSTOM RESOLVES
     //   Add your own resolves properties

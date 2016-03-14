@@ -1,0 +1,115 @@
+<h3>班级信息
+</h3>
+<div class="row" ng-controller="ClassListController">
+
+    <!-- Chaning data-->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form name="newClassForm" ng-submit="addClass()" novalidate="" class="form-inline">
+                <table class="table table-striped hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            <div class="form-group has-feedback">
+                                <label>
+                                    <input type="text" name="className" ng-model="newClass.className" value="" placeholder="班级名称" class="form-control" required />
+                                    <div ng-show="newClassForm.className.$dirty && newClassForm.className.$error.required" class="editable-error ng-binding">班级名称不能为空</div>
+                                </label>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="form-group">
+                                <label>
+                                    <select name="inputeTeacher" ng-model="teacherSelected" ng-options="t.name for t in teacherSelecter" class="form-control" required>
+                                    </select>
+                                    <div ng-show="newClassForm.inputeTeacher.$dirty && newClassForm.inputeTeacher.$error.required" class="editable-error ng-binding">请选择代班老师</div>
+                                </label>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="form-group has-feedback">
+                                <label>
+                                    <input type="text" name="classNum" ng-model="newClass.classNum" ng-pattern="/^[0-9]+$/" placeholder="学生人数" class="form-control" required />
+                                    <div  ng-show="newClassForm.classNum.$dirty && newClassForm.classNum.$error.required" class="editable-error ng-binding">班级人数不能为空</div>
+                                    <div  ng-show="newClassForm.classNum.$dirty && newClassForm.classNum.$error.pattern" class="editable-error ng-binding">请输入正确的数字</div>
+                                </label>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-labeled btn-success">
+                              <span class="btn-label">
+                                 <em class="fa fa-plus"></em>
+                              </span>新增</button>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </form>
+            <table class="table table-striped hover">
+                <thead>
+                <tr>
+                    <th>班级ID</th>
+                    <th>班级名称</th>
+                    <th>带班老师</th>
+                    <th>学生人数</th>
+                    <th>班级状态</th>
+                    <th>创建时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="cla in classlist">
+                    <td class="col-sm-1">{{ cla.classId }}</td>
+                    <td class="col-sm-2"><span e-required="" onbeforesave="checkClassName($data)"  e-form="rowform" editable-text="cla.className" e-name="className" >{{ cla.className }}</span></td>
+                    <td class="col-sm-2"><span e-required="" onbeforesave="checkTeacher($data)"  e-form="rowform" editable-select="cla.teacherId" e-name="teacherId" e-ng-options="t.id as t.name for t in teacherSelecter" >{{ showTeacherName(cla) }}</span></td>
+                    <td class="col-sm-2"><span e-required="" onbeforesave="checkClassNum($data)" e-form="rowform" editable-text="cla.classNum" e-name="classNum" e-type="number">{{ cla.classNum }}</span></td>
+                    <td class="col-sm-2"><span e-required="" onbeforesave="classStates($data)"  e-form="rowform" editable-select="cla.classState" e-name="teacherId" e-ng-options="c.id as c.name for c in classSatesSelecter" >{{ showStateName(cla) }}</span></td>
+                    <td class="col-sm-1"><span>{{ cla.classTime }}</span></td>
+                    <td style="white-space: nowrap">
+                        <!--form-->
+                        <form editable-form="" name="rowform" ng-show="rowform.$visible" onaftersave="saveEditRow(cla)" class="form-buttons form-inline">
+                            <button type="submit" title="保存" ng-disabled="rowform.$waiting" class="btn btn-sm btn-info">
+                                <em class="fa fa-save"></em>
+                            </button>
+                            <button type="button" ng-click="cancelEditRow(rowform)" title="取消" class="btn btn-sm btn-default">
+                                <em class="fa fa-times"></em>
+                            </button>
+                        </form>
+                        <div ng-show="!rowform.$visible" class="buttons">
+                            <button type="button" ng-click="showEditRow(rowform)" title="编辑" class="btn btn-sm btn-info">
+                                <em class="fa fa-pencil"></em>
+                            </button>
+                            <button type="button" ng-click="removePerson(cla)" title="删除" class="btn btn-sm btn-danger">
+                                <em class="fa fa-trash-o"></em>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="dataTables_paginate paging_full_numbers">
+                <a class="paginate_button first disabled">首页</a>
+                <a class="paginate_button previous disabled">上一页</a>
+                <span><a class="paginate_button current">1</a></span>
+                <a class="paginate_button next disabled">下一页</a>
+                <a class="paginate_button last disabled">尾页</a></div>
+        </div>
+    </div>
+    <div class="loading" ng-show="isLoading">
+        <div class="loading-center">
+            <div class="loading-center-absolute">
+                <div class="ball-spin-fade-loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
