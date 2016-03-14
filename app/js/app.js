@@ -143,9 +143,14 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           resolve: helper.resolveFor('xeditable')
       })
       .state('app.stuentDetail',{
-          url:'/student/detail/{stuNum}',
+          url:'/student/detail/{stuId}',
           title:'student.detail',
           templateUrl:helper.basepath('student/studentDetail.html')
+      })
+      .state('app.studentAdd',{
+          url:'/student/add',
+          title:'student.add',
+          templateUrl:helper.basepath('student/studentAdd.html')
       })
     // 
     // CUSTOM RESOLVES
