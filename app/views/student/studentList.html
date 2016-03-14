@@ -7,26 +7,24 @@
                 <tr>
                     <th>#学号</th>
                     <th>姓名</th>
-                    <th>性别</th>
                     <th>班级</th>
-                    <th>缴费</th>
-                    <th>班主任</th>
-                    <th>家长</th>
+                    <th>老师</th>
+                    <th>父母</th>
+                    <th>创建时间</th>
+                    <th>毕业时间</th>
                     <th>联系方式</th>
-                    <th>状态</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="stu in studentList">
-                    <td><a class="ng-scope ng-binding editable editable-click" href="#" ng-click="showStuDetail(stu.stuNum)">{{ stu.stuNum }}</a></td>
+                    <td><a class="ng-scope ng-binding editable editable-click" href="#" ng-click="showStuDetail(stu.stuId)">{{ stu.stuId }}</a></td>
                     <td>{{ stu.stuName }}</td>
-                    <td>{{ stu.stuGender }}</td>
-                    <td>{{stu.stuClassId}}</span></td>
-                    <td>{{stu.stuIsPay}}</td>
-                    <td>{{ stu.stuMasterName }}</td>
-                    <td>{{ stu.stuParent}}</td>
-                    <td>{{ stu.stuTel }}</td>
-                    <td>{{ stu.stuStatus }}</td>
+                    <td>{{stu.className}}</td>
+                    <td>{{stu.teacherName}}</td>
+                    <td>{{ stu.stuParent }}</td>
+                    <td>{{ stu.cTime}}</td>
+                    <td>{{ stu.endTime }}</td>
+                    <td>{{ stu.phone }}</td>
                     <td style="white-space: nowrap">
                         <div class="buttons">
                             <button type="button" ng-click="" title="注销" class="btn btn-sm btn-info">
