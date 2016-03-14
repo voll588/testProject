@@ -275,4 +275,15 @@ $scope.classlist=[
     };
 
     $scope.loadUserList();
+
+
+    //升级
+    $scope.upgradeClass=function(cla){
+
+    };
+
+    //毕业
+    $scope.completeClass=function(cla){
+
+    };
 }]);
