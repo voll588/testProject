@@ -166,7 +166,14 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
       .state('app.teacherEdit',{
           url:'/teacher/edit/{teacherId}',
           title:'teacher detail',
-          templateUrl:helper.basepath('teacher/teacherEdit.html')
+          templateUrl:helper.basepath('teacher/teacherEdit.html'),
+          resolve: helper.resolveFor('ngImgCrop', 'filestyle')
+      })
+      .state('app.teacherAdd',{
+          url:'/teacher/add',
+          title:'teacher add',
+          templateUrl:helper.basepath('teacher/teacherAdd.html'),
+          resolve: helper.resolveFor('ngImgCrop', 'filestyle')
       })
 
     // 
@@ -269,7 +276,8 @@ App
       'modernizr':          ['vendor/modernizr/modernizr.js'],
       'icons':              ['vendor/fontawesome/css/font-awesome.min.css',
                              'vendor/simple-line-icons/css/simple-line-icons.css'],
-        'loaders.css':          ['vendor/loaders.css/loaders.css']
+        'loaders.css':          ['vendor/loaders.css/loaders.css'],
+        'filestyle':          ['vendor/bootstrap-filestyle/src/bootstrap-filestyle.js']
     },
     // Angular based script (use the right module name)
     modules: [
@@ -277,8 +285,10 @@ App
       /*{name: 'ngDialog',                  files: ['vendor/ngDialog/js/ngDialog.min.js',
                                                   'vendor/ngDialog/css/ngDialog.min.css',
                                                   'vendor/ngDialog/css/ngDialog-theme-default.min.css'] }*/
-      {name: 'xeditable', files: ['vendor/angular-xeditable/dist/js/xeditable.js',
-                                 'vendor/angular-xeditable/dist/css/xeditable.css']}
+        {name: 'xeditable', files: ['vendor/angular-xeditable/dist/js/xeditable.js',
+                                 'vendor/angular-xeditable/dist/css/xeditable.css']},
+        {name: 'ngImgCrop',files: ['vendor/ng-img-crop/compile/unminified/ng-img-crop.js',
+                                'vendor/ng-img-crop/compile/unminified/ng-img-crop.css']}
     ]
 
 
@@ -513,6 +523,82 @@ App.directive('toggleState', ['toggleStateService', function(toggle) {
   };
   
 }]);
+
+
+
+/**=========================================================
+ * Module: filestyle.js
+ * Initializes the fielstyle plugin
+ =========================================================*/
+
+App.directive('filestyle', function() {
+    return {
+        restrict: 'A',
+        controller: ["$scope", "$element", function($scope, $element) {
+            var options = $element.data();
+
+            // old usage support
+            options.classInput = $element.data('classinput') || options.classInput;
+
+            $element.filestyle(options);
+        }]
+    };
+});
+
+
+/**=========================================================
+ * Module panel-tools.js
+ * Directive tools to control panels.
+ * Allows collapse, refresh and dismiss (remove)
+ * Saves panel state in browser storage
+ =========================================================*/
+
+App.directive('paneltool', ["$compile", "$timeout", function($compile, $timeout){
+    var templates = {
+        /* jshint multistr: true */
+        collapse:"<a href='#' panel-collapse='' tooltip='收起面板' ng-click='{{panelId}} = !{{panelId}}'> \
+                <em ng-show='{{panelId}}' class='fa fa-plus'></em> \
+                <em ng-show='!{{panelId}}' class='fa fa-minus'></em> \
+              </a>",
+        dismiss: "<a href='#' panel-dismiss='' tooltip='关闭面板'>\
+               <em class='fa fa-times'></em>\
+             </a>",
+        refresh: "<a href='#' panel-refresh='' data-spinner='{{spinner}}' tooltip='刷新面板'>\
+               <em class='fa fa-refresh'></em>\
+             </a>"
+    };
+
+    function getTemplate( elem, attrs ){
+        var temp = '';
+        attrs = attrs || {};
+        if(attrs.toolCollapse)
+            temp += templates.collapse.replace(/{{panelId}}/g, (elem.parent().parent().attr('id')) );
+        if(attrs.toolDismiss)
+            temp += templates.dismiss;
+        if(attrs.toolRefresh)
+            temp += templates.refresh.replace(/{{spinner}}/g, attrs.toolRefresh);
+        return temp;
+    }
+
+    return {
+        restrict: 'E',
+        scope: false,
+        link: function (scope, element, attrs) {
+
+            var tools = scope.panelTools || attrs;
+
+            $timeout(function() {
+                element.html(getTemplate(element, tools )).show();
+                $compile(element.contents())(scope);
+
+                element.addClass('pull-right');
+            });
+
+        }
+    };
+}])
+
+
 
 /**=========================================================
  * Module: browser.js
