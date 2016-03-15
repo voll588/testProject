@@ -153,10 +153,20 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           templateUrl:helper.basepath('student/studentAdd.html')
       })
       .state('app.classList',{
-          url:'/classList',
-          title:'classList',
+          url:'/class',
+          title:'class',
           templateUrl:helper.basepath('class/classList.html'),
           resolve: helper.resolveFor('xeditable')
+      })
+      .state('app.teacherList',{
+          url:'/teacher',
+          title:'teacher',
+          templateUrl:helper.basepath('teacher/teacherList.html')
+      })
+      .state('app.teacherEdit',{
+          url:'/teacher/edit/{teacherId}',
+          title:'teacher detail',
+          templateUrl:helper.basepath('teacher/teacherEdit.html')
       })
 
     // 

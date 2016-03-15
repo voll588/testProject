@@ -1,7 +1,7 @@
 /**
  * Created by lost on 2016/3/10.
  */
-App.controller("studentListController",['$rootScope','$scope','$filter','$http','$cookieStore','$state',function($rootScope,$scope,$filter,$http,$cookieStore,$state){
+App.controller("StudentListController",['$rootScope','$scope','$filter','$http','$cookieStore','$state',function($rootScope,$scope,$filter,$http,$cookieStore,$state){
 
             ///*  TestCode
     $scope.isLoading=false;

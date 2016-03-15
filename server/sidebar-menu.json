@@ -35,6 +35,18 @@
   },
   {
     "menu_id": 9,
+    "text": "老师信息管理",
+    "sref": "#",
+    "icon": "icon-folder",
+    "submenu": [
+      { "menu_id": 91,
+        "text": "老师信息",
+        "sref": "app.teacherList"
+      }
+    ]
+  },
+  {
+    "menu_id": 9,
     "text": "班级管理",
     "sref": "#",
     "icon": "icon-folder",

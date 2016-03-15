@@ -1,0 +1,72 @@
+<div class="panel panel-default" ng-controller="TeacherEditController">
+    <div class="panel-heading"><a>返回</a>&nbsp;详细信息</div>
+    <div class="panel-body">
+        <form method="get" action="/" class="form-horizontal ng-pristine ng-valid">
+            <fieldset>
+                <legend>{{teacherId}}</legend>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">老师姓名:</label>
+                    <div class="col-sm-3">
+                        <input name="teacherName" class="form-control" type="text">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">老师信息描述:</label>
+                    <div class="col-sm-5">
+                       <textarea name="teacherInfo" class="form-control"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">头像:</label>
+                    <div class="col-sm-3">
+                        <input name="teacherPic" class="form-control" type="text">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">电话:</label>
+                    <div class="col-sm-3">
+                        <input name="teacherPhone" class="form-control" type="text">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">视频:</label>
+                    <div class="col-lg-3">
+                            <input name="teacherVideo"  class="form-control" type="text" value="">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="last-child">
+                    <div class="col-sm-4 col-sm-offset-2">
+                        <button type="submit" class="btn btn-primary">保存</button>
+                        <button type="submit" class="btn btn-default">返回</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="loading" ng-show="isLoading">
+        <div class="loading-center">
+            <div class="loading-center-absolute">
+                <div class="ball-spin-fade-loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
