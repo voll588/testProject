@@ -1,13 +1,14 @@
+<h3>老师信息修改</h3>
 <div class="panel panel-default" ng-controller="TeacherEditController">
     <div class="panel-heading"><a>返回</a>&nbsp;详细信息</div>
     <div class="panel-body">
-        <form method="get" action="/" class="form-horizontal ng-pristine ng-valid">
+        <form class="form-horizontal ng-pristine ng-valid">
             <fieldset>
                 <legend>{{teacherId}}</legend>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">老师姓名:</label>
                     <div class="col-sm-3">
-                        <input name="teacherName" class="form-control" type="text">
+                        <input ng-model="editTeacher.teacherName" name="teacherName" class="form-control" type="text">
                     </div>
                 </div>
             </fieldset>
@@ -15,7 +16,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">老师信息描述:</label>
                     <div class="col-sm-5">
-                       <textarea name="teacherInfo" class="form-control"></textarea>
+                       <textarea ng-model="editTeacher.teacherInfo" name="teacherInfo" class="form-control"></textarea>
                     </div>
                 </div>
             </fieldset>
@@ -72,7 +73,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">电话:</label>
                     <div class="col-sm-3">
-                        <input name="teacherPhone" class="form-control" type="text">
+                        <input ng-model="editTeacher.teacherPhone" name="teacherPhone" class="form-control" type="text">
                     </div>
                 </div>
             </fieldset>
@@ -80,15 +81,15 @@
                 <div class="form-group">
                     <label class="col-lg-2 control-label">视频:</label>
                     <div class="col-lg-3">
-                            <input name="teacherVideo"  class="form-control" type="text" value="">
+                            <input ng-model="editTeacher.teacherVideo" name="teacherVideo"  class="form-control" type="text" value="">
                     </div>
                 </div>
             </fieldset>
             <fieldset>
                 <div class="last-child">
                     <div class="col-sm-4 col-sm-offset-2">
-                        <button type="submit" class="btn btn-primary">保存</button>
-                        <button type="submit" class="btn btn-default">返回</button>
+                        <button class="btn btn-oval btn-primary" ng-click="saveTeacher()">保存</button>
+                        <button class="btn btn-oval btn-default" ng-click="goback()">返回</button>
                     </div>
                 </div>
             </fieldset>

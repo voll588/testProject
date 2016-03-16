@@ -105,7 +105,11 @@
     "submenu": [
       { "menu_id": 71,
         "text": "通知信息管理",
-        "sref": "app.submenu"
+        "sref": "app.noticeList"
+      },
+      { "menu_id": 72,
+        "text": "发送通知",
+        "sref": "app.noticeAdd"
       }
     ]
   },

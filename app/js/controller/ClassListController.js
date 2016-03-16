@@ -4,8 +4,11 @@
 
 App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$cookieStore','Notify','$state',function($rootScope,$scope,$filter,$http,$cookieStore,Notify,$state){
 
+    $rootScope.checkUser();
 
-$scope.classlist=[
+    $scope.serviceUrl = $rootScope.serviceUrl + '/classList';
+
+    $scope.classlist=[
     {
         classId: 1,
         className: '大一班',
@@ -64,6 +67,34 @@ $scope.classlist=[
     }
 ];
 
+    //基础数据初始化
+    $scope.init=function(){
+    //老师列表;
+        $scope.initTeachers();
+    //状态?
+    };
+
+    //获取老师列表
+    $scope.initTeachers=function(){
+        $http({
+            method: 'POST',
+            url: $rootScope.serviceUrl + '/teacherList',
+            params: {
+                adminId: $rootScope.loginUser.adminId
+            }
+        })
+            .success(
+                function(response){
+                    if(response && response.code==0){
+                        $scope.teacherSelecter=response.teacherList;
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function(e){
+                    alert("无法获取老师信息.");
+                });
+    };
 
     $scope.teacherSelecter=[{id:1,"name":"王老师"},{id:2,"name":"李老师"},{id:3,"name":"张老师"},{id:4,"name":"赵老师"}];
     $scope.teacherSelected='';
@@ -73,12 +104,6 @@ $scope.classlist=[
 
 
     $scope.isLoading = false;
-
-    $scope.loginUser = $cookieStore.get('loginUser');
-
-    if(!$scope.loginUser) {
-        $state.go("login");
-    }
 
     //显示编辑状态
     $scope.showEditRow=function(e){
@@ -93,6 +118,12 @@ $scope.classlist=[
     $scope.checkClassName=function(data){
         if(!data) {
             return "班级名称不能为空";
+        }
+    };
+
+    $scope.checkClassNum=function(data){
+        if(!data) {
+            return "输入格式不正确";
         }
     };
 
@@ -118,10 +149,10 @@ $scope.classlist=[
 
         $http({
             method: 'POST',
-            url: $scope.serviceUrl + '/adminMge',
+            url: $scope.serviceUrl,
             params: {
-                adminId: $scope.loginUser.adminId,
-                adminRoleId: $scope.loginUser.adminRoleId,
+                adminId: $rootScope.loginUser.adminId,
+                adminRoleId: $rootScope.loginUser.adminRoleId,
                 adminEntity: cla,
                 opType: 'update'
             }
@@ -146,7 +177,7 @@ $scope.classlist=[
 
 
     //新增
-    $scope.newClass={adminName:'',adminUserName:'',adminPassword:'',adminRoleId:-1};
+    $scope.newClass={className:'',classNum:'',teacherId:-1};
 
     $scope.addClass = function(){
 
@@ -154,14 +185,14 @@ $scope.classlist=[
 
             $scope.isLoading = true;
 
-            $scope.newClass.adminRoleId =  $scope.roleSelected.value;
+            $scope.newClass.teacherId =  $scope.teacherSelecter.id;
 
             $http({
                 method: 'POST',
-                url: $scope.serviceUrl+'/adminMge',
+                url: $scope.serviceUrl,
                 params: {
-                    adminId: $scope.loginUser.adminId,
-                    adminRoleId: $scope.loginUser.adminRoleId,
+                    adminId: $rootScope.loginUser.adminId,
+                    adminRoleId: $rootScope.loginUser.adminRoleId,
                     adminEntity: $scope.newClass,
                     opType: 'add'
                 }
@@ -170,16 +201,15 @@ $scope.classlist=[
                     function(respon) {
                         if (respon&&respon.code == 0) {
                             Notify.alert(
-                                '<em class="fa fa-check"></em>新增用户成功!',
+                                '<em class="fa fa-check"></em>班级添加成功!',
                                 {status: 'info', pos:'bottom-center'}
                             );
                             $scope.newClass = '';
-                            $scope.roleSelected = '';
+                            $scope.teacherSelected = '';
 
-                            $scope.newClassForm.adminUserName.$dirty=false;
-                            $scope.newClassForm.adminName.$dirty=false;
-                            $scope.newClassForm.adminPwd.$dirty=false;
-                            $scope.newClassForm.inputeRole.$dirty=false;
+                            $scope.newClassForm.className.$dirty=false;
+                            $scope.newClassForm.classNum.$dirty=false;
+                            $scope.newClassForm.inputeTeacher.$dirty=false;
 
                             $scope.loadUserList();
                         }
@@ -192,39 +222,13 @@ $scope.classlist=[
                         alert(e);
                     });
         }else{
-            $scope.newClassForm.adminUserName.$dirty=true;
-            $scope.newClassForm.adminName.$dirty=true;
-            $scope.newClassForm.adminPwd.$dirty=true;
-            $scope.newClassForm.inputeRole.$dirty=true;
+            $scope.newClassForm.className.$dirty=true;
+            $scope.newClassForm.classNum.$dirty=true;
+            $scope.newClassForm.inputeTeacher.$dirty=true;
         }
     };
 
-    //删除
-    $scope.removePerson=function(cla) {
 
-        $scope.isLoading = true;
-
-        $http({
-            method: 'POST',
-            url: $scope.serviceUrl + '/adminMge',
-            params: {
-                adminId: $scope.loginUser.adminId,
-                adminRoleId: $scope.loginUser.adminRoleId,
-                adminEntity: cla,
-                opType: 'del'
-            }
-        })
-            .success(
-                function (respon) {
-                    if (respon.code == 0) {
-                        //$scope.loadUserList();
-                    }
-                })
-            .error(
-                function (e) {
-                    alert(e);
-                });
-    };
 
 
 
@@ -279,11 +283,38 @@ $scope.classlist=[
 
     //升级
     $scope.upgradeClass=function(cla){
-
+        alert("升级");
     };
 
     //毕业
     $scope.completeClass=function(cla){
+        alert("毕业");
+    };
 
+    //删除
+    $scope.removePerson=function(cla) {
+        alert("删除");
+        $scope.isLoading = true;
+
+        $http({
+            method: 'POST',
+            url: $scope.serviceUrl + '/adminMge',
+            params: {
+                adminId: $scope.loginUser.adminId,
+                adminRoleId: $scope.loginUser.adminRoleId,
+                adminEntity: cla,
+                opType: 'del'
+            }
+        })
+            .success(
+                function (respon) {
+                    if (respon.code == 0) {
+                        //$scope.loadUserList();
+                    }
+                })
+            .error(
+                function (e) {
+                    alert(e);
+                });
     };
 }]);

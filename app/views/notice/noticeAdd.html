@@ -1,0 +1,64 @@
+<h3>发送通知</h3>
+<div class="panel panel-default" ng-controller="NoticeAddController">
+    <div class="panel-body">
+        <form name="noticeForm" novalidate="" class="form-horizontal form-validate">
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">通知标题:</label>
+                    <div class="col-md-4">
+                        <input ng-model="notice.noticeSub" name="noticeSub" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">老师信息描述:</label>
+                    <div class="col-md-5">
+                        <textarea ng-model="notice.noticeText" name="noticeText" class="form-control" required></textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">通知类型:</label>
+                    <div class="col-md-3">
+                        <input ng-model="notice.noticeType" name="noticeType" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">发送人:</label>
+                    <div class="col-md-3">
+                        <p class="form-control-static" >{{notice.noticeName}}</p>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="last-child">
+                    <div class="col-md-4 col-md-offset-2">
+                        <button  class="btn btn-oval btn-info" ng-click="sendNotice()">发送</button>
+                        <button  class="btn btn-oval btn-primary" ng-click="saveNotice()">保存</button>
+                        <button  class="btn btn-oval btn-default" ng-click="goBack()">返回</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="loading" ng-show="isLoading">
+        <div class="loading-center">
+            <div class="loading-center-absolute">
+                <div class="ball-spin-fade-loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

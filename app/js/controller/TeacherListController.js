@@ -3,6 +3,10 @@
  */
 App.controller("TeacherListController",['$rootScope','$scope','$filter','$http','$cookieStore','$state',function($rootScope,$scope,$filter,$http,$cookieStore,$state){
 
+    $rootScope.checkUser();
+
+    $scope.serviceUrl = $rootScope.serviceUrl + '/teacherList';
+
     ///*  TestCode
     $scope.isLoading=false;
 
@@ -85,7 +89,12 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
 
     $scope.showTehDetail=function(teacherId){
         return $state.go('app.teacherEdit',{teacherId:teacherId});
-    }
+    };
+
+
+    $scope.delTeacher=function(){
+      alert('删除');
+    };
 
 
 

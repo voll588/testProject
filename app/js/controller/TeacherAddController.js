@@ -1,8 +1,17 @@
 /**
  * Created by lost on 2016/3/16.
  */
-App.controller('TeacherAddController',['$scope','$stateParams',function($scope,$stateParams){
-    $scope.teacherId=$stateParams.teacherId;
+App.controller('TeacherAddController',['$rootScope','$scope','$stateParams',function($rootScope,$scope){
+
+    $scope.checkUser();
+
+    $scope.saveTeh=function(){
+        alert('Save');
+    };
+
+    $scope.goBack=function(){
+        alert('Go Back');
+    };
 
     $scope.reset = function() {
         $scope.myImage        = '';

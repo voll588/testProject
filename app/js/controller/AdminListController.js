@@ -72,11 +72,8 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
 
     $scope.isLoading = true;
 
-    $scope.loginUser = $cookieStore.get('loginUser');
+    $rootScope.checkUser();
 
-    if(!$scope.loginUser) {
-        $state.go("login");
-    }
     $scope.editRowVisible = false;
     //显示编辑状态
     $scope.showEditRow=function(e){
@@ -131,8 +128,8 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
             method: 'POST',
             url: $scope.serviceUrl + '/adminMge',
             params: {
-                adminId: $scope.loginUser.adminId,
-                adminRoleId: $scope.loginUser.adminRoleId,
+                adminId: $rootScope.loginUser.adminId,
+                adminRoleId: $rootScope.loginUser.adminRoleId,
                 adminEntity: admin,
                 opType: 'update'
             }
@@ -171,8 +168,8 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
                 method: 'POST',
                 url: $scope.serviceUrl+'/adminMge',
                 params: {
-                    adminId: $scope.loginUser.adminId,
-                    adminRoleId: $scope.loginUser.adminRoleId,
+                    adminId: $rootScope.loginUser.adminId,
+                    adminRoleId: $rootScope.loginUser.adminRoleId,
                     adminEntity: $scope.newAdmin,
                     opType: 'add'
                 }
@@ -219,8 +216,8 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
             method: 'POST',
             url: $scope.serviceUrl + '/adminMge',
             params: {
-                adminId: $scope.loginUser.adminId,
-                adminRoleId: $scope.loginUser.adminRoleId,
+                adminId: $rootScope.loginUser.adminId,
+                adminRoleId: $rootScope.loginUser.adminRoleId,
                 adminEntity: admin,
                 opType: 'del'
             }
@@ -258,7 +255,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
             method: 'POST',
             url: $scope.serviceUrl+'/adminList',
             params: {
-                adminId: $scope.loginUser.adminId
+                adminId: $rootScope.loginUser.adminId
             }
         })
             .success(

@@ -28,7 +28,7 @@ var App = angular.module('angle', [
     'ui.utils'
   ]);
 
-App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '$cookies',function ($rootScope, $state, $stateParams, $window, $templateCache,$cookies) {
+App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '$cookieStore',function ($rootScope, $state, $stateParams, $window, $templateCache,$cookieStore) {
   // Set reference to access them from any scope
   $rootScope.$state = $state;
   $rootScope.$stateParams = $stateParams;
@@ -82,6 +82,14 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
         }
 
         return strMsg;
+    };
+
+    $rootScope.checkUser=function(){
+
+        $rootScope.loginUser = $cookieStore.get('loginUser');
+        if(!$rootScope.loginUser) {
+            $state.go("login");
+        }
     };
 
 
@@ -174,6 +182,16 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           title:'teacher add',
           templateUrl:helper.basepath('teacher/teacherAdd.html'),
           resolve: helper.resolveFor('ngImgCrop', 'filestyle')
+      })
+      .state('app.noticeList',{
+          url:'/notice',
+          title:'notice',
+          templateUrl:helper.basepath('notice/noticeList.html')
+      })
+      .state('app.noticeAdd',{
+          url:'/notice/add',
+          title:'notice add',
+          templateUrl:helper.basepath('notice/noticeAdd.html')
       })
 
     // 

@@ -5,7 +5,7 @@
     <!-- Chaning data-->
     <div class="panel panel-default">
         <div class="panel-body">
-            <form name="newClassForm" ng-submit="addClass()" novalidate="" class="form-inline">
+            <form name="newClassForm" novalidate="" class="form-inline form-validate">
                 <table class="table table-striped hover">
                     <thead>
                     <tr>
@@ -18,7 +18,7 @@
                             </div>
                         </th>
                         <th>
-                            <div class="form-group">
+                            <div class="form-group has-feedback">
                                 <label>
                                     <select name="inputeTeacher" ng-model="teacherSelected" ng-options="t.name for t in teacherSelecter" class="form-control" required>
                                     </select>
@@ -37,7 +37,7 @@
                         </th>
                         <th>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-labeled btn-success">
+                                <button ng-click="addClass()" class="btn btn-oval btn-success">
                               <span class="btn-label">
                                  <em class="fa fa-plus"></em>
                               </span>新增</button>
