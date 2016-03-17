@@ -7,7 +7,9 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
 
     $scope.serviceUrl = $rootScope.serviceUrl + '/teacherList';
 
-    ///*  TestCode
+    $scope.teacherList={};
+
+    /*  TestCode
     $scope.isLoading=false;
 
     var teachers=[
@@ -84,8 +86,34 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
     ];
 
     $scope.teacherList=teachers;
-    //*/
+    */
 
+
+    $scope.initList=function() {
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $scope.serviceUrl,
+            params: {
+                adminId: $rootScope.loginUser.adminId
+            }
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.teacherList = response.list;
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function (e) {
+                    alert(e);
+                });
+    };
+
+    $scope.isLoading=true;
+
+    $scope.initList();
 
     $scope.showTehDetail=function(teacherId){
         return $state.go('app.teacherEdit',{teacherId:teacherId});

@@ -3,7 +3,8 @@
  */
 App.controller("StudentListController",['$rootScope','$scope','$filter','$http','$cookieStore','$state',function($rootScope,$scope,$filter,$http,$cookieStore,$state){
 
-            ///*  TestCode
+    $scope.studentList={};
+            /*  TestCode
     $scope.isLoading=false;
     var students = [
         {
@@ -275,12 +276,88 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
     ];
     $scope.studentList = students;
 
-            //*/
+            */
+
+
+    $scope.isLoading = true;
+    $rootScope.checkUser();
+
+    $scope.serviceUrl=$rootScope.serviceUrl+'/studentList';
+
+    //学生信息Lis查询
+    $scope.initList=function() {
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $scope.serviceUrl,
+            params: {
+                adminId: $rootScope.loginUser.adminId
+            }
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.studentList = response.list;
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function (e) {
+                    alert(e);
+                });
+    };
+
+    //班级
+    $scope.classSatesSelecter =[];
+    $scope.initClassList=function(){
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $rootScope.serviceUrl+'/classList',
+            params: {
+                adminId: $rootScope.loginUser.adminId
+            }
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.classSatesSelecter = response.list;
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function (e) {
+                    alert('班级信息获取失败.');
+                });
+    };
+
+    $scope.initList();
 
 
     $scope.showStuDetail=function(stuNum){
         return $state.go('app.stuentDetail',{stuId:stuNum});
     }
+
+    //注销
+    $scope.cancel=function(stu){
+      alert('注销');
+    };
+
+    //暂停
+    $scope.pause=function(stu){
+        alert('暂停');
+    };
+
+    //
+    $scope.reduce=function(stu){
+        alert('降级');
+    };
+
+    //删除
+    $scope.del=function(stu){
+        alert('删除');
+    };
+
 
 
 

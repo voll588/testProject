@@ -8,6 +8,9 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
 
     $scope.serviceUrl = $rootScope.serviceUrl + '/classList';
 
+    $scope.classlist={};
+
+    /*
     $scope.classlist=[
     {
         classId: 1,
@@ -66,13 +69,37 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
         classTime: '2016-01-01'
     }
 ];
+*/
 
-    //基础数据初始化
-    $scope.init=function(){
-    //老师列表;
-        $scope.initTeachers();
-    //状态?
+
+
+
+    $scope.isLoading = false;
+
+    $scope.initList=function() {
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $scope.serviceUrl,
+            params: {
+                adminId: $rootScope.loginUser.adminId
+            }
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.classlist = response.list;
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function (e) {
+                    alert(e);
+                });
     };
+
+
+    $scope.initList();
 
     //获取老师列表
     $scope.initTeachers=function(){
@@ -277,8 +304,6 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
                     //$scope.roleSelected='';
                 });
     };
-
-    $scope.loadUserList();
 
 
     //升级

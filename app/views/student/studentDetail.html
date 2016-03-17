@@ -2,13 +2,13 @@
 <div class="panel panel-default" ng-controller="StuDetailController">
     <div class="panel-heading"><a>返回</a>&nbsp;详细信息</div>
     <div class="panel-body">
-        <form method="get" action="/" class="form-horizontal ng-pristine ng-valid">
+        <form class="form-horizontal ng-pristine ng-valid">
             <fieldset>
-                <legend>{{stuNum}}</legend>
+                <legend>{{stu.stuId}}</legend>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">姓名:</label>
                     <div class="col-sm-3">
-                        <input class="form-control" type="text">
+                        <input ng-model="stu.stuName" class="form-control" type="text">
                     </div>
                 </div>
             </fieldset>
@@ -51,7 +51,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">班主任:</label>
                     <div class="col-sm-3">
-                        <input name="classMaster" class="form-control" type="text">
+                        <input ng-model="stu.teacherName" name="classMaster" class="form-control" type="text">
                     </div>
                 </div>
             </fieldset>
@@ -59,7 +59,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">家长:</label>
                     <div class="col-sm-3">
-                        <input name="parents" class="form-control" type="text">
+                        <input ng-model="stu.userId" name="parents" class="form-control" type="text">
                     </div>
                 </div>
             </fieldset>
@@ -67,7 +67,7 @@
                 <div class="form-group">
                     <label class="col-lg-2 control-label">创建时间:</label>
                     <div class="col-lg-10">
-                        <p class="form-control-static">2016-1-2</p>
+                        <p class="form-control-static">{{stu.cTime}}</p>
                     </div>
                 </div>
             </fieldset>
@@ -87,7 +87,7 @@
                     <label class="col-sm-2 control-label">毕业时间:</label>
                     <div class="col-sm-3">
                         <p class="input-group">
-                            <input type="text" datepicker-popup="yyyy/MM/dd" data-inputmask="'mask': '9999/99/99'" ng-model="dt" is-open="opened" min-date="minDate" max-date="'9999-12-31'" datepicker-options="dateOptions" ng-required="true" close-text="Close"
+                            <input type="text" value="{{stu.endTime}}" datepicker-popup="yyyy/MM/dd" data-inputmask="'mask': '9999/99/99'" ng-model="dt" is-open="opened" min-date="minDate" max-date="'9999-12-31'" datepicker-options="dateOptions" ng-required="true" close-text="Close"
                                    class="form-control" />
                         <span class="input-group-btn">
                            <button type="button" ng-click="open($event)" class="btn btn-default">
@@ -152,7 +152,7 @@
                 <div class="form-group">
                     <label class="col-lg-2 control-label">联系方式:</label>
                     <div class="col-sm-4">
-                        <input name="classTel" class="form-control" type="text">
+                        <input ng-model="stu.phone" name="classTel" class="form-control" type="text">
                     </div>
                 </div>
             </fieldset>

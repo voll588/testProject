@@ -7,21 +7,24 @@ App.controller("DashBoardController",['$rootScope','$scope','$filter','$http','$
 
     //$cookieStore.put('loginUser', {adminId:1,adminRoleId:1,token:'a'});
     //$state.go('app.dashboard');
-    $scope.infos={};
-    return;
+    //$scope.infos={};
+    //return;
     //*/
+
+    $rootScope.checkUser();
 
     $scope.isLoading = true;
 
-    $scope.loginUser = $cookieStore.get('loginUser');
-    if(!$scope.loginUser) {
-        $state.go("Login");
-    }
+    //$scope.loginUser = $cookieStore.get('loginUser');
+    //if(!$scope.loginUser) {
+    //    $state.go("Login");
+    //}
 
     $http({
+        header: {token: $rootScope.loginUser.token},
         method: 'POST',
         url: $scope.serviceUrl + '/landingInfo',
-        params: { adminId: $scope.loginUser.adminId }
+        params: { adminId: $rootScope.loginUser.adminId }
         })
         .success(
             function (response) {

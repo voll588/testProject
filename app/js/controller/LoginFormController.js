@@ -11,9 +11,9 @@ App.controller('LoginFormController', ['$rootScope','$scope', '$http', '$state',
     //$rootScope.loginUser=[];
     ///*  TestCode
 
-    $cookieStore.put('loginUser', {adminId:1,adminRoleId:1,nickName:'Admin',token:'a'});
-    $state.go('app.dashboard');
-    return;
+    //$cookieStore.put('loginUser', {adminId:1,adminRoleId:1,nickName:'Admin',token:'a'});
+    //$state.go('app.dashboard');
+    //return;
     //*/
 
     // bind here all data from the form
@@ -43,7 +43,7 @@ App.controller('LoginFormController', ['$rootScope','$scope', '$http', '$state',
                         //var expireDate = new Date();
                         //expireDate.setDate(expireDate.getHours()+8);
                         //$cookieStore.put('loginCookie',$scope.loginUser,{'expires': expireDate});
-                        $cookieStore.put('loginUser', {adminId:response.adminId,nickName:response.nickName,adminRoleId:response.roleId,token:'a'});
+                        $cookieStore.put('loginUser', {adminId:response.adminId,nickName:response.nickName,adminRoleId:response.roleId,token:response.token});
                         $state.go('app.dashboard');
                     }
                     else {

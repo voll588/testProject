@@ -8,8 +8,8 @@
  =========================================================*/
 
 App.controller('AppController',
-    ['$rootScope', '$scope', '$state', '$translate', '$window', '$localStorage', '$timeout', 'toggleStateService', 'colors', 'browser', 'cfpLoadingBar',
-        function($rootScope, $scope, $state, $translate, $window, $localStorage, $timeout, toggle, colors, browser, cfpLoadingBar) {
+    ['$rootScope', '$scope', '$state', '$translate', '$window', '$localStorage', '$timeout', 'toggleStateService', 'colors', 'browser', 'cfpLoadingBar','$cookieStore','$http',
+        function($rootScope, $scope, $state, $translate, $window, $localStorage, $timeout, toggle, colors, browser, cfpLoadingBar,$cookieStore,$http) {
             "use strict";
 
             // Setup the layout mode
@@ -120,6 +120,31 @@ App.controller('AppController',
             // cancel click event easily
             $rootScope.cancel = function($event) {
                 $event.stopPropagation();
+            };
+
+
+            $scope.quit=function(){
+
+                $http({
+                    header: {token: $rootScope.loginUser.token},
+                    method: 'POST',
+                    url: $rootScope.serviceUrl+'/logout',
+                    params: {
+                        adminId: $rootScope.loginUser.adminId
+                    }
+                })
+                    .success(
+                        function (response) {
+                            if (response && response.code == 2) {
+                            }
+                        })
+                    .error(
+                        function (e) {
+                            alert(e);
+                        });
+
+                $cookieStore.remove('loginUser');
+                $state.go('login');
             };
 
         }]);

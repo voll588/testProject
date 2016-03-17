@@ -5,7 +5,7 @@
 App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$cookieStore','Notify','$state',function($rootScope,$scope,$filter,$http,$cookieStore,Notify,$state){
 
 
-    ///*  TestCode
+    /*  TestCode
     var adminTable = [{
         "adminId": 860,
         "adminUserName": "Superman",
@@ -66,7 +66,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
     ];
     $scope.adminList = adminTable;
     return;
-    //*/
+    */
 
 
 

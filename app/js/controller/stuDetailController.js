@@ -3,11 +3,44 @@
  */
 App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$cookieStore','$state','$stateParams',function($rootScope,$scope,$filter,$http,$cookieStore,$state,$stateParams){
 
-    ///*  TestCode
-    $scope.isLoading=false;
 
-    //*/
-    $scope.stuNum = $stateParams.stuId;
+    $rootScope.isLoading = true;
+
+    $rootScope.checkUser();
+
+    $scope.stuId = $stateParams.stuId;
+
+    $scope.stu={};
+
+    $scope.getStuDetail=function(){
+
+        if(!$scope.stuId){
+            alert('参数错误.');
+        }
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $scope.serviceUrl+'/studentList',
+            params: {
+                adminId: $rootScope.loginUser.adminId,
+                stuId:$scope.stuId
+            }
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.stu = response.list[0];
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function (e) {
+                    alert('数据获取失败.');
+                });
+    };
+
+
+    $scope.getStuDetail();
 
     $scope.today = function() {
         $scope.dt = new Date().toDateString();
