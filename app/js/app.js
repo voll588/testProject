@@ -36,10 +36,10 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
 
 
   //$rootScope.serviceUrl = "http://voll588.imwork.net:15296/NJService/api/admin";
-  //$rootScope.serviceUrl = "http://192.168.1.129:8080/NJService/api/admin";
-  $rootScope.serviceUrl = "http://voll588.imwork.net:32635/NJService/api/admin";
-    //$rootScope.serviceUrl = "http://172.16.2.107:8080/NJService/api/admin";
-
+  $rootScope.serviceUrl = "http://192.168.1.105:8080/NJService/api/admin";
+  //$rootScope.serviceUrl = "http://voll588.imwork.net:32635/NJService/api/admin";
+    // $rootScope.serviceUrl = "http://172.16.2.107:8080/NJService/api/admin";
+    $rootScope.imaUrl="http://192.168.1.105:8080/NJService/";
     // Scope Globals
     // ----------------------------------- 
     $rootScope.app = {

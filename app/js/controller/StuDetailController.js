@@ -39,6 +39,25 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                 });
     };
 
+    //暂停
+    $scope.pause=function(){
+        alert('暂停');
+    };
+
+    //返回
+    $scope.goBack=function(){
+        $state.go('app.studentList');
+    };
+
+    //降级
+    $scope.reduce=function(stu){
+        alert('降级');
+    };
+
+    $scope.cancel=function(){
+      alert('取消');
+    };
+
 
     $scope.getStuDetail();
 

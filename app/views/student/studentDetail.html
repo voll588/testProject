@@ -1,6 +1,6 @@
 <h3>学生信息编辑</h3>
 <div class="panel panel-default" ng-controller="StuDetailController">
-    <div class="panel-heading"><a>返回</a>&nbsp;详细信息</div>
+    <div class="panel-heading"><a ng-click="goBack()">返回</a>&nbsp;详细信息</div>
     <div class="panel-body">
         <form class="form-horizontal ng-pristine ng-valid">
             <fieldset>
@@ -167,11 +167,11 @@
             <fieldset>
                 <div class="last-child">
                     <div class="col-sm-5 col-sm-offset-2">
-                        <button type="submit" class="btn btn-oval btn-primary">保存</button>
-                        <button type="submit" class="btn btn-oval btn-info">暂停</button>
-                        <button type="submit" class="btn btn-oval btn-info">降级</button>
-                        <button type="submit" class="btn btn-oval btn-danger">注销</button>
-                        <button type="submit" class="btn btn-oval btn-default">返回</button>
+                        <button type="submit" class="btn btn-oval btn-primary" ng-click="save()">保存</button>
+                        <button type="submit" class="btn btn-oval btn-info" ng-click="pause()">暂停</button>
+                        <button type="submit" class="btn btn-oval btn-info" ng-click="reduce()">降级</button>
+                        <button type="submit" class="btn btn-oval btn-danger" ng-click="cancel()">注销</button>
+                        <button type="submit" class="btn btn-oval btn-default" ng-click="goBack()">返回</button>
                     </div>
                 </div>
             </fieldset>

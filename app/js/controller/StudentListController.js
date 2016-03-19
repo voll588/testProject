@@ -336,7 +336,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
 
     $scope.showStuDetail=function(stuNum){
         return $state.go('app.stuentDetail',{stuId:stuNum});
-    }
+    };
 
     //注销
     $scope.cancel=function(stu){
@@ -348,7 +348,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
         alert('暂停');
     };
 
-    //
+    //降级
     $scope.reduce=function(stu){
         alert('降级');
     };

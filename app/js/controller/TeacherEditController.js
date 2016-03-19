@@ -6,9 +6,6 @@ App.controller('TeacherEditController',['$rootScope','$scope','$stateParams',fun
     $rootScope.checkUser();
 
     $scope.teacherId=$stateParams.teacherId;
-    if(!$scope.teacherId){
-        alert('参数错误.');
-    }
 
     //服务地址
     $scope.serviceUrl = $rootScope.serviceUrl + '/teacherList';
@@ -18,6 +15,31 @@ App.controller('TeacherEditController',['$rootScope','$scope','$stateParams',fun
     //根据ID 获取 Teacher
     $scope.getTeacherByTeacherId=function(){
 
+        if(!$scope.teacherId){
+            alert('参数错误.');
+            return;
+        }
+
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $scope.serviceUrl,
+            params: {
+                adminId: $rootScope.loginUser.adminId,
+                stuId:$scope.stuId
+            }
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.stu = response.list[0];
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function (e) {
+                    alert('数据获取失败.');
+                });
     };
 
 
