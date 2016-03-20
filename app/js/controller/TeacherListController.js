@@ -9,8 +9,10 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
 
     $scope.teacherList={};
 
-    /*  TestCode
+    ///*  TestCode
     $scope.isLoading=false;
+
+    $rootScope.imaUrl ='';
 
     var teachers=[
         {
@@ -86,7 +88,7 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
     ];
 
     $scope.teacherList=teachers;
-    */
+    //*/
 
 
     $scope.initList=function() {

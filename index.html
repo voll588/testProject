@@ -8,11 +8,14 @@
    <meta name="keywords" content="app, responsive, angular, bootstrap, dashboard, admin">
    <title>{{app.description}}</title>
    <!-- Bootstrap styles-->
-   <link rel="stylesheet" href="app/css/bootstrap.css" data-ng-if="!app.layout.isRTL">
+   <link rel="stylesheet" href="app/css/bootstrap.css">
    <link rel="stylesheet" href="app/css/bootstrap-rtl.css" data-ng-if="app.layout.isRTL">
+   <link rel="stylesheet" href="app/css/bootstrap.min.css">
    <!-- Application styles-->
    <link rel="stylesheet" href="app/css/app.css" data-ng-if="!app.layout.isRTL">
    <link rel="stylesheet" href="app/css/app-rtl.css" data-ng-if="app.layout.isRTL">
+   <!---Customer style-->
+   <link rel="stylesheet" href="app/css/nj.css">
    <!-- Themes-->
    <link rel="stylesheet" ng-href="{{app.layout.theme}}" data-ng-if="app.layout.theme">
 </head>

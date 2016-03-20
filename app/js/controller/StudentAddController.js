@@ -5,10 +5,16 @@ App.controller("StudentAddController",['$rootScope','$scope','$filter','$http','
 
     ///*  TestCode
     $scope.isLoading=false;
-
     //*/
     $scope.stuNum = '';
 
+
+    //返回
+    $scope.goBack=function(){
+        $state.go('app.studentList');
+    };
+
+   //日期控件
     $scope.today = function() {
         $scope.dt = new Date().toDateString();
     };

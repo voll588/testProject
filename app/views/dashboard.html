@@ -1,72 +1,72 @@
-<div ng-controller="DashBoardController">
-   <h3>
+<h3>
    综合信息
    <small>{{ app.description }} !</small>
 </h3>
+<div ng-controller="DashBoardController">
    <!-- START widgets box-->
    <div class="row">
-   <div class="col-lg-3 col-sm-6">
-      <!-- START widget-->
-      <div class="panel widget bg-primary">
+      <div class="col-lg-3 col-sm-6 col-sm-12">
+         <!-- START widget-->
+         <div class="panel widget bg-primary">
+            <div class="row row-table">
+               <div class="col-xs-4 text-center bg-primary-dark pv-lg">
+                  <em class="icon-cloud-upload fa-3x"></em>
+               </div>
+               <div class="col-xs-8 pv-lg">
+                  <div class="h2 mt0">{{infos.stuCount}}</div>
+                  <div class="text-uppercase">学生总数</div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 col-sm-12">
+         <!-- START widget-->
+         <div class="panel widget bg-purple">
          <div class="row row-table">
-            <div class="col-xs-4 text-center bg-primary-dark pv-lg">
-               <em class="icon-cloud-upload fa-3x"></em>
+            <div class="col-xs-4 text-center bg-purple-dark pv-lg">
+               <em class="icon-globe fa-3x"></em>
             </div>
             <div class="col-xs-8 pv-lg">
-               <div class="h2 mt0">{{infos.stuCount}}</div>
-               <div class="text-uppercase">学生总数</div>
+               <div class="h2 mt0">{{infos.parentCount}}</div>
+               <div class="text-uppercase">家长总数</div>
+            </div>
+         </div>
+      </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-12">
+         <!-- START widget-->
+         <div class="panel widget bg-green">
+            <div class="row row-table">
+               <div class="col-xs-4 text-center bg-green-dark pv-lg">
+                  <em class="icon-bubbles fa-3x"></em>
+               </div>
+               <div class="col-xs-8 pv-lg">
+                  <div class="h2 mt0">{{infos.classCount}}</div>
+                  <div class="text-uppercase">班级总数</div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-12">
+         <!-- START widget-->
+         <div class="panel widget bg-green">
+            <div class="row row-table">
+               <div class="col-xs-4 text-center bg-green-dark pv-lg">
+                  <em class="icon-bubbles fa-3x"></em>
+               </div>
+               <div class="col-xs-8 pv-lg">
+                  <div class="h2 mt0">{{infos.deviceCount}}</div>
+                  <div class="text-uppercase">设备总数</div>
+               </div>
             </div>
          </div>
       </div>
    </div>
-   <div class="col-lg-3 col-sm-6">
-<!-- START widget-->
-<div class="panel widget bg-purple">
-   <div class="row row-table">
-      <div class="col-xs-4 text-center bg-purple-dark pv-lg">
-         <em class="icon-globe fa-3x"></em>
-      </div>
-      <div class="col-xs-8 pv-lg">
-         <div class="h2 mt0">{{infos.parentCount}}</div>
-         <div class="text-uppercase">家长总数</div>
-      </div>
-   </div>
-</div>
-</div>
-<div class="col-lg-3 col-md-6 col-sm-12">
-   <!-- START widget-->
-   <div class="panel widget bg-green">
-      <div class="row row-table">
-         <div class="col-xs-4 text-center bg-green-dark pv-lg">
-            <em class="icon-bubbles fa-3x"></em>
-         </div>
-         <div class="col-xs-8 pv-lg">
-            <div class="h2 mt0">{{infos.classCount}}</div>
-            <div class="text-uppercase">班级总数</div>
-         </div>
-      </div>
-   </div>
-</div>
-<div class="col-lg-3 col-md-6 col-sm-12">
-   <!-- START widget-->
-   <div class="panel widget bg-green">
-      <div class="row row-table">
-         <div class="col-xs-4 text-center bg-green-dark pv-lg">
-            <em class="icon-bubbles fa-3x"></em>
-         </div>
-         <div class="col-xs-8 pv-lg">
-            <div class="h2 mt0">{{infos.deviceCount}}</div>
-            <div class="text-uppercase">设备总数</div>
-         </div>
-      </div>
-   </div>
-</div>
-</div>
    <!-- END date widget    -->
 
    <!-- START widgets box-->
    <div class="row">
-   <div class="panel panel-default">
+      <div class="panel panel-default">
       <div class="panel-heading">系统信息</div>
       <div class="panel-body">
          <button type="button" class="btn btn-labeled btn-info">
@@ -99,7 +99,7 @@
          </button>
       </div>
    </div>
-</div>
+   </div>
 
    <div class="loading" ng-show="isLoading">
       <div class="loading-center">

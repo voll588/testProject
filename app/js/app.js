@@ -141,14 +141,14 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
     .state('app.adminList',{
         url:'/admin',
         title:"Admin",
-        templateUrl:helper.basepath('user/adminList.html'),
+        templateUrl:helper.basepath('admin/adminList.html'),
         resolve: helper.resolveFor('xeditable','loaders.css')
       })
       .state('app.studentList',{
           url:'/student',
           title:'Student',
           templateUrl:helper.basepath('student/studentList.html'),
-          resolve: helper.resolveFor('xeditable','loaders.css')
+          resolve: helper.resolveFor('xeditable','ngDialog','loaders.css','ui.select')
       })
       .state('app.stuentDetail',{
           url:'/student/detail/{stuId}',
@@ -304,10 +304,10 @@ App
       /*{name: 'ngDialog',                  files: ['vendor/ngDialog/js/ngDialog.min.js',
                                                   'vendor/ngDialog/css/ngDialog.min.css',
                                                   'vendor/ngDialog/css/ngDialog-theme-default.min.css'] }*/
-        {name: 'xeditable', files: ['vendor/angular-xeditable/dist/js/xeditable.js',
-                                 'vendor/angular-xeditable/dist/css/xeditable.css']},
-        {name: 'ngImgCrop',files: ['vendor/ng-img-crop/compile/unminified/ng-img-crop.js',
-                                'vendor/ng-img-crop/compile/unminified/ng-img-crop.css']}
+        {name: 'xeditable', files: ['vendor/angular-xeditable/dist/js/xeditable.js', 'vendor/angular-xeditable/dist/css/xeditable.css']},
+        {name: 'ngImgCrop',files: ['vendor/ng-img-crop/compile/unminified/ng-img-crop.js','vendor/ng-img-crop/compile/unminified/ng-img-crop.css']},
+        {name: 'ngDialog', files: ['vendor/ngDialog/js/ngDialog.min.js', 'vendor/ngDialog/css/ngDialog.min.css','vendor/ngDialog/css/ngDialog-theme-default.min.css'] },
+        {name: 'ui.select',files: ['vendor/angular-ui-select/dist/select.js','vendor/angular-ui-select/dist/select.css']}
     ]
 
 
