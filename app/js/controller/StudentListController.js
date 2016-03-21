@@ -4,7 +4,7 @@
 App.controller("StudentListController",['$rootScope','$scope','$filter','$http','$cookieStore','$state','ngDialog',function($rootScope,$scope,$filter,$http,$cookieStore,$state,ngDialog){
 
     $scope.studentList={};
-            ///* TestCode
+            /* TestCode
 
     var students = [
         {
@@ -295,7 +295,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
     ];
     $scope.studentList = students;
     //return;
-            //*/
+            */
 
     $rootScope.checkUser();
 
@@ -326,8 +326,9 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
                 });
     };
 
+
     //班级
-    $scope.classSatesSelecter =[];
+    $scope.allClass =[];
     $scope.classList=function(){
         $scope.isLoading = true;
         $http({
@@ -341,7 +342,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
             .success(
                 function (response) {
                     if (response && response.code == 0) {
-                        $scope.classSatesSelecter = response.list;
+                        $scope.allClass = response.list;
                         $scope.isLoading = false;
                     }
                 })
@@ -351,6 +352,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
                 });
     };
 
+
     //学生状态
     $scope.stateList=[{name:'已注销',value:0},{name:'正常',value:1},{name:'休学',value:2},{name:'毕业',value:3}];
     $scope.showState=function(state){
@@ -359,21 +361,70 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
     };
 
 
-    $scope.initList();
+
 
 
     $scope.showStuDetail=function(stuNum){
-        return $state.go('app.stuentDetail',{stuId:stuNum});
+        return $state.go('app.stuentDetail',{stuId:stuNum,opType:'Edit'});
     };
 
     //注销
     $scope.cancel=function(stu){
-      alert('注销');
+        if(!stu){
+            alert('数据错误');
+            return;
+        }
+
+        $http({
+            //headers: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $rootScope.serviceUrl+'/studentMge',
+            params: {
+                adminId: $rootScope.loginUser.adminId,
+                studentEntity:stu,
+                opType:'del'
+            }
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.initList();
+                    }
+                })
+            .error(
+                function (e) {
+                    alert('操作失败..');
+                });
     };
 
     //休学
     $scope.pause=function(stu){
-        alert('休学');
+        //alert('休学');
+        if(!stu){
+            alert('数据错误');
+            return;
+        }
+
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $rootScope.serviceUrl+'/studentMge',
+            params: {
+                adminId: $rootScope.loginUser.adminId,
+                studentEntity:stu,
+                opType:'stop'
+            }
+        })
+            .success(
+                function (code) {
+                    if (code && code == 0) {
+                        $scope.initList();
+                    }
+                })
+            .error(
+                function (e) {
+                    alert('操作失败..');
+                });
     };
 
     //恢复
@@ -382,10 +433,16 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
     };
 
     //降级
-    $scope.reduce=function(stu){
+    $scope.reduce=function(stu,allClass){
+        if(!allClass){
+            alert('班级信息错误.');
+            return;
+        }
+
         ngDialog.open({
             template:'studentReduce',
             controller:['$rootScope','$scope','$http','$filter',function($rootScope,$scope,$http,$filter){
+                /*
                 var tempClassTemp=[
                     {classId: 1,className: '大一班',teacherId: 1,classNum: 20,classState: 1,classTime: '2016-01-01'},
                     {classId: 2,className: '大二班',teacherId: 1,classNum: 20,classState: 1,classTime: '2016-01-01'},
@@ -396,11 +453,14 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
                     {classId: 7,className: '大七班',teacherId: 1,classNum: 20,classState: 1,classTime: '2016-01-01'}
                 ];
                 $scope.classList=tempClassTemp;
+                */
+                $scope.classList = allClass;
                 $scope.class = [];
                 $scope.class.selected = $filter('filter')($scope.classList,stu.classId,'classId')[0];
 
                 $scope.saveReduce=function(){
-                    alert($scope.class.selected.classId);
+                    stu.classId = $scope.class.selected.classId;
+                    alert(stu.className);
                 };
             }]
         });
@@ -408,26 +468,29 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
 
     //添加学生
     $scope.addStud=function(){
-        $state.go('app.studentAdd');
+        return $state.go('app.stuentDetail',{opType:'Add'});
     };
 
     $scope.searchContent='';
     //查询
     $scope.searchStu=function(){
-        alert($scope.searchContent);
-        return;
-        if(!$scope.searchContent){
-            return;
+        //alert($scope.searchContent);
+        //return;
+        var params = '';
+
+        if($scope.searchContent){
+            params = {adminId: $rootScope.loginUser.adminId, stuId:$scope.searchContent};
         }
+        else{
+            params = {adminId: $rootScope.loginUser.adminId};
+        }
+
         $scope.isLoading = true;
         $http({
             header: {token: $rootScope.loginUser.token},
             method: 'POST',
-            url: $scope.serviceUrl+'/studentList',
-            params: {
-                adminId: $rootScope.loginUser.adminId,
-                stuId:$scope.searchContent
-            }
+            url: $scope.serviceUrl,
+            params:params
         })
             .success(
                 function (response) {
@@ -517,11 +580,33 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
 
     //生成邀请码
     $scope.inviteCode= function (stuId) {
-        //alert(stuId);
         ngDialog.open({
             template:'studentInviteCode',
             controller:['$rootScope','$scope','$http',function($rootScope,$scope,$http){
-                $scope.stuInviteCode = stuId;
+                if(!stuId){
+                    $scope.stuInviteCode = '参数错误!';
+                }
+                $http({
+                    header: {token: $rootScope.loginUser.token},
+                    method: 'POST',
+                    url: $rootScope.serviceUrl+'/inkey',
+                    params: {
+                        adminId: $rootScope.loginUser.adminId,
+                        studentId:stuId
+                    }
+                })
+                    .success(
+                        function (response) {
+                            if (response && response.code == 0) {
+                                $scope.stuInviteCode = response.inkey;
+                            }
+                        })
+                    .error(
+                        function (e) {
+                            $scope.stuInviteCode='邀请码生成失败.';
+                        });
+
+
             }]
             //className:'ngdialog-theme-default'
         });
@@ -529,6 +614,13 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
     };
 
 
+
+
+
+
+
+    $scope.initList();
+    $scope.classList();
 
 
 

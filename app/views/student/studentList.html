@@ -31,8 +31,8 @@
                         <td>{{stu.className}}</td>
                         <td>{{stu.teacherName}}</td>
                         <!--{{ stu.stuParent }}-->
-                        <td><button type="button" ng-show="stu.stuState>0" class="btn btn-default" ng-click="parents(stu.stuId)">查看</button>
-                            <button type="button" ng-show="stu.stuState==0" class="btn btn-danger" ng-click="parentsAdd(stu.stuId)">添加</button></td>
+                        <td><button type="button" ng-show="true" class="btn btn-default" ng-click="parents(stu.stuId)">查看</button>
+                            <button type="button" ng-show="false" class="btn btn-danger" ng-click="parentsAdd(stu.stuId)">添加</button></td>
                         <td>{{ stu.cTime}}</td>
                         <!--<td>{{ stu.endTime }}</td>-->
                         <td><button type="button" class="btn btn-default" ng-click="inviteCode(stu.stuId)">生成</button></td>
@@ -46,7 +46,7 @@
                                 <button type="button" ng-show="stu.stuState==2" ng-click="recover(stu)" title="恢复" class="btn btn-sm btn-info">
                                     <em class="fa  icon-user-following"></em>
                                 </button>
-                                <button type="button" ng-disabled="stu.stuState!=1" ng-click="reduce(stu)" title="降级" class="btn btn-sm btn-info">
+                                <button type="button" ng-disabled="stu.stuState!=1" ng-click="reduce(stu,allClass)" title="降级" class="btn btn-sm btn-info">
                                     <em class="fa fa-long-arrow-down"></em>
                                 </button>
                                 <button type="button" ng-disabled="stu.stuState==0 || stu.stuState==3" ng-click="cancel(stu)" title="注销" class="btn btn-sm btn-danger">

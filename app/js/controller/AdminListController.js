@@ -207,6 +207,11 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
         }
     };
 
+    //新增
+    $scope.addStud=function(){
+        $state.go('app.adminAdd');
+    };
+
     //删除
     $scope.removePerson=function(admin) {
 

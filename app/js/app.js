@@ -36,10 +36,10 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
 
 
   //$rootScope.serviceUrl = "http://voll588.imwork.net:15296/NJService/api/admin";
-  $rootScope.serviceUrl = "http://192.168.1.105:8080/NJService/api/admin";
-  //$rootScope.serviceUrl = "http://voll588.imwork.net:32635/NJService/api/admin";
+  //$rootScope.serviceUrl = "http://192.168.1.105:8080/NJService/api/admin";
+  $rootScope.serviceUrl = "http://voll588.imwork.net:32635/NJService/api/admin";
     // $rootScope.serviceUrl = "http://172.16.2.107:8080/NJService/api/admin";
-    $rootScope.imaUrl="http://192.168.1.105:8080/NJService/";
+    $rootScope.imaUrl="http://voll588.imwork.net:32635/NJService/";
     // Scope Globals
     // ----------------------------------- 
     $rootScope.app = {
@@ -144,6 +144,12 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         templateUrl:helper.basepath('admin/adminList.html'),
         resolve: helper.resolveFor('xeditable','loaders.css')
       })
+      .state('app.adminAdd',{
+          url:'/admin',
+          title:"Admin",
+          templateUrl:helper.basepath('admin/adminAdd.html'),
+          resolve: helper.resolveFor('loaders.css')
+      })
       .state('app.studentList',{
           url:'/student',
           title:'Student',
@@ -151,15 +157,10 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           resolve: helper.resolveFor('xeditable','ngDialog','loaders.css','ui.select')
       })
       .state('app.stuentDetail',{
-          url:'/student/detail/{stuId}',
+          url:'/student/detail/opType/{opType}/stu/{stuId}',
           title:'student.detail',
           templateUrl:helper.basepath('student/studentDetail.html'),
-          resolve: helper.resolveFor('loaders.css')
-      })
-      .state('app.studentAdd',{
-          url:'/student/add',
-          title:'student.add',
-          templateUrl:helper.basepath('student/studentAdd.html')
+          resolve: helper.resolveFor('loaders.css','ui.select')
       })
       .state('app.classList',{
           url:'/class',
@@ -173,7 +174,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           templateUrl:helper.basepath('teacher/teacherList.html')
       })
       .state('app.teacherEdit',{
-          url:'/teacher/edit/{teacherId}',
+          url:'/teacher/edit/{teacherId}/',
           title:'teacher detail',
           templateUrl:helper.basepath('teacher/teacherEdit.html'),
           resolve: helper.resolveFor('ngImgCrop', 'filestyle')

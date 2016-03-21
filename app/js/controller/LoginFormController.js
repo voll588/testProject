@@ -46,8 +46,8 @@ App.controller('LoginFormController', ['$rootScope','$scope', '$http', '$state',
                 })
                 .error(function (x) {
                     $scope.authMsg = '服务请求失败,请稍后再试.';
-                    $cookieStore.put('loginUser', {adminId:'MQ==',nickName:'Admin',adminRoleId:1,token:'HSUEBA3-3ERWDVJXA-RWVDXX-R3CDS'});
-                    $state.go('app.dashboard');
+                    //$cookieStore.put('loginUser', {adminId:'MQ==',nickName:'Admin',adminRoleId:1,token:'HSUEBA3-3ERWDVJXA-RWVDXX-R3CDS'});
+                    //$state.go('app.dashboard');
                 });
         }
         else {
