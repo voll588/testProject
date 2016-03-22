@@ -9,7 +9,7 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
 
     $scope.teacherList={};
 
-    ///*  TestCode
+    /*  TestCode
     $scope.isLoading=false;
 
     $rootScope.imaUrl ='';
@@ -88,7 +88,7 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
     ];
 
     $scope.teacherList=teachers;
-    //*/
+    */
 
 
     $scope.initList=function() {
@@ -125,6 +125,11 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
     $scope.delTeacher=function(){
       alert('删除');
     };
+
+    $scope.addStud=function(){
+        $state.go('app.teacherAdd');
+    }
+
 
 
 

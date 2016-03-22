@@ -12,7 +12,6 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
 
     $scope.isAdd = false;
 
-    $scope.stu={};
 
     if(!$scope.optType || ( $scope.optType=='Edit'&&!$scope.stuId )){
         alert('参数错误.');
@@ -38,7 +37,12 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                 function (response) {
                     if (response && response.code == 0) {
                         $scope.stu = response.list[0];
-                        $scope.isLoading = false;
+
+                        //学生状态
+                        $scope.state=[];
+                        $scope.stateList=[{name:'已注销',value:0},{name:'正常',value:1},{name:'休学',value:2},{name:'毕业',value:3}];
+                        $scope.state.selected = $filter('filter')($scope.stateList,$scope.stu.stuState,'value')[0];
+                        $rootScope.isLoading = false;
                     }
                 })
             .error(
@@ -72,28 +76,36 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
 
     //保存
     $scope.saveStu=function(){
-        $scope.stu.classId = $scope.class.selected.classId;
+        if($scope.addForm.$valid){
 
-        $http({
-            //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','token': $rootScope.loginUser.token},
-            method: 'POST',
-            url: $rootScope.serviceUrl+'/studentMge',
-            params: {
-                adminId: $rootScope.loginUser.adminId,
-                studentEntity: $scope.stu,
-                opType:'add'
-            }
-        })
-            .success(
-                function (response) {
-                    if (response && response.code == 0) {
-                        $scope.goBack();
-                    }
-                })
-            .error(
-                function (e) {
-                    alert('操作失败..');
-                });
+            $scope.stu.classId = $scope.class.selected.classId;
+            $scope.stu.stuState = $scope.state.selected.value;
+
+            $http({
+                //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','token': $rootScope.loginUser.token},
+                method: 'POST',
+                url: $rootScope.serviceUrl+'/studentMge',
+                params: {
+                    adminId: $rootScope.loginUser.adminId,
+                    studentEntity: $scope.stu,
+                    opType: $scope.isAdd ? 'add':'update'
+                }
+            })
+                .success(
+                    function (response) {
+                        if (response && response.code == 0) {
+                            $scope.goBack();
+                        }
+                    })
+                .error(
+                    function (e) {
+                        alert('操作失败..');
+                    });
+        }
+        else{
+            $scope.addFrom.stuName.$dirty=true;
+            $scope.addFrom.phone.$dirty=true;
+        }
     };
 
     //班级
@@ -137,16 +149,13 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                 });
     };
 
+
+    $scope.stu={};
     //加载班级
     $scope.getClassList();
     //加载学生信息
     if(!$scope.isAdd){
         $scope.getStuDetail();
-
-        //学生状态
-        $scope.state=[];
-        $scope.stateList=[{name:'已注销',value:0},{name:'正常',value:1},{name:'休学',value:2},{name:'毕业',value:3}];
-        $scope.state.selected = $filter('filter')($scope.stateList,$scope.stu.stuState,'value')[0];
     }
 
 

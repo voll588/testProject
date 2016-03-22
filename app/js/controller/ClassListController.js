@@ -99,7 +99,7 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
     };
 
 
-    $scope.initList();
+
 
     //获取老师列表
     $scope.initTeachers=function(){
@@ -113,7 +113,7 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
             .success(
                 function(response){
                     if(response && response.code==0){
-                        $scope.teacherSelecter=response.teacherList;
+                        $scope.teacherSelecter=response.list;
                         $scope.isLoading = false;
                     }
                 })
@@ -123,186 +123,29 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
                 });
     };
 
-    $scope.teacherSelecter=[{id:1,"name":"王老师"},{id:2,"name":"李老师"},{id:3,"name":"张老师"},{id:4,"name":"赵老师"}];
+
     $scope.teacherSelected='';
 
-    $scope.classSatesSelecter=[{id:1,"name":"在读"},{id:2,"name":"毕业"}];
+    $scope.classSatesSelecter=[{id:1,"name":"正常"},{id:0,"name":"删除"}];
     $scope.classStatesSelected='';
 
 
     $scope.isLoading = false;
 
-    //显示编辑状态
-    $scope.showEditRow=function(e){
-        e.$show();
-    };
-    //取消编辑状态
-    $scope.cancelEditRow=function(e){
-        e.$cancel();
-    };
 
-    //check checkClassName
-    $scope.checkClassName=function(data){
-        if(!data) {
-            return "班级名称不能为空";
-        }
-    };
-
-    $scope.checkClassNum=function(data){
-        if(!data) {
-            return "输入格式不正确";
-        }
-    };
-
-
-    //check checkTeacher
-    $scope.checkTeacher=function(data){
-        if(!data){
-            return "请选择老师";
-        }
-    };
-
-    //check checkTeacher
-    $scope.classStates=function(data){
-        if(!data){
-            return "请选择状态";
-        }
-    };
-
-    //保存编辑
-    $scope.saveEditRow=function(cla) {
-
-        $scope.isLoading = true;
-
-        $http({
-            method: 'POST',
-            url: $scope.serviceUrl,
-            params: {
-                adminId: $rootScope.loginUser.adminId,
-                adminRoleId: $rootScope.loginUser.adminRoleId,
-                adminEntity: cla,
-                opType: 'update'
-            }
-        })
-            .success(
-                function (respon) {
-                    if (respon.code == 0) {
-                        Notify.alert(
-                            '<em class="fa fa-check"></em>班级信息更新成功!',
-                            {status: 'info', pos:'bottom-center'}
-                        );
-                        //$scope.loadUserList();
-                    }
-                })
-            .error(
-                function (e) {
-                    alert(e);
-                });
-    };
-
-
-
-
-    //新增
-    $scope.newClass={className:'',classNum:'',teacherId:-1};
-
-    $scope.addClass = function(){
-
-        if($scope.newClassForm.$valid){
-
-            $scope.isLoading = true;
-
-            $scope.newClass.teacherId =  $scope.teacherSelecter.id;
-
-            $http({
-                method: 'POST',
-                url: $scope.serviceUrl,
-                params: {
-                    adminId: $rootScope.loginUser.adminId,
-                    adminRoleId: $rootScope.loginUser.adminRoleId,
-                    adminEntity: $scope.newClass,
-                    opType: 'add'
-                }
-            })
-                .success(
-                    function(respon) {
-                        if (respon&&respon.code == 0) {
-                            Notify.alert(
-                                '<em class="fa fa-check"></em>班级添加成功!',
-                                {status: 'info', pos:'bottom-center'}
-                            );
-                            $scope.newClass = '';
-                            $scope.teacherSelected = '';
-
-                            $scope.newClassForm.className.$dirty=false;
-                            $scope.newClassForm.classNum.$dirty=false;
-                            $scope.newClassForm.inputeTeacher.$dirty=false;
-
-                            $scope.loadUserList();
-                        }
-                        else{
-                            alert(code);
-                        }
-                    })
-                .error(
-                    function(e){
-                        alert(e);
-                    });
-        }else{
-            $scope.newClassForm.className.$dirty=true;
-            $scope.newClassForm.classNum.$dirty=true;
-            $scope.newClassForm.inputeTeacher.$dirty=true;
-        }
-    };
-
-
-
-
-
-
-
-    //filter 格式化角色
+    //filter 格式化老师名称
 
     $scope.showTeacherName= function(cla){
-        if(cla.teacherId)
-        {
-            var selected = $filter('filter')($scope.teacherSelecter,cla.teacherId,'id');
-            return selected.length ? selected[0].name:'';
-        }
+        var selected = $filter('filter')($scope.teacherSelecter,{teacherId:cla.teacherId});
+        return selected.length ? selected[0].teacherName:'';
+
     };
 
-    //filter 格式化角色
+    //filter 格式化状态
 
     $scope.showStateName= function(cla){
-        if(cla.classState)
-        {
-            var selected = $filter('filter')($scope.classSatesSelecter,cla.classState,'id');
-            return selected.length ? selected[0].name:'';
-        }
-    };
-
-    //加载全部user
-    $scope.loadUserList=function(){
-        $http({
-            method: 'POST',
-            url: $scope.serviceUrl+'/adminList',
-            params: {
-                adminId: $scope.loginUser.adminId
-            }
-        })
-            .success(
-                function(response){
-                    if(response && response.code==0){
-                        $scope.adminList=response.adminList;
-                        $scope.isLoading = false;
-                    }
-                })
-            .error(
-                function(e){
-                    alert(e);
-                    //$scope.newClass='';
-                    //$scope.roleSelected='';
-                });
+        var selected = $filter('filter')($scope.classSatesSelecter,cla.classState,'id');
+        return selected.length ? selected[0].name:'';
     };
 
 
@@ -342,4 +185,19 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
                     alert(e);
                 });
     };
+
+
+
+    //新增
+    $scope.addClass=function(){
+        $state.go('app.classAdd');
+    };
+
+    $scope.editCal=function(calName){
+        $state.go('app.classEdit',{claName:calName});
+    };
+
+
+    $scope.initTeachers();
+    $scope.initList();
 }]);

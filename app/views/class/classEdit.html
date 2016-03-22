@@ -1,34 +1,41 @@
-<h3>学生信息编辑</h3>
-<div class="panel panel-default" ng-controller="StuDetailController">
+<h3>班級信息修改</h3>
+<div class="panel panel-default" ng-controller="ClassEditController">
     <div class="panel-heading"><a ng-click="goBack()">返回</a>&nbsp;详细信息</div>
     <div class="panel-body">
-        <form class="form-horizontal ng-pristine ng-valid" name="addForm">
+        <form class="form-horizontal ng-pristine ng-valid" name="addFrom">
             <fieldset>
-                <legend>{{stu.stuId}}</legend>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">姓名:</label>
+                    <label class="col-sm-2 control-label">班级名称:</label>
                     <div class="col-sm-3">
-                        <input name="stuName" ng-model="stu.stuName" class="form-control" type="text" required>
+                        <input name="className" ng-model="class.className" class="form-control" type="text" required>
                     </div>
                 </div>
             </fieldset>
             <fieldset>
                 <div class="form-group">
-                    <label for="input-id-1" class="col-sm-2 control-label">班级:</label>
-                    <div class="col-sm-3">
-                        <ui-select ng-model="class.selected" theme="bootstrap" class="text-left">
-                            <ui-select-match placeholder="选择班级">{{$select.selected.className }}</ui-select-match>
-                            <ui-select-choices repeat="class in classList | filter: $select.search">
-                                <span ng-bind-html="class.className | highlight: $select.search"></span>
+                    <label class="col-lg-2 control-label">带班老师:</label>
+                    <div class="col-lg-3">
+                        <ui-select ng-model="teacher.selected" theme="bootstrap" class="text-left">
+                            <ui-select-match placeholder="选择老师">{{$select.selected.teacherName }}</ui-select-match>
+                            <ui-select-choices repeat="teacher in teacherList | filter: $select.search">
+                                <span ng-bind-html="teacher.teacherName | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
                     </div>
                 </div>
             </fieldset>
-            <fieldset ng-show="!isAdd">
+            <fieldset>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">状态:</label>
-                    <div class="col-sm-4">
+                    <label class="col-lg-2 control-label">学生人数:</label>
+                    <div class="col-sm-3">
+                        <input name="classNum" ng-model="class.classNum" class="form-control" type="number" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">班级状态:</label>
+                    <div class="col-lg-3">
                         <ui-select ng-model="state.selected" theme="bootstrap" class="text-left">
                             <ui-select-match placeholder="选择状态">{{$select.selected.name }}</ui-select-match>
                             <ui-select-choices repeat="state in stateList | filter: $select.search">
@@ -40,16 +47,16 @@
             </fieldset>
             <fieldset>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">联系方式:</label>
-                    <div class="col-sm-4">
-                        <input name="phone" ng-model="stu.phone" name="classTel" class="form-control" type="text" maxlength="15" required>
+                    <label class="col-lg-2 control-label">班级描述:</label>
+                    <div class="col-sm-6">
+                        <textarea name="classDesc" ng-model="class.classDesc" class="form-control" row="3"></textarea>
                     </div>
                 </div>
             </fieldset>
             <fieldset>
                 <div class="last-child">
                     <div class="col-sm-5 col-sm-offset-2">
-                            <button class="btn btn-oval btn-primary" ng-click="saveStu()">保存</button>
+                        <button class="btn btn-oval btn-primary" ng-click="saveClass()">保存</button>
                         <button class="btn btn-oval btn-default" ng-click="goBack()">返回</button>
                     </div>
                 </div>

@@ -1,49 +1,49 @@
-<h3>添加管理员</h3>
-<div class="panel panel-default" ng-controller="AdminAddController">
+<h3>添加班級</h3>
+<div class="panel panel-default" ng-controller="ClassAddController">
     <div class="panel-heading"><a ng-click="goBack()">返回</a>&nbsp;详细信息</div>
     <div class="panel-body">
         <form class="form-horizontal ng-pristine ng-valid" name="addFrom">
             <fieldset>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">登录账号:</label>
+                    <label class="col-sm-2 control-label">班级名称:</label>
                     <div class="col-sm-3">
-                        <input name="adminUserName" ng-model="admin.adminUserName" class="form-control" type="text" required>
+                        <input name="className" ng-model="class.className" class="form-control" type="text" required>
                     </div>
                 </div>
             </fieldset>
             <fieldset>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">姓名:</label>
-                    <div class="col-sm-3">
-                        <input name="adminName" ng-model="admin.adminName" class="form-control" type="text" required>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">密码:</label>
-                    <div class="col-sm-3">
-                        <input name="adminPassword" ng-model="admin.adminPassword" class="form-control" type="text" required>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">角色:</label>
+                    <label class="col-lg-2 control-label">带班老师:</label>
                     <div class="col-lg-3">
-                        <ui-select ng-model="role.selected" theme="bootstrap" class="text-left">
-                            <ui-select-match placeholder="选择角色">{{$select.selected.name }}</ui-select-match>
-                            <ui-select-choices repeat="role in roleList | filter: $select.search">
-                                <span ng-bind-html="role.name | highlight: $select.search"></span>
+                        <ui-select ng-model="teacher.selected" theme="bootstrap" class="text-left">
+                            <ui-select-match placeholder="选择老师">{{$select.selected.teacherName }}</ui-select-match>
+                            <ui-select-choices repeat="teacher in teacherList | filter: $select.search">
+                                <span ng-bind-html="teacher.teacherName | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
                     </div>
                 </div>
             </fieldset>
             <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">学生人数:</label>
+                    <div class="col-sm-3">
+                        <input name="classNum" ng-model="class.classNum" class="form-control" type="number" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">班级描述:</label>
+                    <div class="col-sm-6">
+                        <textarea name="classDesc" ng-model="class.classDesc" class="form-control" row="3"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
                 <div class="last-child">
                     <div class="col-sm-5 col-sm-offset-2">
-                        <button class="btn btn-oval btn-primary" ng-click="saveAdmin()">保存</button>
+                        <button class="btn btn-oval btn-primary" ng-click="saveClass()">保存</button>
                         <button class="btn btn-oval btn-default" ng-click="goBack()">返回</button>
                     </div>
                 </div>

@@ -145,10 +145,10 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         resolve: helper.resolveFor('xeditable','loaders.css')
       })
       .state('app.adminAdd',{
-          url:'/admin',
+          url:'/admin/add',
           title:"Admin",
           templateUrl:helper.basepath('admin/adminAdd.html'),
-          resolve: helper.resolveFor('loaders.css')
+          resolve: helper.resolveFor('loaders.css','ui.select')
       })
       .state('app.studentList',{
           url:'/student',
@@ -167,6 +167,18 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           title:'class',
           templateUrl:helper.basepath('class/classList.html'),
           resolve: helper.resolveFor('xeditable')
+      })
+      .state('app.classAdd',{
+          url:'/class/add',
+          title:'class',
+          templateUrl:helper.basepath('class/classAdd.html'),
+          resolve: helper.resolveFor('loaders.css','ui.select')
+      })
+      .state('app.classEdit',{
+          url:'/class/edit/{claName}',
+          title:'class',
+          templateUrl:helper.basepath('class/classEdit.html'),
+          resolve: helper.resolveFor('loaders.css','ui.select')
       })
       .state('app.teacherList',{
           url:'/teacher',

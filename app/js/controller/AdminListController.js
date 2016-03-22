@@ -5,7 +5,7 @@
 App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$cookieStore','Notify','$state',function($rootScope,$scope,$filter,$http,$cookieStore,Notify,$state){
 
 
-    ///*  TestCode
+    /*  TestCode
     var adminTable = [{
         "adminId": 860,
         "adminUserName": "Superman",
@@ -65,8 +65,8 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
     }
     ];
     $scope.adminList = adminTable;
-    return;
-    //*/
+
+    */
 
 
 
@@ -208,7 +208,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
     };
 
     //新增
-    $scope.addStud=function(){
+    $scope.addAdmin=function(){
         $state.go('app.adminAdd');
     };
 
@@ -273,8 +273,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
             .error(
                 function(e){
                     alert(e);
-                    //$scope.newAdmin='';
-                    //$scope.roleSelected='';
+                    $scope.isLoading =false;
                 });
     };
 

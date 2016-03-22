@@ -40,13 +40,13 @@
                         <td>{{showState(stu.stuState)}}</td>
                         <td style="white-space: nowrap">
                             <div class="buttons">
-                                <button type="button" ng-show="stu.stuState!=2" ng-disabled="stu.stuState!=1" ng-click="pause(stu)" title="休学" class="btn btn-sm btn-info">
+                                <button ng-show="false" type="button" ng-show="stu.stuState!=2" ng-disabled="stu.stuState!=1" ng-click="pause(stu)" title="休学" class="btn btn-sm btn-info">
                                     <em class="fa icon-user-unfollow"></em>
                                 </button>
-                                <button type="button" ng-show="stu.stuState==2" ng-click="recover(stu)" title="恢复" class="btn btn-sm btn-info">
+                                <button ng-show="false" type="button" ng-show="stu.stuState==2" ng-click="recover(stu)" title="恢复" class="btn btn-sm btn-info">
                                     <em class="fa  icon-user-following"></em>
                                 </button>
-                                <button type="button" ng-disabled="stu.stuState!=1" ng-click="reduce(stu,allClass)" title="降级" class="btn btn-sm btn-info">
+                                <button ng-show="false" type="button" ng-disabled="stu.stuState!=1" ng-click="reduce(stu,allClass)" title="降级" class="btn btn-sm btn-info">
                                     <em class="fa fa-long-arrow-down"></em>
                                 </button>
                                 <button type="button" ng-disabled="stu.stuState==0 || stu.stuState==3" ng-click="cancel(stu)" title="注销" class="btn btn-sm btn-danger">
