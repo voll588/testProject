@@ -502,6 +502,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
             .error(
                 function (e) {
                     alert('数据获取失败.');
+                    $scope.isLoading = false;
                 });
     };
 

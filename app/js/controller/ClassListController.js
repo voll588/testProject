@@ -74,9 +74,10 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
 
 
 
-    $scope.isLoading = false;
+    $scope.isLoading = true;
 
     $scope.initList=function() {
+        $scope.isLoading = true;
         $http({
             header: {token: $rootScope.loginUser.token},
             method: 'POST',
@@ -95,6 +96,7 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
             .error(
                 function (e) {
                     alert(e);
+                    $scope.isLoading = false;
                 });
     };
 
@@ -103,6 +105,7 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
 
     //获取老师列表
     $scope.initTeachers=function(){
+        $scope.isLoading = true;
         $http({
             method: 'POST',
             url: $rootScope.serviceUrl + '/teacherList',
@@ -114,12 +117,15 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
                 function(response){
                     if(response && response.code==0){
                         $scope.teacherSelecter=response.list;
+                        $scope.initList();
                         $scope.isLoading = false;
                     }
+                    $scope.isLoading = false;
                 })
             .error(
                 function(e){
                     alert("无法获取老师信息.");
+                    $scope.isLoading = false;
                 });
     };
 
@@ -156,29 +162,54 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
 
     //毕业
     $scope.completeClass=function(cla){
-        alert("毕业");
-    };
-
-    //删除
-    $scope.removePerson=function(cla) {
-        alert("删除");
-        $scope.isLoading = true;
-
+        alert('毕业');
+        /*
         $http({
             method: 'POST',
-            url: $scope.serviceUrl + '/adminMge',
+            url: $rootScope.serviceUrl + '/classMge',
             params: {
                 adminId: $scope.loginUser.adminId,
-                adminRoleId: $scope.loginUser.adminRoleId,
-                adminEntity: cla,
-                opType: 'del'
+                classEntity: cla,
+                opType: 'complete'
             }
         })
             .success(
                 function (respon) {
                     if (respon.code == 0) {
-                        //$scope.loadUserList();
+                        $scope.initList();
                     }
+                })
+            .error(
+                function (e) {
+                    alert(e);
+                });
+                */
+    };
+
+    //删除
+    $scope.removePerson=function(cla) {
+        $scope.isLoading = true;
+        cla.classState = 0;
+
+        $http({
+            method: 'POST',
+            url: $rootScope.serviceUrl+'/classMge',
+            params: {
+                adminId: $rootScope.loginUser.adminId,
+                classEntity: cla,
+                opType: 'update'
+            }
+        })
+            .success(
+                function (response) {
+                    if(response&& response.code==0){
+
+                    }
+                    else if(response && response.code == 1){
+                        alert(response.errorMessage);
+                    }
+                    $scope.initList();
+                    $scope.isLoading = false;
                 })
             .error(
                 function (e) {
@@ -197,7 +228,40 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
         $state.go('app.classEdit',{claName:calName});
     };
 
+    $scope.searchContent='';
+    //查询班级
+    $scope.searchCla=function(){
+        var params = '';
+
+        if($scope.searchContent){
+            params = {adminId: $rootScope.loginUser.adminId, className:$scope.searchContent};
+        }
+        else{
+            params = {adminId: $rootScope.loginUser.adminId};
+        }
+
+        $scope.isLoading = true;
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $scope.serviceUrl,
+            params:params
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.classlist = response.list;
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function (e) {
+                    alert('数据获取失败.');
+                    $scope.isLoading = false;
+                });
+    };
+
+
 
     $scope.initTeachers();
-    $scope.initList();
 }]);

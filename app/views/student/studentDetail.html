@@ -2,7 +2,7 @@
 <div class="panel panel-default" ng-controller="StuDetailController">
     <div class="panel-heading"><a ng-click="goBack()">返回</a>&nbsp;详细信息</div>
     <div class="panel-body">
-        <form class="form-horizontal ng-pristine ng-valid" name="addForm">
+        <form class="form-horizontal ng-pristine ng-valid" name="addForm" novalidate>
             <fieldset>
                 <legend>{{stu.stuId}}</legend>
                 <div class="form-group">
@@ -16,7 +16,7 @@
                 <div class="form-group">
                     <label for="input-id-1" class="col-sm-2 control-label">班级:</label>
                     <div class="col-sm-3">
-                        <ui-select ng-model="class.selected" theme="bootstrap" class="text-left">
+                        <ui-select ng-model="class.selected" theme="bootstrap" class="text-left" required="">
                             <ui-select-match placeholder="选择班级">{{$select.selected.className }}</ui-select-match>
                             <ui-select-choices repeat="class in classList | filter: $select.search">
                                 <span ng-bind-html="class.className | highlight: $select.search"></span>

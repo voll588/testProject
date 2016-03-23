@@ -3,6 +3,10 @@
 <div ng-controller="ClassListController">
     <div class="row btn-operation-div-bottom">
         <button class="btn btn-oval btn-success" ng-click="addClass()">添加</button>
+        <div class="pull-right form-inline">
+            <input type="text" class="form-control form-control-rounded col-4" ng-model="searchContent" placeholder="班级名称">
+            <button type="button" class="btn btn-oval btn-info" ng-click="searchCla()"><em class="fa fa-search"></em>搜索</button>
+        </div>
     </div>
     <!-- Chaning data-->
     <div class="row" >
@@ -29,13 +33,13 @@
                     <td class="col-sm-1"><span>{{ cla.classTime }}</span></td>
                     <td style="white-space: nowrap">
                         <div class="buttons">
-                            <button type="button" ng-click="completeClass(cla)" title="毕业" class="btn btn-sm btn-info">
-                                <em class="fa fa-pencil"></em>
+                            <button ng-disabled="cla.classState == 0" type="button" ng-click="completeClass(cla)" title="毕业" class="btn btn-sm btn-info">
+                                <em class="fa icon-graduation"></em>
                             </button>
                             <button type="button" ng-click="editCal(cla.className)" title="编辑" class="btn btn-sm btn-info">
                                 <em class="fa fa-pencil"></em>
                             </button>
-                            <button type="button" ng-click="removePerson(cla)" title="删除" class="btn btn-sm btn-danger">
+                            <button ng-disabled="cla.classState == 0" type="button" ng-click="removePerson(cla)" title="删除" class="btn btn-sm btn-danger">
                                 <em class="fa fa-trash-o"></em>
                             </button>
                         </div>

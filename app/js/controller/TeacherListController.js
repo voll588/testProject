@@ -117,17 +117,73 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
 
     $scope.initList();
 
-    $scope.showTehDetail=function(teacherId){
-        return $state.go('app.teacherEdit',{teacherId:teacherId});
+    $scope.showTehDetail=function(tName){
+        return $state.go('app.teacherEdit',{teacherName:tName});
     };
 
 
-    $scope.delTeacher=function(){
-      alert('删除');
+    $scope.delTeacher=function(teacher){
+        $scope.isLoading = true;
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $rootScope.serviceUrl+'/teacherMge',
+            params: {
+                adminId: $rootScope.loginUser.adminId,
+                teacherEntity:teacher,
+                opType : 'del'
+
+            }
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.teacherList = response.list;
+                        $scope.initList();
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function (e) {
+                    alert(e);
+                    $scope.isLoading = false;
+                });
     };
 
     $scope.addStud=function(){
         $state.go('app.teacherAdd');
+    }
+
+    //搜索
+    $scope.searchTec=function(){
+        var params = '';
+
+        if($scope.searchContent){
+            params = {adminId: $rootScope.loginUser.adminId, teacherName:$scope.searchContent};
+        }
+        else{
+            params = {adminId: $rootScope.loginUser.adminId};
+        }
+
+        $scope.isLoading = true;
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $scope.serviceUrl,
+            params:params
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.teacherList = response.list;
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function (e) {
+                    alert('数据获取失败.');
+                    $scope.isLoading = false;
+                });
     }
 
 

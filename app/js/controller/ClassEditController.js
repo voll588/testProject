@@ -19,13 +19,9 @@ App.controller("ClassEditController",['$rootScope','$scope','$filter','$http','$
     //状态
     $scope.state={};
     $scope.stateList=[{id:1,name:'正常'},{id:0,name:'删除'}];
-    $scope.state.selected = $filter('filter')($scope.stateList,$scope.class.classState,'id')[0];
-
-
-
 
     $scope.initTeacherList=function(){
-
+        $scope.isLoading = true;
         $http({
             method: 'POST',
             url: $scope.serviceUrl+'/teacherList',
@@ -37,13 +33,13 @@ App.controller("ClassEditController",['$rootScope','$scope','$filter','$http','$
                 function(response){
                     if(response && response.code==0){
                         $scope.teacherList=response.list;
-                        $scope.teacher.selected = $filter('filter')($scope.teacherList,$scope.class.teacherId,'value')[0];
+                        $scope.getClassDetail();
                         $scope.isLoading = false;
                     }
                 })
             .error(
                 function(e){
-                    alert(e);
+                    alert('老师信息获取失败.');
                     $scope.isLoading =false;
                 });
     };
@@ -53,7 +49,7 @@ App.controller("ClassEditController",['$rootScope','$scope','$filter','$http','$
             alert('参数错误.');
             return;
         }
-
+        $scope.isLoading = true;
         $http({
             method: 'POST',
             url: $scope.serviceUrl+'/classList',
@@ -66,6 +62,8 @@ App.controller("ClassEditController",['$rootScope','$scope','$filter','$http','$
                 function(response){
                     if(response && response.code==0){
                         $scope.class=response.list[0];
+                        $scope.teacher.selected = $filter('filter')($scope.teacherList,{teacherId:$scope.class.teacherId})[0];
+                        $scope.state.selected = $filter('filter')($scope.stateList,$scope.class.classState,'id')[0];
                         $scope.isLoading = false;
                     }
                 })
@@ -84,6 +82,7 @@ App.controller("ClassEditController",['$rootScope','$scope','$filter','$http','$
         if($scope.addFrom.$valid && $scope.teacher.selected){
             $scope.isLoading = true;
             $scope.class.teacherId = $scope.teacher.selected.teacherId;
+            $scope.class.classState = $scope.state.selected.id;
 
             $http({
                 method: 'POST',
@@ -99,8 +98,11 @@ App.controller("ClassEditController",['$rootScope','$scope','$filter','$http','$
                         if (response && response.code == 0) {
                             $scope.goBack();
                         }
+                        else if(response.code && response.code == 1){
+                            alert(response.errorMessage);
+                        }
                         else{
-                            alert(code);
+                            alert('操作失败.');
                         }
                         $scope.isLoading = false;
                     })
@@ -126,6 +128,5 @@ App.controller("ClassEditController",['$rootScope','$scope','$filter','$http','$
     };
 
     $scope.initTeacherList();
-    $scope.getClassDetail();
 }
 ]);

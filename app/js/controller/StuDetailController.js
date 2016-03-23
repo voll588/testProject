@@ -41,7 +41,10 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                         //学生状态
                         $scope.state=[];
                         $scope.stateList=[{name:'已注销',value:0},{name:'正常',value:1},{name:'休学',value:2},{name:'毕业',value:3}];
-                        $scope.state.selected = $filter('filter')($scope.stateList,$scope.stu.stuState,'value')[0];
+                        //学生状态
+                        $scope.state.selected = $filter('filter')($scope.stateList,{value:$scope.stu.stuState})[0];
+                        //班级选择
+                        $scope.class.selected = $filter('filter')($scope.classList,{classId:$scope.stu.classId})[0];
                         $rootScope.isLoading = false;
                     }
                 })
@@ -77,9 +80,12 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
     //保存
     $scope.saveStu=function(){
         if($scope.addForm.$valid){
+            $scope.isLoading = true;
 
             $scope.stu.classId = $scope.class.selected.classId;
-            $scope.stu.stuState = $scope.state.selected.value;
+            if(!$scope.isAdd) {
+                $scope.stu.stuState = $scope.state.selected.value;
+            }
 
             $http({
                 //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','token': $rootScope.loginUser.token},
@@ -100,11 +106,13 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                 .error(
                     function (e) {
                         alert('操作失败..');
+                        $scope.isLoading = false;
                     });
+
         }
         else{
-            $scope.addFrom.stuName.$dirty=true;
-            $scope.addFrom.phone.$dirty=true;
+            $scope.addForm.stuName.$dirty=true;
+            $scope.addForm.phone.$dirty=true;
         }
     };
 
@@ -138,8 +146,12 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                 function (response) {
                     if (response && response.code == 0) {
                         $scope.classList = response.list;
-                        $scope.class = [];
-                        $scope.class.selected = $filter('filter')($scope.classList,$scope.stu.classId,'classId')[0];
+
+                        //加载学生信息
+                        if(!$scope.isAdd){
+                            $scope.getStuDetail();
+                        }
+
                         $scope.isLoading = false;
                     }
                 })
@@ -150,13 +162,10 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
     };
 
 
-    $scope.stu={};
+    $scope.stu = {};
+    $scope.class = {};
     //加载班级
     $scope.getClassList();
-    //加载学生信息
-    if(!$scope.isAdd){
-        $scope.getStuDetail();
-    }
 
 
 

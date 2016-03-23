@@ -38,10 +38,6 @@
       { "menu_id": 91,
         "text": "老师信息",
         "sref": "app.teacherList"
-      },
-      { "menu_id": 92,
-        "text": "新增老师",
-        "sref": "app.teacherAdd"
       }
     ]
   },

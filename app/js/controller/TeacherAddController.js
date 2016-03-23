@@ -1,18 +1,49 @@
 /**
  * Created by lost on 2016/3/16.
  */
-App.controller('TeacherAddController',['$rootScope','$scope','$stateParams',function($rootScope,$scope){
+App.controller('TeacherAddController',['$rootScope','$scope','$state','$http',function($rootScope,$scope,$state,$http){
 
     $scope.checkUser();
 
+    $scope.teacher={};
+
     $scope.saveTeh=function(){
-        alert('Save');
+        if($scope.addForm.$valid){
+            $scope.isLoading =true;
+
+            $scope.teacher.teacherPic='Resource/thumb/01.jpg';
+            $scope.teacher.teacherVideo='Resource/video/test1.mp4';
+
+            $http({
+                //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','token': $rootScope.loginUser.token},
+                method: 'POST',
+                url: $rootScope.serviceUrl+'/teacherMge',
+                params: {
+                    adminId: $rootScope.loginUser.adminId,
+                    teacherEntity: $scope.teacher,
+                    opType:  'add'
+                }
+            })
+                .success(
+                    function (response) {
+                        if (response && response.code == 0) {
+                            $scope.goBack();
+                        }
+                    })
+                .error(
+                    function (e) {
+                        alert('操作失败..');
+                        $scope.isLoading = false;
+                    });
+        }
     };
 
     $scope.goBack=function(){
-        alert('Go Back');
+        $state.go('app.teacherList');
     };
 
+
+    //图片上传 begin
     $scope.reset = function() {
         $scope.myImage        = '';
         $scope.myCroppedImage = '';
@@ -34,4 +65,5 @@ App.controller('TeacherAddController',['$rootScope','$scope','$stateParams',func
     };
 
     angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+    //图片上传 end
 }]);

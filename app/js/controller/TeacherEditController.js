@@ -1,58 +1,81 @@
 /**
  * Created by lost on 2016/3/16.
  */
-App.controller('TeacherEditController',['$rootScope','$scope','$stateParams',function($rootScope,$scope,$stateParams){
+App.controller('TeacherEditController',['$rootScope','$scope','$stateParams','$http','$state',function($rootScope,$scope,$stateParams,$http,$state){
 
-    $rootScope.checkUser();
+    $scope.checkUser();
 
-    $scope.teacherId=$stateParams.teacherId;
+    $scope.teacherName=$stateParams.teacherName;
 
-    //服务地址
-    $scope.serviceUrl = $rootScope.serviceUrl + '/teacherList';
+    $scope.teacher={};
 
-    $scope.editTeacher={};
 
-    //根据ID 获取 Teacher
-    $scope.getTeacherByTeacherId=function(){
+    //根据Name 获取 Teacher
+    $scope.getTeacherByTeacherName=function(){
 
-        if(!$scope.teacherId){
+        if(!$scope.teacherName){
             alert('参数错误.');
             return;
         }
+        $scope.isLoading = true;
 
         $http({
             header: {token: $rootScope.loginUser.token},
             method: 'POST',
-            url: $scope.serviceUrl,
+            url: $scope.serviceUrl + '/teacherList',
             params: {
                 adminId: $rootScope.loginUser.adminId,
-                stuId:$scope.stuId
+                teacherName:$scope.teacherName
             }
         })
             .success(
                 function (response) {
                     if (response && response.code == 0) {
-                        $scope.stu = response.list[0];
+                        $scope.teacher = response.list[0];
                         $scope.isLoading = false;
                     }
                 })
             .error(
                 function (e) {
                     alert('数据获取失败.');
+                    $scope.isLoading = false;
                 });
     };
 
+    $scope.saveTeh=function(){
+        if($scope.addForm.$valid){
+            $scope.isLoading =true;
 
-    $scope.saveTeacher=function(){
-      alert('保存');
+            $http({
+                //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','token': $rootScope.loginUser.token},
+                method: 'POST',
+                url: $rootScope.serviceUrl+'/teacherMge',
+                params: {
+                    adminId: $rootScope.loginUser.adminId,
+                    teacherEntity: $scope.teacher,
+                    opType:  'update'
+                }
+            })
+                .success(
+                    function (response) {
+                        if (response && response.code == 0) {
+                            $scope.goBack();
+                        }
+                    })
+                .error(
+                    function (e) {
+                        alert('操作失败..');
+                        $scope.isLoading = false;
+                    });
+        }
     };
 
-    $scope.goback=function(){
-        alert('返回');
+    $scope.goBack=function(){
+        $state.go('app.teacherList');
     };
 
 
-    //图片上传-------------
+    //图片上传 begin
     $scope.reset = function() {
         $scope.myImage        = '';
         $scope.myCroppedImage = '';
@@ -74,6 +97,10 @@ App.controller('TeacherEditController',['$rootScope','$scope','$stateParams',fun
     };
 
     angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+    //图片上传 end
 
-    //图片上传-------------
+
+
+
+    $scope.getTeacherByTeacherName();
 }]);

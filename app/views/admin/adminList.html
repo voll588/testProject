@@ -3,6 +3,10 @@
 <div ng-controller="AdminListController">
    <div class="row btn-operation-div-bottom">
       <button class="btn btn-oval btn-success" ng-click="addAdmin()">添加</button>
+      <div class="pull-right form-inline">
+         <input type="text" class="form-control form-control-rounded col-4" ng-model="searchContent" placeholder="登录账号">
+         <button type="button" class="btn btn-oval btn-info" ng-click="searchCla()"><em class="fa fa-search"></em>搜索</button>
+      </div>
    </div>
    <div class="row">
       <div class="panel panel-default">

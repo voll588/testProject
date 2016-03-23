@@ -154,7 +154,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           url:'/student',
           title:'Student',
           templateUrl:helper.basepath('student/studentList.html'),
-          resolve: helper.resolveFor('xeditable','ngDialog','loaders.css','ui.select')
+          resolve: helper.resolveFor('ngDialog','loaders.css','ui.select')
       })
       .state('app.stuentDetail',{
           url:'/student/detail/opType/{opType}/stu/{stuId}',
@@ -166,7 +166,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           url:'/class',
           title:'class',
           templateUrl:helper.basepath('class/classList.html'),
-          resolve: helper.resolveFor('xeditable')
+          resolve: helper.resolveFor('loaders.css')
       })
       .state('app.classAdd',{
           url:'/class/add',
@@ -183,19 +183,20 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
       .state('app.teacherList',{
           url:'/teacher',
           title:'teacher',
-          templateUrl:helper.basepath('teacher/teacherList.html')
+          templateUrl:helper.basepath('teacher/teacherList.html'),
+          resolve: helper.resolveFor('loaders.css')
       })
       .state('app.teacherEdit',{
-          url:'/teacher/edit/{teacherId}/',
+          url:'/teacher/edit/{teacherName}/',
           title:'teacher detail',
           templateUrl:helper.basepath('teacher/teacherEdit.html'),
-          resolve: helper.resolveFor('ngImgCrop', 'filestyle')
+          resolve: helper.resolveFor('ngImgCrop', 'filestyle','loaders.css')
       })
       .state('app.teacherAdd',{
           url:'/teacher/add',
           title:'teacher add',
           templateUrl:helper.basepath('teacher/teacherAdd.html'),
-          resolve: helper.resolveFor('ngImgCrop', 'filestyle')
+          resolve: helper.resolveFor('ngImgCrop', 'filestyle','loaders.css')
       })
       .state('app.noticeList',{
           url:'/notice',
