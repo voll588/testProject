@@ -3,8 +3,7 @@
  */
 App.controller("NoticeListController",['$rootScope','$scope','$filter','$http','$cookieStore','$state',function($rootScope,$scope,$filter,$http,$cookieStore,$state){
 
-    $scope.isLoading =false;
-    $scope.loginUser='';
+
     $scope.noticeList='';
 
 
@@ -39,6 +38,7 @@ App.controller("NoticeListController",['$rootScope','$scope','$filter','$http','
 
     $scope.serviceUrl = $rootScope.serviceUrl + '/noticeList';
 
+    //发送通知
     $scope.sendNotice=function(notice){
         //发送通知
         $scope.isLoading =true;
@@ -65,6 +65,7 @@ App.controller("NoticeListController",['$rootScope','$scope','$filter','$http','
             .error(
                 function (e) {
                     alert(e);
+                    $scope.isLoading =false;
                 });
     };
 
@@ -72,7 +73,7 @@ App.controller("NoticeListController",['$rootScope','$scope','$filter','$http','
 
     };
 
-    $scope.init=function(){
+    $scope.initList=function(){
 
         //获取数据
         $scope.isLoading =true;
@@ -80,8 +81,7 @@ App.controller("NoticeListController",['$rootScope','$scope','$filter','$http','
             method: 'POST',
             url: $scope.serviceUrl,
             params: {
-                adminId: $rootScope.loginUser.adminId,
-                adminRoleId: $rootScope.loginUser.adminRoleId
+                adminId: $rootScope.loginUser.adminId
             }
         })
             .success(
@@ -94,7 +94,16 @@ App.controller("NoticeListController",['$rootScope','$scope','$filter','$http','
             .error(
                 function (e) {
                     alert(e);
+                    $scope.isLoading = false;
                 });
     };
-    $scope.noticeList = testList;
+
+    $scope.noticeTypeList=[{typeId:0,typeName:'系统消息'},{typeId:1,typeName:'校园消息'},{typeId:2,typeName:'班级消息'}];
+
+    $scope.showTypeName=function(noticeType){
+        var nType = $filter('filter')($scope.noticeTypeList,{typeId:noticeType})[0];
+        return nType.typeName;
+    };
+
+    $scope.initList();
 }]);

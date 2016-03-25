@@ -1,0 +1,101 @@
+<h3>添加兴趣班</h3>
+<div class="panel panel-default" ng-controller="InterestAddController">
+    <div class="panel-heading"><a ng-click="goBack()">返回</a>&nbsp;详细信息</div>
+    <div class="panel-body">
+        <form class="form-horizontal ng-pristine ng-valid" name="addFrom" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">兴趣班名称:</label>
+                    <div class="col-sm-3">
+                        <input name="interestName" ng-model="interest.interestName" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">带班老师:</label>
+                    <div class="col-lg-3">
+                        <ui-select ng-model="teacher.selected" theme="bootstrap" class="text-left">
+                            <ui-select-match placeholder="选择老师">{{$select.selected.teacherName }}</ui-select-match>
+                            <ui-select-choices repeat="teacher in teacherList | filter: $select.search">
+                                <span ng-bind-html="teacher.teacherName | highlight: $select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">兴趣班描述:</label>
+                    <div class="col-sm-6">
+                        <textarea name="interestDesc" ng-model="interest.interestDesc" class="form-control" row="3"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">兴趣图片:</label>
+                    <div class="col-sm-6">
+                        <input name="interestPic" ng-model="interest.interestPic" class="form-control">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">已参加人数:</label>
+                    <div class="col-sm-3">
+                        <input name="interestNum" ng-model="interest.interestNum" class="form-control" type="number" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">总人数:</label>
+                    <div class="col-sm-3">
+                        <input name="interestCount" ng-model="interest.interestCount" class="form-control" type="number" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">单价:</label>
+                    <div class="col-sm-3">
+                        <input name="interestFee" ng-model="interest.interestFee" class="form-control" type="number" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">开班月份:</label>
+                    <div class="col-sm-3">
+                        <input name="interestTime" ng-model="interest.interestTime" class="form-control" type="number" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="last-child">
+                    <div class="col-sm-5 col-sm-offset-2">
+                        <button class="btn btn-oval btn-primary" ng-click="saveInterest()">保存</button>
+                        <button class="btn btn-oval btn-default" ng-click="goBack()">返回</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="loading" ng-show="isLoading">
+        <div class="loading-center">
+            <div class="loading-center-absolute">
+                <div class="ball-spin-fade-loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

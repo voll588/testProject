@@ -54,6 +54,18 @@
     ]
   },
   {
+    "menu_id": 10,
+    "text": "兴趣班管理",
+    "sref": "#",
+    "icon": "icon-folder",
+    "submenu": [
+      { "menu_id": 91,
+        "text": "兴趣班信息",
+        "sref": "app.interestLsit"
+      }
+    ]
+  },
+  {
     "menu_id": 4,
     "text": "教学管理",
     "sref": "#",

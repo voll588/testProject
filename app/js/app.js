@@ -196,17 +196,31 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           url:'/teacher/add',
           title:'teacher add',
           templateUrl:helper.basepath('teacher/teacherAdd.html'),
-          resolve: helper.resolveFor('ngImgCrop', 'filestyle','loaders.css')
+          resolve: helper.resolveFor('ngImgCrop', 'filestyle','loaders.css','angularFileUpload')
       })
       .state('app.noticeList',{
           url:'/notice',
           title:'notice',
-          templateUrl:helper.basepath('notice/noticeList.html')
+          templateUrl:helper.basepath('notice/noticeList.html'),
+          resolve: helper.resolveFor('loaders.css')
       })
       .state('app.noticeAdd',{
           url:'/notice/add',
           title:'notice add',
-          templateUrl:helper.basepath('notice/noticeAdd.html')
+          templateUrl:helper.basepath('notice/noticeAdd.html'),
+          resolve: helper.resolveFor('ui.select','loaders.css')
+      })
+      .state('app.interestLsit',{
+          url:'/interset',
+          title:'interest',
+          templateUrl:helper.basepath('interest/interestList.html'),
+          resolve: helper.resolveFor('ngDialog','loaders.css')
+      })
+      .state('app.interestAdd',{
+          url:'/interset/add',
+          title:'interest',
+          templateUrl:helper.basepath('interest/interestAdd.html'),
+          resolve: helper.resolveFor('filestyle','loaders.css','angularFileUpload')
       })
 
     // 
@@ -319,6 +333,7 @@ App
                                                   'vendor/ngDialog/css/ngDialog.min.css',
                                                   'vendor/ngDialog/css/ngDialog-theme-default.min.css'] }*/
         {name: 'xeditable', files: ['vendor/angular-xeditable/dist/js/xeditable.js', 'vendor/angular-xeditable/dist/css/xeditable.css']},
+        {name: 'angularFileUpload',files: ['vendor/angular-file-upload/angular-file-upload.js']},
         {name: 'ngImgCrop',files: ['vendor/ng-img-crop/compile/unminified/ng-img-crop.js','vendor/ng-img-crop/compile/unminified/ng-img-crop.css']},
         {name: 'ngDialog', files: ['vendor/ngDialog/js/ngDialog.min.js', 'vendor/ngDialog/css/ngDialog.min.css','vendor/ngDialog/css/ngDialog-theme-default.min.css'] },
         {name: 'ui.select',files: ['vendor/angular-ui-select/dist/select.js','vendor/angular-ui-select/dist/select.css']}

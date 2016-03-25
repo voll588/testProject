@@ -110,6 +110,7 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
             .error(
                 function (e) {
                     alert(e);
+                    $scope.isLoading = false;
                 });
     };
 

@@ -1,0 +1,74 @@
+<h3>兴趣班管理</h3>
+<div ng-controller="InterestListController">
+    <div class="row btn-operation-div-bottom">
+        <button class="btn btn-oval btn-success" ng-click="addInterest()">添加</button>
+        <div class="pull-right form-inline">
+            <input type="text" class="form-control form-control-rounded col-4" ng-model="searchContent" placeholder="兴趣班名称">
+            <button type="button" class="btn btn-oval btn-info" ng-click="searchInt()"><em class="fa fa-search"></em>搜索</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>#序号</th>
+                        <th>兴趣班名称</th>
+                        <th>老师名称</th>
+                        <th>已参加人数</th>
+                        <th>总人数</th>
+                        <th>单价</th>
+                        <th>开班月份</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<a class="ng-scope ng-binding editable editable-click" href="#" ng-click="">-->
+                    <tr ng-repeat="interest in interestList">
+                        <td class="text-center">{{ $index + 1 }}</td>
+                        <td>{{ interest.interestName }}</td>
+                        <td>{{interest.teacherName}}</td>
+                        <td>{{interest.teacherName}}</td>
+                        <td>{{ interest.interestNum}}</td>
+                        <td>{{ interest.interestCount }}</td>
+                        <td>{{interest.interestFee}}</td>
+                        <td>{{interest.interestTime}}</td>
+                        <td style="white-space: nowrap">
+                            <div class="buttons">
+                                <button type="button" ng-click="" title="编辑" class="btn btn-sm btn-info">
+                                    <em class="fa fa-pencil"></em>
+                                </button>
+                                <button type="button"ng-disabled="interest.interestState!=1" ng-click="" title="删除" class="btn btn-sm btn-danger">
+                                    <em class="fa fa-trash-o"></em>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="dataTables_paginate paging_full_numbers">
+                    <a class="paginate_button first">首页</a>
+                    <a class="paginate_button previous">上一页</a>
+                    <span><a class="paginate_button current">1</a></span>
+                    <a class="paginate_button next">下一页</a>
+                    <a class="paginate_button last">尾页</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="loading" ng-show="isLoading">
+        <div class="loading-center">
+            <div class="loading-center-absolute">
+                <div class="ball-spin-fade-loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
