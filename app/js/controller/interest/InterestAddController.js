@@ -30,7 +30,35 @@ App.controller("InterestAddController",['$rootScope','$scope','$filter','$http',
                 })
             .error(
                 function(e){
-                    alert(e);
+                    alert('老师信息获取错误.');
+                    $scope.isLoading =false;
+                });
+    };
+
+    //费用
+    $scope.fee={};
+    $scope.feeList=[];
+
+    $scope.initFeeList=function(){
+        $scope.isLoading =true;
+        $http({
+            method: 'POST',
+            url: $rootScope.serviceUrl+'/feeList',
+            params: {
+                adminId: $rootScope.loginUser.adminId
+            }
+        })
+            .success(
+                function(response){
+                    if(response && response.code==0){
+                        $scope.feeList=response.list;
+                        //$scope.teacher.selected = $filter('filter')($scope.teacherList,$scope.interest.teacherId,'value')[0];
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function(e){
+                    alert('费用获取错误.');
                     $scope.isLoading =false;
                 });
     };
@@ -43,6 +71,7 @@ App.controller("InterestAddController",['$rootScope','$scope','$filter','$http',
       if($scope.addForm.$valid){
           $scope.isLoading = true;
           $scope.interest.teacherId = $scope.teacher.selected.teacherId;
+          $scope.interest.psId = $scope.fee.selected.psId;
 
           $http({
               method: 'POST',
@@ -77,8 +106,9 @@ App.controller("InterestAddController",['$rootScope','$scope','$filter','$http',
     };
 
 
-
     $scope.initTeacherList();
+
+    $scope.initFeeList();
 
 
 
@@ -88,7 +118,7 @@ App.controller("InterestAddController",['$rootScope','$scope','$filter','$http',
 
     //文件上传
     var uploaderPic = $scope.uploaderPic = new FileUploader({
-        url: $rootScope.serviceUrl+'/upload?type=XQ',
+        url: $rootScope.serviceUrl+'/upload?type=ICP',
         queueLimit: 1,   //文件个数
         removeAfterUpload: true
     });

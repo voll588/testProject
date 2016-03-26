@@ -121,7 +121,7 @@ App.controller("InterestEditController",['$rootScope','$scope','$filter','$http'
 
     //文件上传
     var uploaderPic = $scope.uploaderPic = new FileUploader({
-        url: $rootScope.serviceUrl+'/upload?type=XQ',
+        url: $rootScope.serviceUrl+'/upload?type=ICP',
         queueLimit: 1,   //文件个数
         removeAfterUpload: true
     });

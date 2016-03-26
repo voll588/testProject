@@ -1,3 +1,11 @@
 .btn-operation-div-bottom {
     margin-bottom: 10px;
 }
+
+input[type="number"]{
+    -moz-appearance:textfield;
+}
+
+.ng-dirty .ng-invalid-required {
+    border-color: #f05050;
+}

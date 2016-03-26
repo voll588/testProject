@@ -60,14 +60,13 @@ App.controller("FeeEditController",['$rootScope','$scope','$filter','$http','$co
             url: $rootScope.serviceUrl + '/feeList',
             params: {
                 adminId: $rootScope.loginUser.adminId,
-                feeId:$scope.feeId
+                psId:$scope.feeId
             }
         })
             .success(
                 function (response) {
                     if (response && response.code == 0) {
                         $scope.fee = response.list[0];
-                        $scope.teacher.selected = $filter('filter')($scope.teacherList,{teacherId:$scope.interest.teacherId})[0];
                         $scope.isLoading = false;
                     }
                 })
