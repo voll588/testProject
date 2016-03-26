@@ -7,7 +7,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">老师姓名:</label>
                     <div class="col-sm-3">
-                        <input ng-model="teacher.teacherName" name="teacherName" class="form-control" type="text">
+                        <input ng-model="teacher.teacherName" name="teacherName" class="form-control" type="text" required>
                     </div>
                 </div>
             </fieldset>
@@ -132,7 +132,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">电话:</label>
                     <div class="col-sm-3">
-                        <input  ng-model="teacher.teacherPhone" name="teacherPhone" class="form-control" type="text">
+                        <input  ng-model="teacher.teacherPhone" name="teacherPhone" class="form-control" type="text" ng-maxlength="11" ng-pattern="/[0-9]/" required>
                     </div>
                 </div>
             </fieldset>

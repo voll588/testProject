@@ -35,11 +35,11 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
   $rootScope.$storage = $window.localStorage;
 
 
-  //$rootScope.serviceUrl = "http://voll588.imwork.net:15296/NJService/api/admin";
-  //$rootScope.serviceUrl = "http://192.168.1.105:8080/NJService/api/admin";
-  $rootScope.serviceUrl = "http://voll588.imwork.net:32635/NJService/api/admin";
-    // $rootScope.serviceUrl = "http://172.16.2.107:8080/NJService/api/admin";
+
+    //$rootScope.serviceUrl = "http://192.168.1.105:8080/NJService/api/admin";
+    $rootScope.serviceUrl = "http://voll588.imwork.net:32635/NJService/api/admin";
     $rootScope.imaUrl="http://voll588.imwork.net:32635/NJService/";
+    //$rootScope.imaUrl="http://192.168.1.105:8080/NJService/";
     // Scope Globals
     // ----------------------------------- 
     $rootScope.app = {
@@ -210,17 +210,23 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           templateUrl:helper.basepath('notice/noticeAdd.html'),
           resolve: helper.resolveFor('ui.select','loaders.css')
       })
-      .state('app.interestLsit',{
-          url:'/interset',
+      .state('app.interestList',{
+          url:'/interest',
           title:'interest',
           templateUrl:helper.basepath('interest/interestList.html'),
           resolve: helper.resolveFor('ngDialog','loaders.css')
       })
       .state('app.interestAdd',{
-          url:'/interset/add',
+          url:'/interest/add',
           title:'interest',
           templateUrl:helper.basepath('interest/interestAdd.html'),
-          resolve: helper.resolveFor('filestyle','loaders.css','angularFileUpload')
+          resolve: helper.resolveFor('filestyle','loaders.css','angularFileUpload','ui.select')
+      })
+      .state('app.interestEdit',{
+          url:'/interest/edit/{interestName}',
+          title:'interest',
+          templateUrl:helper.basepath('interest/interestEdit.html'),
+          resolve: helper.resolveFor('filestyle','loaders.css','angularFileUpload','ui.select')
       })
 
     // 

@@ -73,6 +73,14 @@ App.controller("InterestListController",['$rootScope','$scope','$filter','$http'
                 });
     };
 
+
+    //编辑
+    $scope.editInterest=function(interestName){
+      return $state.go('app.interestEdit',{interestName:interestName});
+    };
+
     $scope.initList();
+
+
 }
 ]);

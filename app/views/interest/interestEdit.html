@@ -1,5 +1,5 @@
-<h3>添加兴趣班</h3>
-<div class="panel panel-default" ng-controller="InterestAddController">
+<h3>兴趣班信息</h3>
+<div class="panel panel-default" ng-controller="InterestEditController">
     <div class="panel-heading"><a ng-click="goBack()">返回</a>&nbsp;详细信息</div>
     <div class="panel-body">
         <form class="form-horizontal ng-pristine ng-valid" name="addForm" novalidate>
@@ -120,7 +120,7 @@
                 <div class="form-group">
                     <label class="col-lg-2 control-label">开班月份:</label>
                     <div class="col-sm-3">
-                        <input name="interestTime" ng-model="interest.interestTime" class="form-control" type="number" required>
+                        <input name="interestTime" ng-model="interest.interestTime" class="form-control" required>
                     </div>
                 </div>
             </fieldset>

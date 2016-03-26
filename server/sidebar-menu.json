@@ -18,18 +18,6 @@
     ]
   },
   {
-    "menu_id": 3,
-    "text": "家长信息管理",
-    "sref": "#",
-    "icon": "icon-folder",
-    "submenu": [
-      { "menu_id": 31,
-        "text": "家长信息管理",
-        "sref": "app.submenu"
-      }
-    ]
-  },
-  {
     "menu_id": 9,
     "text": "老师信息管理",
     "sref": "#",
@@ -61,7 +49,7 @@
     "submenu": [
       { "menu_id": 91,
         "text": "兴趣班信息",
-        "sref": "app.interestLsit"
+        "sref": "app.interestList"
       }
     ]
   },

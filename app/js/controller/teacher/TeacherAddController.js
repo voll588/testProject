@@ -11,9 +11,6 @@ App.controller('TeacherAddController',['$rootScope','$scope','$state','$http','F
         if($scope.addForm.$valid){
             $scope.isLoading =true;
 
-            $scope.teacher.teacherPic='Resource/thumb/01.jpg';
-            $scope.teacher.teacherVideo='Resource/video/test1.mp4';
-
             $http({
                 //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','token': $rootScope.loginUser.token},
                 method: 'POST',

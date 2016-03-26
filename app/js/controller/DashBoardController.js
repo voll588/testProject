@@ -3,23 +3,9 @@
  */
 App.controller("DashBoardController",['$rootScope','$scope','$filter','$http','$cookieStore','$state',function($rootScope,$scope,$filter,$http,$cookieStore,$state){
 
-    ///*  TestCode
-
-    //$cookieStore.put('loginUser', {adminId:1,adminRoleId:1,token:'a'});
-    //$state.go('app.dashboard');
-    //$scope.infos={};
-    //return;
-    //*/
-
     $rootScope.checkUser();
 
     $scope.isLoading = true;
-
-    //$scope.loginUser = $cookieStore.get('loginUser');
-    //if(!$scope.loginUser) {
-    //    $state.go("Login");
-    //}
-
     $http({
         header: {token: $rootScope.loginUser.token},
         method: 'POST',
@@ -37,6 +23,7 @@ App.controller("DashBoardController",['$rootScope','$scope','$filter','$http','$
             })
         .error(
             function (e) {
-                alert(e);
+                alert('数据加载失败.');
+                $scope.isLoading = false;
             });
 }]);

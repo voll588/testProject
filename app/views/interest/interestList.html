@@ -28,14 +28,13 @@
                         <td class="text-center">{{ $index + 1 }}</td>
                         <td>{{ interest.interestName }}</td>
                         <td>{{interest.teacherName}}</td>
-                        <td>{{interest.teacherName}}</td>
                         <td>{{ interest.interestNum}}</td>
                         <td>{{ interest.interestCount }}</td>
                         <td>{{interest.interestFee}}</td>
                         <td>{{interest.interestTime}}</td>
                         <td style="white-space: nowrap">
                             <div class="buttons">
-                                <button type="button" ng-click="" title="编辑" class="btn btn-sm btn-info">
+                                <button type="button" ng-click="editInterest(interest.interestName)" title="编辑" class="btn btn-sm btn-info">
                                     <em class="fa fa-pencil"></em>
                                 </button>
                                 <button type="button"ng-disabled="interest.interestState!=1" ng-click="" title="删除" class="btn btn-sm btn-danger">

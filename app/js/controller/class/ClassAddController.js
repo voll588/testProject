@@ -7,7 +7,7 @@ App.controller("ClassAddController",['$rootScope','$scope','$filter','$http','$c
 
     $scope.class={};
 
-    //角色
+    //老师
     $scope.teacher={};
     $scope.teacherList=[];
 

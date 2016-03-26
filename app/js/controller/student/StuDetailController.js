@@ -44,30 +44,14 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                         //学生状态
                         $scope.state.selected = $filter('filter')($scope.stateList,{value:$scope.stu.stuState})[0];
                         //班级选择
-                        $scope.class.selected = $filter('filter')($scope.classList,{classId:$scope.stu.classId})[0];
+                        $scope.class.selected = $filter('filter')($scope.classList,{className:$scope.stu.className})[0];
                         $rootScope.isLoading = false;
                     }
                 })
             .error(
                 function (e) {
                     alert('数据获取失败.');
-                    /*
-                     $scope.stu={
-                     stuId:'NJ2016010001',
-                     stuName:'张三',
-                     stuGender:1,
-                     classId:1,
-                     className:'大一班',
-                     teacherId:2,
-                     teacherName:'王老师',
-                     stuParent:'隔壁老王',
-                     stuState:0,
-                     phone:13891888076,
-                     cTime:'2016-01-01',
-                     endTime:'2019-01-01'
-                     }
-                     */
-                    $scope.isLoading =false;
+                     $scope.isLoading =false;
                 });
     };
 
@@ -117,20 +101,6 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
     };
 
     //班级
-    /*
-     var tempClassTemp=[
-     {classId: 1,className: '大一班',teacherId: 1,classNum: 20,classState: 1,classTime: '2016-01-01'},
-     {classId: 2,className: '大二班',teacherId: 1,classNum: 20,classState: 1,classTime: '2016-01-01'},
-     {classId: 3,className: '大三班',teacherId: 1,classNum: 20,classState: 1,classTime: '2016-01-01'},
-     {classId: 4,className: '大四班',teacherId: 1,classNum: 20,classState: 1,classTime: '2016-01-01'},
-     {classId: 5,className: '大五班',teacherId: 1,classNum: 20,classState: 1,classTime: '2016-01-01'},
-     {classId: 6,className: '大六班',teacherId: 1,classNum: 20,classState: 1,classTime: '2016-01-01'},
-     {classId: 7,className: '大七班',teacherId: 1,classNum: 20,classState: 1,classTime: '2016-01-01'}
-     ];
-     $scope.classList=tempClassTemp;
-     */
-
-    //班级
     $scope.classList=[];
     $scope.getClassList=function(){
         $scope.isLoading = true;
@@ -151,13 +121,13 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                         if(!$scope.isAdd){
                             $scope.getStuDetail();
                         }
-
                         $scope.isLoading = false;
                     }
                 })
             .error(
                 function (e) {
                     alert('班级信息获取失败.');
+                    $scope.isLoading = false;
                 });
     };
 
