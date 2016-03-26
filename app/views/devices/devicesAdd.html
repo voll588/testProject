@@ -1,0 +1,116 @@
+<H3>添加监控设备</H3>
+<div class="panel panel-default" ng-controller="DevicesAddController">
+    <div class="panel-heading"><a ng-click="goBack()">返回</a>&nbsp;详细信息</div>
+    <div class="panel-body">
+        <form class="form-horizontal ng-pristine ng-valid" name="addForm" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">设备名称:</label>
+                    <div class="col-sm-3">
+                        <input ng-model="video.videoName" name="videoName" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">设备描述:</label>
+                    <div class="col-sm-5">
+                        <textarea ng-model="video.videoDesc" name="videoDesc" class="form-control"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">直播图片:</label>
+                    <div ng-if="video.videoPic" class="col-sm-5">
+                        <input ng-model="video.videoPic" name="videoPic" class="form-control" type="text" readonly>
+                    </div>
+                    <div ng-if="!video.videoPic" class="col-lg-8">
+                        <!--文件上传 开始-->
+                        <input filestyle="" type="file" ng-click="clearPicItems()" data-button-text="选择文件" data-class-button="btn btn-default" data-classinput="form-control inline" nv-file-select="" uploader="uploaderPic" class="form-control" />
+                        <span ng-if="isTypeError" class="alert-danger">图片格式错误,请重新选择.</span>
+                        <span ng-if="isPicSizeError" class="alert-danger">图片大小超过限制,请重新选择.</span>
+                        <div ng-if="uploaderPic.queue.length">
+                            <table ng-if="uploaderPic.queue.length" class="table">
+                                <thead>
+                                <tr>
+                                    <th>文件名</th>
+                                    <th ng-show="uploaderPic.isHTML5">大小</th>
+                                    <th ng-show="uploaderPic.isHTML5">进度</th>
+                                    <th>状态</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in uploaderPic.queue">
+                                    <td>
+                                        <strong>{{ item.file.name }}</strong>
+                                    </td>
+                                    <td ng-show="uploaderPic.isHTML5" nowrap="">{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploaderPic.isHTML5">
+                                        <div style="margin-bottom: 0;" class="progress progress-xs">
+                                            <div role="progressbar" ng-style="{ 'width': item.progress + '%' }" class="progress-bar"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                 <span ng-show="item.isSuccess">
+                                    <em class="fa fa-check fa-fw"></em>
+                                 </span>
+                                 <span ng-show="item.isCancel">
+                                    <em class="fa fa-ban-circle fa-fw"></em>
+                                 </span>
+                                 <span ng-show="item.isError">
+                                    <em class="fa fa-times fa-fw"></em>
+                                 </span>
+                                    </td>
+                                    <td nowrap="">
+                                        <button type="button" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess" class="btn btn-info btn-xs">
+                                            <span class="icon-cloud-upload mr"></span>上传</button>
+                                        <button type="button" ng-click="item.cancel()" ng-disabled="!item.isUploading" class="btn btn-warning btn-xs">
+                                            <span class="icon-close mr"></span>取消</button>
+                                        <button type="button" ng-click="item.remove()" class="btn btn-danger btn-xs">
+                                            <span class="icon-trash mr"></span>删除</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--文件上传 结束-->
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">直播源:</label>
+                    <div class="col-sm-3">
+                        <input  ng-model="video.videoUrl" name="videoUrl" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="last-child">
+                    <div class="col-sm-4 col-sm-offset-2">
+                        <button class="btn btn-oval btn-primary" ng-click="saveVideo()">保存</button>
+                        <button class="btn btn-oval btn-default" ng-click="goBack()">返回</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="loading" ng-show="isLoading">
+        <div class="loading-center">
+            <div class="loading-center-absolute">
+                <div class="ball-spin-fade-loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

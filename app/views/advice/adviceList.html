@@ -1,7 +1,10 @@
-<h3>监控设备管理</h3>
-<div  ng-controller="DevicesController">
+<h3>建议信息管理</h3>
+<div  ng-controller="AdviceListController">
     <div class="row btn-operation-div-bottom">
-        <button class="btn btn-oval btn-success" ng-click="addVideo()">添加</button>
+        <div class="pull-right form-inline">
+            <input type="text" class="form-control form-control-rounded col-4" ng-model="searchContent" placeholder="">
+            <button type="button" class="btn btn-oval btn-info" ng-click="searchTec()"><em class="fa fa-search"></em>搜索</button>
+        </div>
     </div>
     <div class="row">
         <div class="panel panel-default">
@@ -11,21 +14,21 @@
                         <thead>
                         <tr>
                             <th class="text-center" style="white-space: nowrap">#序号</th>
-                            <th class="text-center">设备名称</th>
-                            <th class="text-center">设备描述</th>
-                            <th class="text-center">直播图片</th>
-                            <th class="text-center">设备状态</th>
-                            <th class="text-center">直播源</th>
+                            <th class="text-center">联系电话</th>
+                            <th class="text-center">建议内容</th>
+                            <th class="text-center">建议时间</th>
+                            <th class="text-center">客户端类型</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="video in videoList">
+                        <tr ng-repeat="advice in adviceList">
                             <td class="text-center">{{$index + 1}}</td>
-                            <td>{{ video.videoName }}</td>
-                            <td>{{ video.videoDesc }}</td>
-                            <td><a href="{{ video.videoPic }}">直播图片</a></td>
-                            <td>{{ video.videoState }}</td>
-                            <td><a href="{{ video.videoUrl }}">直播源</a></td>
+                            <td class="col-md-1 text-center">{{advice.phone}}</td>
+                            <td class="col-md-7 small">
+                                {{advice.adviceTxt}}
+                            </td>
+                            <td class="col-md-1 text-center">{{advice.adviceTime}}</td>
+                            <td class="col-md-1 text-center">{{showClient(advice.clientType)}}</td>
                         </tr>
                         </tbody>
                     </table>

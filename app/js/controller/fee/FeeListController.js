@@ -1,22 +1,32 @@
 /**
  * Created by lost on 2016/3/26.
  */
-App.controller("DevicesController",['$rootScope','$scope','$filter','$http','$cookieStore','$state',function($rootScope,$scope,$filter,$http,$cookieStore,$state){
-
+App.controller("FeeListController",['$rootScope','$scope','$filter','$http','$cookieStore','$state',function($rootScope,$scope,$filter,$http,$cookieStore,$state) {
 
     $rootScope.checkUser();
 
-    $scope.addVideo = function(){
-        $state.go('app.devicesAdd');
+    $scope.feeList=[];
+
+
+    $scope.addFee=function(){
+        return $state.go('app.feeAdd');
     };
 
-    $scope.videoList = [];
-    $scope.getVideoList=function(){
-        $scope.isLoading=true;
+    $scope.editFee=function(feeId){
+        
+    };
+    
+    $scope.del= function (feeId) {
+        
+    };
+
+    $scope.getFeeList=function(){
+        $scope.isLoading = true;
+
         $http({
             header: {token: $rootScope.loginUser.token},
             method: 'POST',
-            url: $rootScope.serviceUrl+'/videoList',
+            url: $rootScope.serviceUrl+'/feeList',
             params: {
                 adminId: $rootScope.loginUser.adminId
             }
@@ -24,7 +34,7 @@ App.controller("DevicesController",['$rootScope','$scope','$filter','$http','$co
             .success(
                 function (response) {
                     if (response && response.code == 0) {
-                        $scope.videoList = response.list;
+                        $scope.feeList = response.list;
                         $scope.isLoading = false;
                     }
                 })
@@ -35,5 +45,8 @@ App.controller("DevicesController",['$rootScope','$scope','$filter','$http','$co
                 });
     };
 
-    $scope.getVideoList();
-}]);
+    $scope.getFeeList();
+
+
+}
+]);

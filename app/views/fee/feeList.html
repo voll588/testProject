@@ -1,0 +1,65 @@
+<h3>费用信息</h3>
+<div ng-controller="FeeListController">
+    <div class="row btn-operation-div-bottom">
+        <button class="btn btn-oval btn-success" ng-click="addFee()">添加</button>
+    </div>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>#序号</th>
+                        <th>单价名称</th>
+                        <th>单价金额（分）</th>
+                        <th>单价时间</th>
+                        <th>兴趣图片</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="fee in feeList">
+                        <td class="text-center">{{ $index + 1 }}</td>
+                        <td>{{fee.psName}}</td>
+                        <td>{{fee.psPrice}}</td>
+                        <td>{{fee.psTime}}</td>
+                        <td>{{fee.psState}}</td>
+                        <td><a href="{{fee.interestPic}}">兴趣图片</a></td>
+                        <td style="white-space: nowrap">
+                            <div class="buttons">
+                                <button type="button" ng-disabled="fee.psState!=0" ng-click="editFee(fee.psId)" title="编辑" class="btn btn-sm btn-info">
+                                    <em class="fa fa-long-arrow-down"></em>
+                                </button>
+                                <button type="button" ng-disabled="fee.psState==0" ng-click="del(fee.psId)" title="删除" class="btn btn-sm btn-danger">
+                                    <em class="fa fa-trash-o"></em>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="dataTables_paginate paging_full_numbers">
+                    <a class="paginate_button first">首页</a>
+                    <a class="paginate_button previous">上一页</a>
+                    <span><a class="paginate_button current">1</a></span>
+                    <a class="paginate_button next">下一页</a>
+                    <a class="paginate_button last">尾页</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="loading" ng-show="isLoading">
+        <div class="loading-center">
+            <div class="loading-center-absolute">
+                <div class="ball-spin-fade-loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

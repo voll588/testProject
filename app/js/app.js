@@ -36,8 +36,8 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
 
 
 
-    //$rootScope.serviceUrl = "http://192.168.1.105:8080/NJService/api/admin";
-    $rootScope.serviceUrl = "http://voll588.imwork.net:32635/NJService/api/admin";
+    $rootScope.serviceUrl = "http://192.168.1.105:8080/NJService/api/admin";
+    //$rootScope.serviceUrl = "http://voll588.imwork.net:32635/NJService/api/admin";
     $rootScope.imaUrl="http://voll588.imwork.net:32635/NJService/";
     //$rootScope.imaUrl="http://192.168.1.105:8080/NJService/";
     // Scope Globals
@@ -227,6 +227,42 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           title:'interest',
           templateUrl:helper.basepath('interest/interestEdit.html'),
           resolve: helper.resolveFor('filestyle','loaders.css','angularFileUpload','ui.select')
+      })
+      .state('app.devicesList',{
+          url:'/devices',
+          title:'devices',
+          templateUrl:helper.basepath('devices/devicesList.html'),
+          resolve: helper.resolveFor('loaders.css')
+      })
+      .state('app.devicesAdd',{
+          url:'/devices/Add',
+          title:'devices',
+          templateUrl:helper.basepath('devices/devicesAdd.html'),
+          resolve: helper.resolveFor('loaders.css','angularFileUpload','filestyle')
+      })
+      .state('app.feeList',{
+          url:'/fee',
+          title:'fee',
+          templateUrl:helper.basepath('fee/feeList.html'),
+          resolve: helper.resolveFor('loaders.css')
+      })
+      .state('app.feeAdd',{
+          url:'/fee/add',
+          title:'fee',
+          templateUrl:helper.basepath('fee/feeAdd.html'),
+          resolve: helper.resolveFor('loaders.css','angularFileUpload','filestyle')
+      })
+      .state('app.feeEdit',{
+          url:'/fee/edit/{feeId}',
+          title:'fee',
+          templateUrl:helper.basepath('fee/feeEdit.html'),
+          resolve: helper.resolveFor('loaders.css','angularFileUpload','filestyle')
+      })
+      .state('app.adviceList',{
+          url:'/advice',
+          title:'advice',
+          templateUrl:helper.basepath('advice/adviceList.html'),
+          resolve: helper.resolveFor('loaders.css')
       })
 
     // 
