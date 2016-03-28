@@ -53,7 +53,7 @@ App.controller("NoticeAddController",['$rootScope','$scope','$filter','$http','$
                     });
         }
         else{
-            alert(0);
+            //alert(0);
         }
     };
 

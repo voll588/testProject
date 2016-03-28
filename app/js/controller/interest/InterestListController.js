@@ -29,7 +29,7 @@ App.controller("InterestListController",['$rootScope','$scope','$filter','$http'
                 })
             .error(
                 function (e) {
-                    alert(e);
+                    alert('数据获取失败.');
                     $scope.isLoading = false;
                 });
     };
@@ -38,6 +38,32 @@ App.controller("InterestListController",['$rootScope','$scope','$filter','$http'
     //添加
     $scope.addInterest=function(){
         return $state.go('app.interestAdd');
+    };
+
+    $scope.delInterest=function(int){
+        $scope.isLoading = true;
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $rootScope.serviceUrl+'/interestMge',
+            params: {
+                adminId: $rootScope.loginUser.adminId,
+                interestEntity:int,
+                opType:'del'
+            }
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.isLoading = false;
+                        $scope.initList();
+                    }
+                })
+            .error(
+                function (e) {
+                    alert('操作失败.');
+                    $scope.isLoading = false;
+                });
     };
 
     $scope.searchContent='';
@@ -79,6 +105,35 @@ App.controller("InterestListController",['$rootScope','$scope','$filter','$http'
       return $state.go('app.interestEdit',{interestName:interestName});
     };
 
+
+    $scope.feeList =[];
+    //获取费用 列表
+    $scope.getFeeList=function(){
+        $scope.isLoading = true;
+
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $rootScope.serviceUrl+'/feeList',
+            params: {
+                adminId: $rootScope.loginUser.adminId
+            }
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.feeList = response.list;
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function (e) {
+                    alert('费用信息加载失败.');
+                    $scope.isLoading = false;
+                });
+    };
+
+    $scope.getFeeList();
     $scope.initList();
 
 

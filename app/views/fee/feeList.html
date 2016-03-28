@@ -12,8 +12,9 @@
                         <th>#序号</th>
                         <th>单价名称</th>
                         <th>单价金额（分）</th>
+                        <th>费用类型</th>
                         <th>单价时间</th>
-                        <th>兴趣图片</th>
+                        <th>单价状态</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -21,15 +22,15 @@
                         <td class="text-center">{{ $index + 1 }}</td>
                         <td>{{fee.psName}}</td>
                         <td>{{fee.psPrice}}</td>
+                        <td>{{showFeeType(fee.psType)}}</td>
                         <td>{{fee.psTime}}</td>
-                        <td>{{fee.psState}}</td>
-                        <td><a href="{{fee.interestPic}}">兴趣图片</a></td>
+                        <td>{{showState(fee.psState)}}</td>
                         <td style="white-space: nowrap">
                             <div class="buttons">
-                                <button type="button" ng-disabled="fee.psState!=0" ng-click="editFee(fee.psId)" title="编辑" class="btn btn-sm btn-info">
-                                    <em class="fa fa-long-arrow-down"></em>
+                                <button type="button" ng-click="editFee(fee.psId)" title="编辑" class="btn btn-sm btn-info">
+                                    <em class="fa fa-pencil"></em>
                                 </button>
-                                <button type="button" ng-disabled="fee.psState==0" ng-click="del(fee.psId)" title="删除" class="btn btn-sm btn-danger">
+                                <button type="button" ng-disabled="fee.psState==0 || fee.psType =='main'" ng-click="del(fee)" title="删除" class="btn btn-sm btn-danger">
                                     <em class="fa fa-trash-o"></em>
                                 </button>
                             </div>

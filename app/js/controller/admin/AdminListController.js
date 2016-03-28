@@ -5,73 +5,6 @@
 App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$cookieStore','Notify','$state',function($rootScope,$scope,$filter,$http,$cookieStore,Notify,$state){
 
 
-    /*  TestCode
-    var adminTable = [{
-        "adminId": 860,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":4,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 861,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":3,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 862,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":2,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 863,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":4,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 864,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":1,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 865,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":1,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 866,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":2,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }, {
-        "adminId": 867,
-        "adminUserName": "Superman",
-        "adminName": "Yoda",
-        "adminRoleId":3,
-        "adminRoulName":"aaa",
-        "cTime":"2016-1-1"
-    }
-    ];
-    $scope.adminList = adminTable;
-
-    */
-
-
-
-    $scope.isLoading = true;
-
     $rootScope.checkUser();
 
     $scope.editRowVisible = false;
@@ -235,7 +168,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
                 })
             .error(
                 function (e) {
-                    alert(e);
+                    alert('操作失败.');
                 });
     };
 
@@ -256,6 +189,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
 
     //加载全部user
     $scope.loadUserList=function(){
+        $scope.isLoading = true;
         $http({
             method: 'POST',
             url: $scope.serviceUrl+'/adminList',
@@ -272,8 +206,42 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
                 })
             .error(
                 function(e){
-                    alert(e);
+                    alert('数据加载失败.');
                     $scope.isLoading =false;
+                });
+    };
+
+
+    //搜索
+    $scope.searchAdmin=function(){
+
+        var params = '';
+
+        if($scope.searchContent){
+            params = {adminId: $rootScope.loginUser.adminId, className:$scope.searchContent};
+        }
+        else{
+            params = {adminId: $rootScope.loginUser.adminId};
+        }
+
+        $scope.isLoading = true;
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $scope.serviceUrl+'/adminList',
+            params:params
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.adminList = response.list;
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function (e) {
+                    alert('数据获取失败.');
+                    $scope.isLoading = false;
                 });
     };
 

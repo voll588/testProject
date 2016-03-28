@@ -10,72 +10,6 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
 
     $scope.classlist={};
 
-    /*
-    $scope.classlist=[
-    {
-        classId: 1,
-        className: '大一班',
-        teacherId: 1,
-        classNum: 20,
-        classState: 1,
-        classTime: '2016-01-01'
-    },
-    {
-        classId: 2,
-        className: '大二班',
-        teacherId: 1,
-        classNum: 20,
-        classState: 1,
-        classTime: '2016-01-01'
-    },
-    {
-        classId: 3,
-        className: '大三班',
-        teacherId: 1,
-        classNum: 20,
-        classState: 1,
-        classTime: '2016-01-01'
-    },
-    {
-        classId: 4,
-        className: '大四班',
-        teacherId: 1,
-        classNum: 20,
-        classState: 1,
-        classTime: '2016-01-01'
-    },
-    {
-        classId: 5,
-        className: '大五班',
-        teacherId: 1,
-        classNum: 20,
-        classState: 1,
-        classTime: '2016-01-01'
-    },
-    {
-        classId: 6,
-        className: '大六班',
-        teacherId: 1,
-        classNum: 20,
-        classState: 1,
-        classTime: '2016-01-01'
-    },
-    {
-        classId: 7,
-        className: '大七班',
-        teacherId: 1,
-        classNum: 20,
-        classState: 1,
-        classTime: '2016-01-01'
-    }
-];
-*/
-
-
-
-
-    $scope.isLoading = true;
-
     $scope.initList=function() {
         $scope.isLoading = true;
         $http({
@@ -95,7 +29,7 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
                 })
             .error(
                 function (e) {
-                    alert(e);
+                    alert('数据添加失败.');
                     $scope.isLoading = false;
                 });
     };

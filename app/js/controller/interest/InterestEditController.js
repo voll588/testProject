@@ -109,10 +109,43 @@ App.controller("InterestEditController",['$rootScope','$scope','$filter','$http'
     };
 
 
+    //费用
+    $scope.fee={};
+    $scope.feeList=[];
+
+    $scope.initFeeList=function(){
+        $scope.isLoading =true;
+        $http({
+            method: 'POST',
+            url: $rootScope.serviceUrl+'/feeList',
+            params: {
+                adminId: $rootScope.loginUser.adminId
+            }
+        })
+            .success(
+                function(response){
+                    if(response && response.code==0){
+                        $scope.feeList=response.list;
+                        $scope.fee.selected = $filter('filter')($scope.feeList,{psId:$scope.interest.psId})[0];
+                        $scope.isLoading = false;
+                    }
+                })
+            .error(
+                function(e){
+                    alert('费用获取错误.');
+                    $scope.isLoading =false;
+                });
+    };
+
+    $scope.editPic =false;
+    $scope.editInterestPic=function(){
+        $scope.editPic = !$scope.editPic;
+    };
 
     $scope.initTeacherList();
     $scope.getInterestByName();
 
+    $scope.initFeeList();
 
 
 

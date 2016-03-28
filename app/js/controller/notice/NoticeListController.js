@@ -12,6 +12,7 @@ App.controller("NoticeListController",['$rootScope','$scope','$filter','$http','
 
     //发送通知
     $scope.sendNotice=function(notice){
+
         //发送通知
         $scope.isLoading =true;
         $http({
@@ -41,6 +42,11 @@ App.controller("NoticeListController",['$rootScope','$scope','$filter','$http','
                 });
     };
 
+
+    $scope.addNotice=function(){
+        return $state.go('app.noticeAdd');
+    };
+
     $scope.delNotice=function(notice){
 
     };
@@ -65,7 +71,7 @@ App.controller("NoticeListController",['$rootScope','$scope','$filter','$http','
                 })
             .error(
                 function (e) {
-                    alert(e);
+                    alert('数据加载失败.');
                     $scope.isLoading = false;
                 });
     };

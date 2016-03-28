@@ -94,14 +94,6 @@
             </fieldset>
             <fieldset>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">已参加人数:</label>
-                    <div class="col-sm-3">
-                        <input name="interestNum" ng-model="interest.interestNum" class="form-control number" type="number" required>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div class="form-group">
                     <label class="col-lg-2 control-label">总人数:</label>
                     <div class="col-sm-3">
                         <input name="interestCount" ng-model="interest.interestCount" class="form-control number" type="number" required>
@@ -115,7 +107,7 @@
                         <ui-select ng-model="fee.selected" theme="bootstrap" class="text-left" required="">
                             <ui-select-match placeholder="选择单价">{{$select.selected.psName }}</ui-select-match>
                             <ui-select-choices repeat="fee in feeList | filter: $select.search">
-                                <div ng-bind-html="fee.className+' '+fee.psPrice | highlight: $select.search"></div>
+                                <div ng-bind-html="fee.psName+' '+fee.psPrice | highlight: $select.search"></div>
                             </ui-select-choices>
                         </ui-select>
                     </div>

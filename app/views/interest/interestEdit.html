@@ -38,7 +38,11 @@
                     <div ng-if="interest.interestPic" class="col-sm-5">
                         <input ng-model="interest.interestPic" name="interestPic" class="form-control" type="text" readonly>
                     </div>
-                    <div ng-if="!interest.interestPic" class="col-lg-8">
+                    <button class="btn btn-default" ng-click="editInterestPic()">修改</button>
+                </div>
+                <div ng-if="editPic" class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-lg-8">
                         <!--文件上传 开始-->
                         <input filestyle="" type="file" ng-click="clearPicItems()" data-button-text="选择文件" data-class-button="btn btn-default" data-classinput="form-control inline" nv-file-select="" uploader="uploaderPic" class="form-control" />
                         <span ng-if="isTypeError" class="alert-danger">图片格式错误,请重新选择.</span>
@@ -112,7 +116,12 @@
                 <div class="form-group">
                     <label class="col-lg-2 control-label">单价:</label>
                     <div class="col-sm-3">
-                        <input name="interestFee" ng-model="interest.interestFee" class="form-control" type="number" required>
+                        <ui-select ng-model="fee.selected" theme="bootstrap" class="text-left" required="">
+                            <ui-select-match placeholder="选择单价">{{$select.selected.psName }}</ui-select-match>
+                            <ui-select-choices repeat="fee in feeList | filter: $select.search">
+                                <div ng-bind-html="fee.psName+' '+fee.psPrice | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
                     </div>
                 </div>
             </fieldset>

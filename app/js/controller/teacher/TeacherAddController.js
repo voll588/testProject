@@ -24,6 +24,7 @@ App.controller('TeacherAddController',['$rootScope','$scope','$state','$http','F
                 .success(
                     function (response) {
                         if (response && response.code == 0) {
+                            $scope.isLoading =false;
                             $scope.goBack();
                         }
                     })
