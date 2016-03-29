@@ -163,6 +163,8 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
         return $state.go('app.stuentDetail',{opType:'Add'});
     };
 
+    $scope.pageData=[];
+
     $scope.searchContent='';
     //查询
     $scope.searchStu=function(){
@@ -171,12 +173,32 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
         var params = '';
 
         if($scope.searchContent){
-            params = {adminId: $rootScope.loginUser.adminId, stuId:$scope.searchContent};
+            params = {
+                adminId: $rootScope.loginUser.adminId,
+                stuId:$scope.searchContent,
+                cursor:($scope.pageIndex-1) * $scope.pageCount,
+                offset:$scope.pageIndex * $scope.pageCount
+            };
         }
         else{
-            params = {adminId: $rootScope.loginUser.adminId};
+            params = {adminId: $rootScope.loginUser.adminId,
+                cursor:($scope.pageIndex-1) * $scope.pageCount,
+                offset:$scope.pageIndex * $scope.pageCount
+            };
         }
 
+        $scope.isLoading = true;
+        $scope.getDate(params,function(response){
+            $scope.studentList =response.list;
+            $scope.dataCount = response.count;
+            $scope.pageCalc();
+            $scope.isLoading = false;
+        },function(e){
+            alert('数据获取失败.');
+            $scope.isLoading = false;
+        });
+
+        /*
         $scope.isLoading = true;
         $http({
             header: {token: $rootScope.loginUser.token},
@@ -196,6 +218,48 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
                     alert('数据获取失败.');
                     $scope.isLoading = false;
                 });
+     */
+    };
+
+    $scope.pageCalc= function () {
+
+        $scope.pageStartNum = ($scope.pageIndex-1) * $scope.pageCount + 1;
+
+        if($scope.dataCount < $scope.pageCount)
+        {
+            $scope.pageFirstDisable = true;//首页
+            $scope.pagePrevDisable = true;//上一页
+            $scope.pageNextDisable = true;//下一页
+            $scope.pageLastDisable = true;//尾页
+        }
+
+        if($scope.dataCount - ($scope.pageIndex * $scope.pageCount)>0)
+        {
+            $scope.pageNextDisable = false;//下一页
+            $scope.pageLastDisable = false;//尾页
+        }
+        else
+        {
+            $scope.pageNextDisable = true;//下一页
+            $scope.pageLastDisable = true;//尾页
+        }
+        if((($scope.pageIndex-1) * $scope.pageCount + 1) > $scope.pageCount)
+        {
+            $scope.pageFirstDisable = false;//首页
+            $scope.pagePrevDisable = false;//上一页
+        }
+        else
+        {
+            $scope.pageFirstDisable = true;//首页
+            $scope.pagePrevDisable = true;//上一页
+        }
+
+        if($scope.pageIndex == 1)
+        {
+            $scope.pageFirstDisable = true;//首页
+            $scope.pagePrevDisable = true;//上一页
+        }
+
     };
 
     //查看家长
@@ -305,8 +369,68 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
 
     };
 
-    $scope.initList();
+
+
+    //分页查询
+    $scope.dataCount = 0;//数据总数
+    $scope.pageCount = 10;//每页显示10条数据
+    $scope.pageIndex = 1; //当前页数
+    $scope.pageStartNum = 1;//当前页开始序号
+    $scope.pageFirstDisable = true;//首页
+    $scope.pagePrevDisable = true;//上一页
+    $scope.pageNextDisable = true;//下一页
+    $scope.pageLastDisable = true;//尾页
+
+    //首页
+    $scope.firstPage = function(){
+        $scope.pageIndex = 1; //当前页数
+        $scope.pageStartNum = 1;//当前页开始序号
+
+        $scope.searchStu();
+    };
+    //尾页
+    $scope.lastPage = function(){
+        $scope.pageIndex = Math.ceil($scope.dataCount/$scope.pageCount);
+        $scope.searchStu();
+    };
+    //下一页
+    $scope.nextPage = function(){
+        $scope.pageIndex += 1; //当前页数
+
+        $scope.searchStu();
+    };
+    //上一页
+    $scope.prevPage = function() {
+        if ($scope.pageIndex > 1)
+            $scope.pageIndex -= 1; //当前页数
+
+        $scope.searchStu();
+    };
+
+
+    $scope.getDate=function(params,successFun,errorFun){
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $scope.serviceUrl,
+            params:params
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0 && successFun) {
+                        successFun(response);
+                    }
+                })
+            .error(
+                function (e) {
+                    errorFun(e);
+                });
+    };
+
+    //$scope.initList();
     $scope.classList();
+
+    $scope.searchStu();
 
 
 

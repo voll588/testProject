@@ -58,11 +58,11 @@
                     </tbody>
                 </table>
                 <div class="dataTables_paginate paging_full_numbers">
-                    <a class="paginate_button first">首页</a>
-                    <a class="paginate_button previous">上一页</a>
-                    <span><a class="paginate_button current">1</a></span>
-                    <a class="paginate_button next">下一页</a>
-                    <a class="paginate_button last">尾页</a></div>
+                    <button ng-disabled="pageFirstDisable" ng-click="firstPage()" class="">首页</button>
+                    <button ng-disabled="pagePrevDisable" ng-click="prevPage()" class=" ">上一页</button>
+                    <span>{{pageIndex}}</span>
+                    <button ng-disabled="pageNextDisable" ng-click="nextPage()" class=" ">下一页</button>
+                    <button ng-disabled="pageLastDisable" ng-click="lastPage()"  class=" ">尾页</button></div>
             </div>
         </div>
     </div>
