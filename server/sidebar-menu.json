@@ -112,8 +112,8 @@
         "sref": "app.adminList"
       },
       { "menu_id": 82,
-        "text": "系统信息设置",
-        "sref": "app.submenu"
+        "text": "周餐表信息",
+        "sref": "app.foodWeek"
       }
     ]
   }

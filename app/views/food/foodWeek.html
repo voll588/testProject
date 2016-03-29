@@ -1,10 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<h3>周餐费更新</h3>
+<div class="panel panel-default" ng-controller="FoodController">
+    <div class="panel-heading">本周餐表</div>
+    <div class="panel-body">
+        <form class="form-horizontal ng-pristine ng-valid" name="addFrom" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">周一套餐:</label>
+                    <div class="col-sm-3">
+                        <input name="foodMon" ng-model="food.foodMon" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">周二套餐:</label>
+                    <div class="col-sm-3">
+                        <input name="foodTue" ng-model="food.foodTue" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">周三套餐:</label>
+                    <div class="col-sm-3">
+                        <input name="foodWed" ng-model="food.foodWed" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">周四套餐:</label>
+                    <div class="col-sm-3">
+                        <input name="foodThu" ng-model="food.foodThu" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">周五套餐:</label>
+                    <div class="col-sm-3">
+                        <input name="foodFri" ng-model="food.foodFri" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="last-child">
+                    <div class="col-sm-5 col-sm-offset-2">
+                        <button class="btn btn-oval btn-primary" ng-click="updateFood()">更新</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="loading" ng-show="isLoading">
+        <div class="loading-center">
+            <div class="loading-center-absolute">
+                <div class="ball-spin-fade-loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

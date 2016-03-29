@@ -10,6 +10,8 @@ App.controller("DevicesController",['$rootScope','$scope','$filter','$http','$co
         $state.go('app.devicesAdd');
     };
 
+    $scope.imgUrl = $rootScope.imgUrl;
+
     $scope.videoList = [];
     $scope.getVideoList=function(){
         $scope.isLoading=true;

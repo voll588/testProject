@@ -38,7 +38,7 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
 
     //$rootScope.serviceUrl = "http://192.168.1.105:8080/NJService/api/admin";
     $rootScope.serviceUrl = "http://voll588.imwork.net:32635/NJService/api/admin";
-    $rootScope.imaUrl="http://voll588.imwork.net:32635/NJService/";
+    $rootScope.imgUrl="http://voll588.imwork.net:32635/NJService/";
     //$rootScope.imaUrl="http://192.168.1.105:8080/NJService/";
     // Scope Globals
     // ----------------------------------- 
@@ -262,6 +262,12 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           url:'/advice',
           title:'advice',
           templateUrl:helper.basepath('advice/adviceList.html'),
+          resolve: helper.resolveFor('loaders.css')
+      })
+      .state('app.foodWeek',{
+          url:'/food',
+          title:'food',
+          templateUrl:helper.basepath('food/foodWeek.html'),
           resolve: helper.resolveFor('loaders.css')
       })
 
