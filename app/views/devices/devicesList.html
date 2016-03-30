@@ -12,6 +12,7 @@
                         <tr>
                             <th class="text-center" style="white-space: nowrap">#序号</th>
                             <th class="text-center">设备名称</th>
+                            <th class="text-center">设备类型</th>
                             <th class="text-center">设备描述</th>
                             <th class="text-center">直播图片</th>
                             <th class="text-center">设备状态</th>
@@ -22,10 +23,21 @@
                         <tr ng-repeat="video in videoList">
                             <td>{{$index + 1}}</td>
                             <td>{{ video.videoName }}</td>
+                            <td>{{video.videoType?'自定义设备':'基础设备'}}</td>
                             <td>{{ video.videoDesc }}</td>
                             <td><a href="{{imgUrl + video.videoPic }}" target="_blank">直播图片</a></td>
                             <td>{{ video.videoState?'正常':'无效' }}</td>
                             <td><a href="{{video.videoUrl }}" target="_blank">直播源</a></td>
+                            <td style="white-space: nowrap">
+                                <div class="buttons">
+                                    <button type="button" ng-click="editDevice(video.videoId)" title="编辑" class="btn btn-sm btn-info">
+                                        <em class="fa fa-pencil"></em>
+                                    </button>
+                                    <button type="button" ng-click="delDevice(video)" title="删除" class="btn btn-sm btn-danger">
+                                        <em class="fa fa-trash-o"></em>
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

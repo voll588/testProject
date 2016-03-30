@@ -18,7 +18,7 @@ App.controller("FoodController",['$rootScope','$scope','$http','$cookieStore','$
             .success(
                 function (response) {
                     if (response && response.code == 0) {
-                        $scope.food = response.foodList[0];
+                        $scope.food = response.list;
                         $scope.isLoading = false;
                     }
                 }
@@ -35,13 +35,31 @@ App.controller("FoodController",['$rootScope','$scope','$http','$cookieStore','$
 
 
     $scope.updateFood = function(){
-
+        $scope.isLoading = true;
+        $http({
+            url: $rootScope.serviceUrl + '/foodWeek',
+            params: {
+                adminId: $rootScope.loginUser.adminId,
+                foodEntity:$scope.food
+            }
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.isLoading = false;
+                    }
+                }
+            )
+            .error(
+                function (e) {
+                    alert('数据更新失败.');
+                    $scope.isLoading = false;
+                }
+            )
     };
 
 
+
     $scope.getFoodWeek();
-
-
-
 
 }]);

@@ -238,7 +238,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           url:'/devices/Add',
           title:'devices',
           templateUrl:helper.basepath('devices/devicesAdd.html'),
-          resolve: helper.resolveFor('loaders.css','angularFileUpload','filestyle')
+          resolve: helper.resolveFor('loaders.css','angularFileUpload','filestyle','ui.select')
+      })
+      .state('app.devicesEdit',{
+          url:'/devices/Edit/{dId}',
+          title:'devices',
+          templateUrl:helper.basepath('devices/devicesEdit.html'),
+          resolve: helper.resolveFor('loaders.css','angularFileUpload','filestyle','ui.select')
       })
       .state('app.feeList',{
           url:'/fee',

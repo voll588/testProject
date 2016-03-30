@@ -11,10 +11,13 @@ App.controller("DevicesAddController",['$rootScope','$scope','$filter','$http','
         return $state.go('app.devicesList');
     };
 
+    $scope.videoType={};
+    $scope.videoTypeList=[{id:0,name:'基础设备'},{id:1,name:'自定义设备'}];
+
     $scope.saveVideo=function(){
       if($scope.addForm.$valid){
           $scope.isLoading =true;
-
+          $scope.video.videoType = $scope.videoType.selected.id;
           $http({
               //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','token': $rootScope.loginUser.token},
               method: 'POST',
@@ -38,6 +41,7 @@ App.controller("DevicesAddController",['$rootScope','$scope','$filter','$http','
                   });
       }
     };
+
 
 
 

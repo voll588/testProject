@@ -188,62 +188,136 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
     };
 
     //加载全部user
-    $scope.loadUserList=function(){
+    $scope.loadUserList=function() {
         $scope.isLoading = true;
-        $http({
-            method: 'POST',
-            url: $scope.serviceUrl+'/adminList',
-            params: {
-                adminId: $rootScope.loginUser.adminId
-            }
-        })
-            .success(
-                function(response){
-                    if(response && response.code==0){
-                        $scope.adminList=response.adminList;
-                        $scope.isLoading = false;
-                    }
-                })
-            .error(
-                function(e){
-                    alert('数据加载失败.');
-                    $scope.isLoading =false;
-                });
+
+        $scope.getDate(
+            {
+                adminId: $rootScope.loginUser.adminId,
+                cursor: ($scope.pageIndex - 1) * $scope.pageCount,
+                offset: $scope.pageCount
+            },
+            $scope.serviceUrl + '/adminList',
+            function (response) {
+                if (response && response.code == 0) {
+                    $scope.adminList = response.adminList;
+                    $scope.dataCount = response.count;
+                    $scope.pageCalc();
+                    $scope.isLoading = false;
+                }
+            }, function (e) {
+                alert('数据加载失败.');
+                $scope.isLoading = false;
+            });
     };
 
 
-    //搜索
-    $scope.searchAdmin=function(){
 
-        var params = '';
 
-        if($scope.searchContent){
-            params = {adminId: $rootScope.loginUser.adminId, className:$scope.searchContent};
+    //分页查询
+    $scope.dataCount = 0;//数据总数
+    $scope.pageCount = 10;//每页显示10条数据
+    $scope.pageIndex = 1; //当前页数
+    $scope.pageStartNum = 1;//当前页开始序号
+    $scope.pageFirstDisable = true;//首页
+    $scope.pagePrevDisable = true;//上一页
+    $scope.pageNextDisable = true;//下一页
+    $scope.pageLastDisable = true;//尾页
+
+    $scope.pageCalc= function () {
+
+        $scope.pageStartNum = ($scope.pageIndex-1) * $scope.pageCount + 1;
+
+        if($scope.dataCount < $scope.pageCount)
+        {
+            $scope.pageFirstDisable = true;//首页
+            $scope.pagePrevDisable = true;//上一页
+            $scope.pageNextDisable = true;//下一页
+            $scope.pageLastDisable = true;//尾页
         }
-        else{
-            params = {adminId: $rootScope.loginUser.adminId};
+
+        if($scope.dataCount - ($scope.pageIndex * $scope.pageCount)>0)
+        {
+            $scope.pageNextDisable = false;//下一页
+            $scope.pageLastDisable = false;//尾页
+        }
+        else
+        {
+            $scope.pageNextDisable = true;//下一页
+            $scope.pageLastDisable = true;//尾页
+        }
+        if((($scope.pageIndex-1) * $scope.pageCount + 1) > $scope.pageCount)
+        {
+            $scope.pageFirstDisable = false;//首页
+            $scope.pagePrevDisable = false;//上一页
+        }
+        else
+        {
+            $scope.pageFirstDisable = true;//首页
+            $scope.pagePrevDisable = true;//上一页
         }
 
-        $scope.isLoading = true;
+        if($scope.pageIndex == 1)
+        {
+            $scope.pageFirstDisable = true;//首页
+            $scope.pagePrevDisable = true;//上一页
+        }
+
+    };
+
+    //首页
+    $scope.firstPage = function(){
+        $scope.pageIndex = 1; //当前页数
+        $scope.pageStartNum = 1;//当前页开始序号
+
+        $scope.loadUserList();
+    };
+    //尾页
+    $scope.lastPage = function(){
+        $scope.pageIndex = Math.ceil($scope.dataCount/$scope.pageCount);
+        $scope.loadUserList();
+    };
+    //下一页
+    $scope.nextPage = function(){
+        $scope.pageIndex += 1; //当前页数
+
+        $scope.loadUserList();
+    };
+    //上一页
+    $scope.prevPage = function() {
+        if ($scope.pageIndex > 1)
+            $scope.pageIndex -= 1; //当前页数
+
+        $scope.loadUserList();
+    };
+
+    $scope.pageCountNumChange = function(){
+        $scope.pageIndex = 1;
+        $scope.pageStartNum = 1;
+        $scope.loadUserList();
+    };
+
+    //分页获取数据
+    $scope.getDate=function(params,url,successFun,errorFun){
         $http({
             header: {token: $rootScope.loginUser.token},
             method: 'POST',
-            url: $scope.serviceUrl+'/adminList',
+            url: url,
             params:params
         })
             .success(
                 function (response) {
-                    if (response && response.code == 0) {
-                        $scope.adminList = response.list;
-                        $scope.isLoading = false;
+                    if (response && response.code == 0 && successFun) {
+                        successFun(response);
                     }
                 })
             .error(
                 function (e) {
-                    alert('数据获取失败.');
-                    $scope.isLoading = false;
+                    errorFun(e);
                 });
     };
+
+
 
     $scope.loadUserList();
 }]);

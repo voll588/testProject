@@ -92,7 +92,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
             .success(
                 function (response) {
                     if (response && response.code == 0) {
-                        $scope.initList();
+                        $scope.searchStu();
                     }
                 })
             .error(
@@ -122,7 +122,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
             .success(
                 function (code) {
                     if (code && code == 0) {
-                        $scope.initList();
+                        $scope.searchStu();
                     }
                 })
             .error(
@@ -177,18 +177,18 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
                 adminId: $rootScope.loginUser.adminId,
                 stuId:$scope.searchContent,
                 cursor:($scope.pageIndex-1) * $scope.pageCount,
-                offset:$scope.pageIndex * $scope.pageCount
+                offset:$scope.pageCount
             };
         }
         else{
             params = {adminId: $rootScope.loginUser.adminId,
                 cursor:($scope.pageIndex-1) * $scope.pageCount,
-                offset:$scope.pageIndex * $scope.pageCount
+                offset: $scope.pageCount
             };
         }
 
         $scope.isLoading = true;
-        $scope.getDate(params,function(response){
+        $scope.getDate(params,$scope.serviceUrl,function(response){
             $scope.studentList =response.list;
             $scope.dataCount = response.count;
             $scope.pageCalc();
@@ -221,53 +221,12 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
      */
     };
 
-    $scope.pageCalc= function () {
-
-        $scope.pageStartNum = ($scope.pageIndex-1) * $scope.pageCount + 1;
-
-        if($scope.dataCount < $scope.pageCount)
-        {
-            $scope.pageFirstDisable = true;//首页
-            $scope.pagePrevDisable = true;//上一页
-            $scope.pageNextDisable = true;//下一页
-            $scope.pageLastDisable = true;//尾页
-        }
-
-        if($scope.dataCount - ($scope.pageIndex * $scope.pageCount)>0)
-        {
-            $scope.pageNextDisable = false;//下一页
-            $scope.pageLastDisable = false;//尾页
-        }
-        else
-        {
-            $scope.pageNextDisable = true;//下一页
-            $scope.pageLastDisable = true;//尾页
-        }
-        if((($scope.pageIndex-1) * $scope.pageCount + 1) > $scope.pageCount)
-        {
-            $scope.pageFirstDisable = false;//首页
-            $scope.pagePrevDisable = false;//上一页
-        }
-        else
-        {
-            $scope.pageFirstDisable = true;//首页
-            $scope.pagePrevDisable = true;//上一页
-        }
-
-        if($scope.pageIndex == 1)
-        {
-            $scope.pageFirstDisable = true;//首页
-            $scope.pagePrevDisable = true;//上一页
-        }
-
-    };
-
     //查看家长
     $scope.parents= function (stuId) {
         ngDialog.open({
             template:'studentParents',
             controller:['$rootScope','$scope','$http',function($rootScope,$scope,$http){
-                var parents=[
+               /* var parents=[
                     {
                         parentId:1,
                         parentName:'王爸爸',
@@ -292,8 +251,22 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
                         parentRelation:'奶奶',
                         parentPhone:'13813813838'
                     }
-                ];
-                $scope.parentsList=parents;
+                ];*/
+                $http({
+                    header: {token: $rootScope.loginUser.token},
+                    method: 'POST',
+                    url: $rootScope.serviceUrl+'/userInfoList',
+                    params: {
+                        adminId: $rootScope.loginUser.adminId,
+                        stuId:stuId
+                    }
+                })
+                    .success(
+                        function (response) {
+                            if (response && response.code == 0) {
+                                $scope.parentsList = response.list;
+                            }
+                        });
             }]
         });
     };
@@ -375,11 +348,55 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
     $scope.dataCount = 0;//数据总数
     $scope.pageCount = 10;//每页显示10条数据
     $scope.pageIndex = 1; //当前页数
+    $scope.pageLastIndex = 1;//总页数
     $scope.pageStartNum = 1;//当前页开始序号
     $scope.pageFirstDisable = true;//首页
     $scope.pagePrevDisable = true;//上一页
     $scope.pageNextDisable = true;//下一页
     $scope.pageLastDisable = true;//尾页
+
+    $scope.pageCalc= function () {
+
+        $scope.pageStartNum = ($scope.pageIndex-1) * $scope.pageCount + 1;
+
+        $scope.pageLastIndex = Math.ceil($scope.dataCount/$scope.pageCount);
+
+        if($scope.dataCount < $scope.pageCount)
+        {
+            $scope.pageFirstDisable = true;//首页
+            $scope.pagePrevDisable = true;//上一页
+            $scope.pageNextDisable = true;//下一页
+            $scope.pageLastDisable = true;//尾页
+        }
+
+        if($scope.dataCount - ($scope.pageIndex * $scope.pageCount)>0)
+        {
+            $scope.pageNextDisable = false;//下一页
+            $scope.pageLastDisable = false;//尾页
+        }
+        else
+        {
+            $scope.pageNextDisable = true;//下一页
+            $scope.pageLastDisable = true;//尾页
+        }
+        if((($scope.pageIndex-1) * $scope.pageCount + 1) > $scope.pageCount)
+        {
+            $scope.pageFirstDisable = false;//首页
+            $scope.pagePrevDisable = false;//上一页
+        }
+        else
+        {
+            $scope.pageFirstDisable = true;//首页
+            $scope.pagePrevDisable = true;//上一页
+        }
+
+        if($scope.pageIndex == 1)
+        {
+            $scope.pageFirstDisable = true;//首页
+            $scope.pagePrevDisable = true;//上一页
+        }
+
+    };
 
     //首页
     $scope.firstPage = function(){
@@ -406,13 +423,27 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
 
         $scope.searchStu();
     };
+    //跳页
+    $scope.pageIndexChange = function(){
+        if($scope.pageIndex<1 || $scope.pageIndex > $scope.pageLastIndex)
+        {
+            return;
+        }
+        $scope.searchStu();
+    };
+    //每页显示数量
+    $scope.pageCountNumChange = function(){
+        $scope.pageIndex = 1;
+        $scope.pageStartNum = 1;
+        $scope.searchStu();
+    };
 
-
-    $scope.getDate=function(params,successFun,errorFun){
+    //分页获取数据
+    $scope.getDate=function(params,url,successFun,errorFun){
         $http({
             header: {token: $rootScope.loginUser.token},
             method: 'POST',
-            url: $scope.serviceUrl,
+            url: url,
             params:params
         })
             .success(
