@@ -1,5 +1,3 @@
-<h3>管理员信息
-</h3>
 <div ng-controller="AdminListController">
    <div class="row btn-operation-div-bottom">
       <button class="btn btn-oval btn-success" ng-click="addAdmin()">添加</button>
@@ -104,14 +102,15 @@
             </tr>
             </tbody>
          </table>
-          <div class="form-inline" style="margin-top: 20px">
+          <div style="margin-top: 20px">
               <button ng-disabled="pageFirstDisable" ng-click="firstPage()" class="">首页</button>
               <button ng-disabled="pagePrevDisable" ng-click="prevPage()" class=" ">上一页</button>
-              <span>{{pageIndex}}</span>
+              第<input type="number" ng-model="pageIndex" ng-change="pageIndexChange()" style="width:30px;overflow-x:visible;overflow-y:visible;">页
               <button ng-disabled="pageNextDisable" ng-click="nextPage()" class=" ">下一页</button>
               <button ng-disabled="pageLastDisable" ng-click="lastPage()"  class=" ">尾页</button>
               每页:<input type="number" ng-model="pageCount" ng-change="pageCountNumChange()" style="width:30px;overflow-x:visible;overflow-y:visible;">条
-      </div>
+              &nbsp;共{{pageLastIndex}}页
+          </div>
    </div>
       <div class="loading" ng-show="isLoading">
       <div class="loading-center">

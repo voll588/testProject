@@ -10,33 +10,6 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
 
     $scope.classlist={};
 
-    $scope.initList=function() {
-        $scope.isLoading = true;
-        $http({
-            header: {token: $rootScope.loginUser.token},
-            method: 'POST',
-            url: $scope.serviceUrl,
-            params: {
-                adminId: $rootScope.loginUser.adminId
-            }
-        })
-            .success(
-                function (response) {
-                    if (response && response.code == 0) {
-                        $scope.classlist = response.list;
-                        $scope.isLoading = false;
-                    }
-                })
-            .error(
-                function (e) {
-                    alert('数据添加失败.');
-                    $scope.isLoading = false;
-                });
-    };
-
-
-
-
     //获取老师列表
     $scope.initTeachers=function(){
         $scope.isLoading = true;
@@ -142,7 +115,7 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
                     else if(response && response.code == 1){
                         alert(response.errorMessage);
                     }
-                    $scope.initList();
+                    $scope.initTeachers();
                     $scope.isLoading = false;
                 })
             .error(
@@ -276,13 +249,13 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
 
         $scope.initTeachers();
     };
-
+    //每页显示数量改变
     $scope.pageCountNumChange = function(){
         $scope.pageIndex = 1;
         $scope.pageStartNum = 1;
         $scope.initTeachers();
     };
-
+    //跳页
     $scope.pageIndexChange = function(){
         if($scope.pageIndex<1 || $scope.pageIndex > $scope.pageLastIndex)
         {
