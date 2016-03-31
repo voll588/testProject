@@ -14,11 +14,38 @@ App.controller("NoticeAddController",['$rootScope','$scope','$filter','$http','$
 
     $scope.serviceUrl = $rootScope.serviceUrl + '/noticeMge';
 
+    $scope.class={};
+    $scope.classList=[];
+    $scope.getClass=function(){
+        $http({
+            header: {token: $rootScope.loginUser.token},
+            method: 'POST',
+            url: $rootScope.serviceUrl+'/classList',
+            params: {
+                adminId: $rootScope.loginUser.adminId
+            }
+        })
+            .success(
+                function (response) {
+                    if (response && response.code == 0) {
+                        $scope.classList = response.list;
+                    }
+                })
+            .error(
+                function (e) {
+                    //alert('班级信息获取失败.');
+                });
+    };
 
     $scope.sendNotice=function(){
 
         if($scope.noticeForm.$valid){
             $scope.notice.noticeType = $scope.noticeType.selected.typeId;
+
+            if($scope.notice.noticeType == 2){
+                $scope.notice.classId = $scope.class.selected.classId;
+            }
+
             //发送通知
             $scope.isLoading =true;
             $http({
@@ -66,4 +93,8 @@ App.controller("NoticeAddController",['$rootScope','$scope','$filter','$http','$
     $scope.goBack=function(){
         $state.go('app.noticeList');
     };
+
+
+
+    $scope.getClass();
 }]);

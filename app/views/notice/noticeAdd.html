@@ -31,6 +31,19 @@
                     </div>
                 </div>
             </fieldset>
+            <fieldset ng-if="noticeType.selected.typeId ==2">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">班级:</label>
+                    <div class="col-sm-3">
+                        <ui-select ng-model="class.selected" theme="bootstrap" class="text-left" required="">
+                            <ui-select-match placeholder="选择班级">{{$select.selected.className }}</ui-select-match>
+                            <ui-select-choices repeat="class in classList | filter: $select.search">
+                                <span ng-bind-html="class.className | highlight: $select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </fieldset>
             <fieldset>
                 <div class="form-group">
                     <label class="col-md-2 control-label">发送人:</label>

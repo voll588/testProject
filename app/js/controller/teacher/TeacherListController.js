@@ -76,7 +76,7 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
         if($scope.searchContent){
             params = {
                 adminId: $rootScope.loginUser.adminId,
-                stuId:$scope.searchContent,
+                teacherName:$scope.searchContent,
                 cursor:($scope.pageIndex-1) * $scope.pageCount,
                 offset:$scope.pageCount
             };
