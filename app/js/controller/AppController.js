@@ -144,6 +144,7 @@ App.controller('AppController',
                         });
 
                 $cookieStore.remove('loginUser');
+                $cookieStore.remove('menuRole');
                 $state.go('login');
             };
 

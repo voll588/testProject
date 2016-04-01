@@ -31,6 +31,7 @@ App.controller('LoginFormController', ['$rootScope','$scope', '$http', '$state',
                         //expireDate.setDate(expireDate.getHours()+8);
                         //$cookieStore.put('loginCookie',$scope.loginUser,{'expires': expireDate});
                         $cookieStore.put('loginUser', {adminId:response.adminId,nickName:response.nickName,adminRoleId:response.roleId,token:response.token});
+                        $cookieStore.put('menuRole', response.roleList);
                         $state.go('app.dashboard');
                     }
                     else {

@@ -14,6 +14,7 @@
                     <tr>
                         <th>#学号</th>
                         <th>姓名</th>
+                        <th>类型</th>
                         <th>班级</th>
                         <th>老师</th>
                         <th>家长</th>
@@ -28,6 +29,7 @@
                         <td class="text-center"><a class="ng-scope ng-binding editable editable-click" href="#" ng-click="showStuDetail(stu.stuId)">{{ stu.stuId }}</a></td>
                         <td>{{ stu.stuName }}</td>
                         <td>{{stu.className}}</td>
+                        <td>{{stu.stuType == '02'?'业主':'普通'}}</td>
                         <td>{{stu.teacherName}}</td>
                         <!--{{ stu.stuParent }}-->
                         <td><button type="button" ng-show="true" class="btn btn-default" ng-click="parents(stu.stuId)">查看</button>

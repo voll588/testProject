@@ -7,8 +7,8 @@
  * Handle sidebar collapsible elements
  =========================================================*/
 
-App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', '$timeout', 'Utils',
-    function($rootScope, $scope, $state, $http, $timeout, Utils){
+App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', '$timeout', 'Utils','$filter',
+    function($rootScope, $scope, $state, $http, $timeout, Utils,$filter){
 
         var collapseList = [];
 
@@ -102,6 +102,10 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 
         function isChild($index) {
             return (typeof $index === 'string') && !($index.indexOf('-') < 0);
+        }
+
+        $scope.roleMenu = function(item){
+           return $filter('filter')($rootScope.roleList,{menuId: item.menu_id}).length > 0;
         }
 
     }]);

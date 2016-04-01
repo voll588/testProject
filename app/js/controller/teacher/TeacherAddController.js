@@ -41,32 +41,6 @@ App.controller('TeacherAddController',['$rootScope','$scope','$state','$http','F
     };
 
 
-    //图片上传 begin
-    $scope.reset = function() {
-        $scope.myImage        = '';
-        $scope.myCroppedImage = '';
-        $scope.imgcropType    = "square";
-    };
-
-    $scope.reset();
-
-    var handleFileSelect=function(evt) {
-        var file=evt.currentTarget.files[0];
-        var reader = new FileReader();
-        reader.onload = function (evt) {
-            $scope.$apply(function($scope){
-                $scope.myImage=evt.target.result;
-            });
-        };
-        if(file)
-            reader.readAsDataURL(file);
-    };
-
-    angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
-    //图片上传 end
-
-
-
     //文件上传
     var uploaderPic = $scope.uploaderPic = new FileUploader({
         url: $rootScope.serviceUrl+'/upload?type=TT',

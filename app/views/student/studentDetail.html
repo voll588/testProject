@@ -14,6 +14,19 @@
             </fieldset>
             <fieldset>
                 <div class="form-group">
+                    <label class="col-lg-2 control-label">类型:</label>
+                    <div class="col-sm-2">
+                        <ui-select ng-model="stuType.selected" theme="bootstrap" class="text-left">
+                            <ui-select-match placeholder="选择状态">{{$select.selected.typeName }}</ui-select-match>
+                            <ui-select-choices repeat="stuType in stuTypeList | filter: $select.search">
+                                <span ng-bind-html="stuType.typeName | highlight: $select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
                     <label class="col-sm-2 control-label">班级:</label>
                     <div class="col-sm-3">
                         <ui-select ng-model="class.selected" theme="bootstrap" class="text-left" required="">
@@ -28,7 +41,7 @@
             <fieldset ng-show="!isAdd">
                 <div class="form-group">
                     <label class="col-lg-2 control-label">状态:</label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <ui-select ng-model="state.selected" theme="bootstrap" class="text-left">
                             <ui-select-match placeholder="选择状态">{{$select.selected.name }}</ui-select-match>
                             <ui-select-choices repeat="state in stateList | filter: $select.search">

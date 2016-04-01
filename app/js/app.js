@@ -87,7 +87,8 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
     $rootScope.checkUser=function(){
 
         $rootScope.loginUser = $cookieStore.get('loginUser');
-        if(!$rootScope.loginUser) {
+        $rootScope.roleList = $cookieStore.get('menuRole');
+        if(!$rootScope.loginUser || !$rootScope.roleList) {
             $state.go("login");
         }
     };

@@ -5,7 +5,6 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
 
     $rootScope.checkUser();
 
-    $rootScope.isLoading = true;
     $scope.opType = '';
     $scope.stuId = $stateParams.stuId;
     $scope.optType=$stateParams.opType;
@@ -24,6 +23,7 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
 
     //
     $scope.getStuDetail=function(){
+        $rootScope.isLoading = true;
         $http({
             header: {token: $rootScope.loginUser.token},
             method: 'POST',
@@ -45,6 +45,8 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                         $scope.state.selected = $filter('filter')($scope.stateList,{value:$scope.stu.stuState})[0];
                         //班级选择
                         $scope.class.selected = $filter('filter')($scope.classList,{className:$scope.stu.className})[0];
+                        //学生类型
+                        $scope.stuType.selected = $filter('filter')($scope.stuTypeList,{typeId:$scope.stu.stuType})[0];
                         $rootScope.isLoading = false;
                     }
                 })
@@ -69,6 +71,7 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
             $scope.stu.classId = $scope.class.selected.classId;
             if(!$scope.isAdd) {
                 $scope.stu.stuState = $scope.state.selected.value;
+                $scope.stu.stuType = $scope.stuType.selected.typeId;
             }
 
             $http({
@@ -84,6 +87,7 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                 .success(
                     function (response) {
                         if (response && response.code == 0) {
+                            $scope.isLoading = false;
                             $scope.goBack();
                         }
                     })
@@ -130,6 +134,10 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                     $scope.isLoading = false;
                 });
     };
+
+    //学生类型
+    $scope.stuType={};
+    $scope.stuTypeList=[{typeId:'01',typeName:'普通'},{typeId:'02',typeName:'业主'}];
 
 
     $scope.stu = {};
