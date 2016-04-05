@@ -98,6 +98,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
             $scope.newAdmin.adminRoleId =  $scope.roleSelected.value;
 
             $http({
+                headers: {token: $rootScope.loginUser.token},
                 method: 'POST',
                 url: $scope.serviceUrl+'/adminMge',
                 params: {
@@ -151,6 +152,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
         $scope.isLoading = true;
 
         $http({
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $scope.serviceUrl + '/adminMge',
             params: {
@@ -312,7 +314,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
     //分页获取数据
     $scope.getDate=function(params,url,successFun,errorFun){
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: url,
             params:params

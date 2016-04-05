@@ -23,6 +23,7 @@ App.controller("ClassEditController",['$rootScope','$scope','$filter','$http','$
     $scope.initTeacherList=function(){
         $scope.isLoading = true;
         $http({
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $scope.serviceUrl+'/teacherList',
             params: {
@@ -51,6 +52,7 @@ App.controller("ClassEditController",['$rootScope','$scope','$filter','$http','$
         }
         $scope.isLoading = true;
         $http({
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $scope.serviceUrl+'/classList',
             params: {
@@ -85,6 +87,7 @@ App.controller("ClassEditController",['$rootScope','$scope','$filter','$http','$
             $scope.class.classState = $scope.state.selected.id;
 
             $http({
+                headers: {token: $rootScope.loginUser.token},
                 method: 'POST',
                 url: $scope.serviceUrl+'/classMge',
                 params: {

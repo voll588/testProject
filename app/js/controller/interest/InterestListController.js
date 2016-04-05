@@ -17,7 +17,7 @@ App.controller("InterestListController",['$rootScope','$scope','$filter','$http'
     $scope.delInterest=function(int){
         $scope.isLoading = true;
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl+'/interestMge',
             params: {
@@ -86,7 +86,7 @@ App.controller("InterestListController",['$rootScope','$scope','$filter','$http'
         $scope.isLoading = true;
 
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl+'/feeList',
             params: {
@@ -207,7 +207,7 @@ App.controller("InterestListController",['$rootScope','$scope','$filter','$http'
     //分页获取数据
     $scope.getDate=function(params,url,successFun,errorFun){
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: url,
             params:params

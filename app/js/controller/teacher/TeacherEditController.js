@@ -30,7 +30,7 @@ App.controller('TeacherEditController',['$rootScope','$scope','$stateParams','$h
         $scope.isLoading = true;
 
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $scope.serviceUrl + '/teacherList',
             params: {
@@ -57,7 +57,7 @@ App.controller('TeacherEditController',['$rootScope','$scope','$stateParams','$h
             $scope.isLoading =true;
 
             $http({
-                //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','token': $rootScope.loginUser.token},
+                headers: {token: $rootScope.loginUser.token},
                 method: 'POST',
                 url: $rootScope.serviceUrl+'/teacherMge',
                 params: {

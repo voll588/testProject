@@ -18,7 +18,7 @@ App.controller("NoticeAddController",['$rootScope','$scope','$filter','$http','$
     $scope.classList=[];
     $scope.getClass=function(){
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl+'/classList',
             params: {
@@ -49,6 +49,7 @@ App.controller("NoticeAddController",['$rootScope','$scope','$filter','$http','$
             //发送通知
             $scope.isLoading =true;
             $http({
+                headers: {token: $rootScope.loginUser.token},
                 method: 'POST',
                 url: $rootScope.serviceUrl+'/sendMsg',
                 params: {

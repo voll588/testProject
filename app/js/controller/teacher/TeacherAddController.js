@@ -12,7 +12,7 @@ App.controller('TeacherAddController',['$rootScope','$scope','$state','$http','F
             $scope.isLoading =true;
 
             $http({
-                //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','token': $rootScope.loginUser.token},
+                headers: {token: $rootScope.loginUser.token},
                 method: 'POST',
                 url: $rootScope.serviceUrl+'/teacherMge',
                 params: {

@@ -17,7 +17,7 @@ App.controller("DevicesController",['$rootScope','$scope','$filter','$http','$co
     $scope.delDevice=function(dev){
         $scope.isLoading =true;
         $http({
-            //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','token': $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl+'/videoMge',
             params: {
@@ -161,7 +161,7 @@ App.controller("DevicesController",['$rootScope','$scope','$filter','$http','$co
     //分页获取数据
     $scope.getDate=function(params,url,successFun,errorFun){
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: url,
             params:params

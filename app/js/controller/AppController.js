@@ -126,7 +126,7 @@ App.controller('AppController',
             $scope.quit=function(){
 
                 $http({
-                    header: {token: $rootScope.loginUser.token},
+                    headers: {token: $rootScope.loginUser.token},
                     method: 'POST',
                     url: $rootScope.serviceUrl+'/logout',
                     params: {

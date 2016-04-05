@@ -12,7 +12,7 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
     $scope.initList=function() {
         $scope.isLoading=true;
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $scope.serviceUrl,
             params: {
@@ -40,7 +40,7 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
     $scope.delTeacher=function(teacher){
         $scope.isLoading = true;
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl+'/teacherMge',
             params: {
@@ -201,7 +201,7 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
     //分页获取数据
     $scope.getDate=function(params,url,successFun,errorFun){
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: url,
             params:params

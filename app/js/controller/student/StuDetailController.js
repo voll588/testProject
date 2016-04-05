@@ -25,7 +25,7 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
     $scope.getStuDetail=function(){
         $rootScope.isLoading = true;
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $scope.serviceUrl+'/studentList',
             params: {
@@ -75,7 +75,7 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
             }
 
             $http({
-                //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','token': $rootScope.loginUser.token},
+                headers: {token: $rootScope.loginUser.token},
                 method: 'POST',
                 url: $rootScope.serviceUrl+'/studentMge',
                 params: {
@@ -109,7 +109,7 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
     $scope.getClassList=function(){
         $scope.isLoading = true;
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl+'/classList',
             params: {

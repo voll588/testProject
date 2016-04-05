@@ -16,6 +16,7 @@ App.controller("FeeAddController",['$rootScope','$scope','$filter','$http','$coo
             $scope.isLoading = true;
             $scope.fee.psType = 'other';
             $http({
+                headers: {token: $rootScope.loginUser.token},
                 method: 'POST',
                 url: $rootScope.serviceUrl+'/feeMge',
                 params: {

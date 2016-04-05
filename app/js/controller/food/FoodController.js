@@ -10,6 +10,7 @@ App.controller("FoodController",['$rootScope','$scope','$http','$cookieStore','$
     $scope.getFoodWeek = function() {
         $scope.isLoading = true;
         $http({
+            headers: {token: $rootScope.loginUser.token},
             url: $rootScope.serviceUrl + '/foodWeek',
             params: {
                 adminId: $rootScope.loginUser.adminId
@@ -37,6 +38,7 @@ App.controller("FoodController",['$rootScope','$scope','$http','$cookieStore','$
     $scope.updateFood = function(){
         $scope.isLoading = true;
         $http({
+            headers: {token: $rootScope.loginUser.token},
             url: $rootScope.serviceUrl + '/foodWeek',
             params: {
                 adminId: $rootScope.loginUser.adminId,

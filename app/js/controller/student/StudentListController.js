@@ -13,7 +13,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
     $scope.initList=function() {
         $scope.isLoading = true;
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $scope.serviceUrl,
             params: {
@@ -40,7 +40,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
     $scope.classList=function(){
         $scope.isLoading = true;
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl+'/classList',
             params: {
@@ -80,7 +80,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
         }
 
         $http({
-            //headers: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl+'/studentMge',
             params: {
@@ -110,7 +110,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
         }
 
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl+'/studentMge',
             params: {
@@ -253,7 +253,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
                     }
                 ];*/
                 $http({
-                    header: {token: $rootScope.loginUser.token},
+                    headers: {token: $rootScope.loginUser.token},
                     method: 'POST',
                     url: $rootScope.serviceUrl+'/userInfoList',
                     params: {
@@ -316,7 +316,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
                     $scope.stuInviteCode = '参数错误!';
                 }
                 $http({
-                    header: {token: $rootScope.loginUser.token},
+                    headers: {token: $rootScope.loginUser.token},
                     method: 'POST',
                     url: $rootScope.serviceUrl+'/inkey',
                     params: {
@@ -441,7 +441,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
     //分页获取数据
     $scope.getDate=function(params,url,successFun,errorFun){
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: url,
             params:params

@@ -24,6 +24,7 @@ App.controller("AdminAddController",['$rootScope','$scope','$filter','$http','$c
             $scope.admin.adminRoleId = $scope.role.selected.value;
 
             $http({
+                headers: {token: $rootScope.loginUser.token},
                 method: 'POST',
                 url: $scope.serviceUrl+'/adminMge',
                 params: {

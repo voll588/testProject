@@ -16,6 +16,7 @@ App.controller("InterestEditController",['$rootScope','$scope','$filter','$http'
     $scope.initTeacherList=function(){
         $scope.isLoading =true;
         $http({
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl+'/teacherList',
             params: {
@@ -43,6 +44,7 @@ App.controller("InterestEditController",['$rootScope','$scope','$filter','$http'
     $scope.initFeeList=function(){
         $scope.isLoading =true;
         $http({
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl+'/feeList',
             params: {
@@ -71,7 +73,7 @@ App.controller("InterestEditController",['$rootScope','$scope','$filter','$http'
         $scope.isLoading = true;
 
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl + '/interestList',
             params: {
@@ -105,6 +107,7 @@ App.controller("InterestEditController",['$rootScope','$scope','$filter','$http'
             $scope.interest.teacherId = $scope.teacher.selected.teacherId;
 
             $http({
+                headers: {token: $rootScope.loginUser.token},
                 method: 'POST',
                 url: $rootScope.serviceUrl+'/interestMge',
                 params: {

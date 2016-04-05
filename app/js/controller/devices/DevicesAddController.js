@@ -19,7 +19,7 @@ App.controller("DevicesAddController",['$rootScope','$scope','$filter','$http','
           $scope.isLoading =true;
           $scope.video.videoType = $scope.videoType.selected.id;
           $http({
-              //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','token': $rootScope.loginUser.token},
+              headers: {token: $rootScope.loginUser.token},
               method: 'POST',
               url: $rootScope.serviceUrl+'/videoMge',
               params: {

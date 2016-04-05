@@ -141,7 +141,7 @@ App.controller("AdviceListController",['$rootScope','$scope','$filter','$http','
     //分页获取数据
     $scope.getDate=function(params,url,successFun,errorFun){
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: url,
             params:params

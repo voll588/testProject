@@ -14,6 +14,7 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
     $scope.initTeachers=function(){
         $scope.isLoading = true;
         $http({
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl + '/teacherList',
             params: {
@@ -99,6 +100,7 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
         cla.classState = 0;
 
         $http({
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl+'/classMge',
             params: {
@@ -267,7 +269,7 @@ App.controller("ClassListController",['$rootScope','$scope','$filter','$http','$
     //分页获取数据
     $scope.getDate=function(params,url,successFun,errorFun){
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: url,
             params:params

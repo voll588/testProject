@@ -16,6 +16,7 @@ App.controller("ClassAddController",['$rootScope','$scope','$filter','$http','$c
     $scope.initTeacherList=function(){
 
         $http({
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $scope.serviceUrl+'/teacherList',
             params: {
@@ -46,6 +47,7 @@ App.controller("ClassAddController",['$rootScope','$scope','$filter','$http','$c
             $scope.class.teacherId = $scope.teacher.selected.teacherId;
 
             $http({
+                headers: {token: $rootScope.loginUser.token},
                 method: 'POST',
                 url: $scope.serviceUrl+'/classMge',
                 params: {

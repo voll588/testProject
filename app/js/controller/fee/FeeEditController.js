@@ -18,6 +18,7 @@ App.controller("FeeEditController",['$rootScope','$scope','$filter','$http','$co
         if($scope.addForm.$valid){
             $scope.isLoading = true;
             $http({
+                headers: {token: $rootScope.loginUser.token},
                 method: 'POST',
                 url: $rootScope.serviceUrl+'/feeMge',
                 params: {
@@ -55,7 +56,7 @@ App.controller("FeeEditController",['$rootScope','$scope','$filter','$http','$co
         $scope.isLoading = true;
 
         $http({
-            header: {token: $rootScope.loginUser.token},
+            headers: {token: $rootScope.loginUser.token},
             method: 'POST',
             url: $rootScope.serviceUrl + '/feeList',
             params: {
