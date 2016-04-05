@@ -120,7 +120,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url: '/app',
         templateUrl: helper.basepath('app.html'),
         controller: 'AppController',
-        resolve: helper.resolveFor('modernizr', 'icons')
+        resolve: helper.resolveFor('modernizr', 'icons','ngDialog')
     })
     .state('app.dashboard', {
         url: '/dashboard',

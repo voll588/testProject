@@ -8,8 +8,8 @@
  =========================================================*/
 
 App.controller('AppController',
-    ['$rootScope', '$scope', '$state', '$translate', '$window', '$localStorage', '$timeout', 'toggleStateService', 'colors', 'browser', 'cfpLoadingBar','$cookieStore','$http',
-        function($rootScope, $scope, $state, $translate, $window, $localStorage, $timeout, toggle, colors, browser, cfpLoadingBar,$cookieStore,$http) {
+    ['$rootScope', '$scope', '$state', '$translate', '$window', '$localStorage', '$timeout', 'toggleStateService', 'colors', 'browser', 'cfpLoadingBar','$cookieStore','$http','ngDialog',
+        function($rootScope, $scope, $state, $translate, $window, $localStorage, $timeout, toggle, colors, browser, cfpLoadingBar,$cookieStore,$http,ngDialog) {
             "use strict";
 
             // Setup the layout mode
@@ -124,28 +124,34 @@ App.controller('AppController',
 
 
             $scope.quit=function(){
+                ngDialog.openConfirm({
+                    template: "<p>确定退出后台管理系统?</p><div><button type='button' class='btn btn-default' ng-click='closeThisDialog(0)'>取消<button type='button' class='btn btn-primary' ng-click='confirm(1)'>确定</button></div>",
+                    plain: true,
+                    className: 'ngdialog-theme-default'
+                }).then(function (value) {
+                    $http({
+                        headers: {token: $rootScope.loginUser.token},
+                        method: 'POST',
+                        url: $rootScope.serviceUrl+'/logout',
+                        params: {
+                            adminId: $rootScope.loginUser.adminId
+                        }
+                    })
+                        .success(
+                            function (response) {
+                                if (response && response.code == 2) {
+                                }
+                            })
+                        .error(
+                            function (e) {
+                                alert(e);
+                            });
 
-                $http({
-                    headers: {token: $rootScope.loginUser.token},
-                    method: 'POST',
-                    url: $rootScope.serviceUrl+'/logout',
-                    params: {
-                        adminId: $rootScope.loginUser.adminId
-                    }
-                })
-                    .success(
-                        function (response) {
-                            if (response && response.code == 2) {
-                            }
-                        })
-                    .error(
-                        function (e) {
-                            alert(e);
-                        });
+                    $cookieStore.remove('loginUser');
+                    $cookieStore.remove('menuRole');
+                    $state.go('login');
+                });
 
-                $cookieStore.remove('loginUser');
-                $cookieStore.remove('menuRole');
-                $state.go('login');
             };
 
         }]);
