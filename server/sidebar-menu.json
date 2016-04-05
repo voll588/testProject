@@ -62,6 +62,11 @@
       { "menu_id": 51,
         "text": "费用信息管理",
         "sref": "app.feeList"
+      },
+      {
+        "menu_id":52,
+        "text":"缴费信息查询",
+        "sref":"app.payInfo"
       }
     ]
   },

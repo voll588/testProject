@@ -277,6 +277,12 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           templateUrl:helper.basepath('food/foodWeek.html'),
           resolve: helper.resolveFor('loaders.css')
       })
+      .state('app.payInfo',{
+          url:'/payInfo',
+          title:'payInfo',
+          templateUrl:helper.basepath('pay/payInfoList.html'),
+          resolve: helper.resolveFor('loaders.css')
+      })
 
     // 
     // CUSTOM RESOLVES
