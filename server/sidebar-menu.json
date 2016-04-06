@@ -96,11 +96,17 @@
   },
   {
     "menu_id": 10,
-    "text": "意见建议",
+    "text": "餐表&建议",
     "sref": "#",
     "icon": "icon-folder",
     "submenu": [
-      { "menu_id": 101,
+      {
+        "menu_id": 101,
+        "text": "周餐表信息",
+        "sref": "app.foodWeek"
+      },
+      {
+        "menu_id": 102,
         "text": "建议信息管理",
         "sref": "app.adviceList"
       }
@@ -115,10 +121,6 @@
       { "menu_id": 71,
         "text": "管理员信息",
         "sref": "app.adminList"
-      },
-      { "menu_id": 72,
-        "text": "周餐表信息",
-        "sref": "app.foodWeek"
       }
     ]
   }
