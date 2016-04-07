@@ -2,43 +2,100 @@
     <div class="panel-heading">本周餐表</div>
     <div class="panel-body">
         <form class="form-horizontal ng-pristine ng-valid" name="addFrom" novalidate>
+            <!--
             <fieldset>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">周一套餐:</label>
-                    <div class="col-sm-5">
-                        <input name="foodMon" ng-model="food.foodMon" class="form-control" type="text" required>
+                    <div class="col-lg-9">
+                        <div class="col-md-3">
+                            <input name="foodMon" ng-model="food.foodMon" placeholder="早" class="form-control" type="text" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input placeholder="中" class="form-control" type="text">
+                        </div>
+                        <div class="col-md-3">
+                            <input placeholder="晚" class="form-control" type="text">
+                        </div>
                     </div>
                 </div>
             </fieldset>
             <fieldset>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">周二套餐:</label>
-                    <div class="col-sm-5">
-                        <input name="foodTue" ng-model="food.foodTue" class="form-control" type="text" required>
+                    <div class="col-lg-9">
+                        <div class="col-md-3">
+                            <input name="foodTue" ng-model="food.foodTue" placeholder="早" class="form-control" type="text" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input placeholder="中" class="form-control" type="text">
+                        </div>
+                        <div class="col-md-3">
+                            <input placeholder="晚" class="form-control" type="text">
+                        </div>
                     </div>
                 </div>
             </fieldset>
             <fieldset>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">周三套餐:</label>
-                    <div class="col-sm-5">
-                        <input name="foodWed" ng-model="food.foodWed" class="form-control" type="text" required>
+                    <div class="col-lg-9">
+                        <div class="col-md-3">
+                            <input name="foodWed" ng-model="food.foodWed" placeholder="早" class="form-control" type="text" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input placeholder="中" class="form-control" type="text">
+                        </div>
+                        <div class="col-md-3">
+                            <input placeholder="晚" class="form-control" type="text">
+                        </div>
                     </div>
                 </div>
             </fieldset>
             <fieldset>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">周四套餐:</label>
-                    <div class="col-sm-5">
-                        <input name="foodThu" ng-model="food.foodThu" class="form-control" type="text" required>
+                    <div class="col-lg-9">
+                        <div class="col-md-3">
+                            <input name="foodThu" ng-model="food.foodThu" placeholder="早" class="form-control" type="text" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input placeholder="中" class="form-control" type="text">
+                        </div>
+                        <div class="col-md-3">
+                            <input placeholder="晚" class="form-control" type="text">
+                        </div>
                     </div>
                 </div>
             </fieldset>
             <fieldset>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">周五套餐:</label>
-                    <div class="col-sm-5">
-                        <input name="foodFri" ng-model="food.foodFri" class="form-control" type="text" required>
+                    <div class="col-lg-9">
+                        <div class="col-md-3">
+                            <input name="foodFri" ng-model="food.foodFri" placeholder="早" class="form-control" type="text" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input placeholder="中" class="form-control" type="text">
+                        </div>
+                        <div class="col-md-3">
+                            <input placeholder="晚" class="form-control" type="text">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>-->
+            <fieldset ng-repeat="food in foodList">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{food.Day}}:</label>
+                    <div class="col-lg-9">
+                        <div class="col-md-3">
+                                <input ng-model="food.foods.foodB" placeholder="早" class="form-control" type="text" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input  ng-model="food.foods.foodL" placeholder="中" class="form-control" type="text">
+                        </div>
+                        <div class="col-md-3">
+                            <input  ng-model="food.foods.foodD" placeholder="晚" class="form-control" type="text">
+                        </div>
                     </div>
                 </div>
             </fieldset>

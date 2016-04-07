@@ -11,8 +11,8 @@ App.controller("PayInfoListController",['$rootScope','$scope','$filter','$http',
     $scope.serviceUrl = $rootScope.serviceUrl + '/payInfoList';
 
     $scope.exportReport = function(){
-
-        $scope.isLoading = true;
+            window.open($rootScope.serviceUrl + '/reportList?adminId='+$rootScope.loginUser.adminId);
+        /*$scope.isLoading = true;
         $http({
             headers: {token: $rootScope.loginUser.token},
             method: 'POST',
@@ -28,7 +28,7 @@ App.controller("PayInfoListController",['$rootScope','$scope','$filter','$http',
                     alert('导出失败.');
                     $scope.isLoading = false;
                 });
-
+*/
 
     };
 
