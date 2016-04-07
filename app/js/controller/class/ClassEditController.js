@@ -37,6 +37,11 @@ App.controller("ClassEditController",['$rootScope','$scope','$filter','$http','$
                         $scope.getClassDetail();
                         $scope.isLoading = false;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
                 })
             .error(
                 function(e){
@@ -67,6 +72,11 @@ App.controller("ClassEditController",['$rootScope','$scope','$filter','$http','$
                         $scope.teacher.selected = $filter('filter')($scope.teacherList,{teacherId:$scope.class.teacherId})[0];
                         $scope.state.selected = $filter('filter')($scope.stateList,$scope.class.classState,'id')[0];
                         $scope.isLoading = false;
+                    }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
                     }
                 })
             .error(
@@ -103,6 +113,11 @@ App.controller("ClassEditController",['$rootScope','$scope','$filter','$http','$
                         }
                         else if(response.code && response.code == 1){
                             alert(response.errorMessage);
+                        }
+                        else if (response && response.code != 0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
                         }
                         else{
                             alert('操作失败.');

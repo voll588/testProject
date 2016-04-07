@@ -30,6 +30,11 @@ App.controller("ClassAddController",['$rootScope','$scope','$filter','$http','$c
                         $scope.teacher.selected = $filter('filter')($scope.teacherList,$scope.class.teacherId,'value')[0];
                         $scope.isLoading = false;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
                 })
             .error(
                 function(e){
@@ -59,20 +64,20 @@ App.controller("ClassAddController",['$rootScope','$scope','$filter','$http','$c
                 .success(
                     function(response) {
                         if (response && response.code == 0) {
+                            $scope.isLoading = false;
                             $scope.goBack();
                         }
-                        else{
-                            alert(code);
+                        else if (response && response.code != 0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
                         }
-                        $scope.isLoading = false;
                     })
                 .error(
                     function(e){
                         alert('添加失敗.');
                         $scope.isLoading = false;
                     });
-
-
         }
         else{
             $scope.addFrom.className.$dirty=true;

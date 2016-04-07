@@ -30,10 +30,13 @@ App.controller("FeeEditController",['$rootScope','$scope','$filter','$http','$co
                 .success(
                     function(response) {
                         if (response && response.code == 0) {
+                            $scope.isLoading = false;
                             $scope.goBack();
                         }
-                        else{
-                            alert(code);
+                        else if (response && response.code != 0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
                         }
                         $scope.isLoading = false;
                     })
@@ -70,6 +73,12 @@ App.controller("FeeEditController",['$rootScope','$scope','$filter','$http','$co
                         $scope.fee = response.list[0];
                         $scope.isLoading = false;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
+                    $scope.isLoading = false;
                 })
             .error(
                 function (e) {

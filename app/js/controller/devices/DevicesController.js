@@ -1,7 +1,7 @@
 /**
  * Created by lost on 2016/3/26.
  */
-App.controller("DevicesController",['$rootScope','$scope','$filter','$http','$cookieStore','$state','$route',function($rootScope,$scope,$filter,$http,$cookieStore,$state,$route){
+App.controller("DevicesController",['$rootScope','$scope','$filter','$http','$cookieStore','$state','$route','ngDialog',function($rootScope,$scope,$filter,$http,$cookieStore,$state,$route,ngDialog){
 
 
     $rootScope.checkUser();
@@ -15,48 +15,67 @@ App.controller("DevicesController",['$rootScope','$scope','$filter','$http','$co
     };
 
     $scope.delDevice=function(dev){
-        $scope.isLoading =true;
-        $http({
-            headers: {token: $rootScope.loginUser.token},
-            method: 'POST',
-            url: $rootScope.serviceUrl+'/videoMge',
-            params: {
-                adminId: $rootScope.loginUser.adminId,
-                videoEntity: dev,
-                opType:  'del'
-            }
-        })
-            .success(
-                function (response) {
-                    if (response && response.code == 0) {
+
+        ngDialog.openConfirm({
+            template: "<p>确定要删除所选设备?</p><div><button type='button' class='btn btn-default btn-confirm' ng-click='closeThisDialog(0)'>取消</button><button type='button' class='btn btn-primary' ng-click='confirm(1)'>确定</button></div>",
+            plain: true,
+            className: 'ngdialog-theme-default'
+        }).then(function (value) {
+            $scope.isLoading = true;
+            $http({
+                headers: {token: $rootScope.loginUser.token},
+                method: 'POST',
+                url: $rootScope.serviceUrl + '/videoMge',
+                params: {
+                    adminId: $rootScope.loginUser.adminId,
+                    videoEntity: dev,
+                    opType: 'del'
+                }
+            })
+                .success(
+                    function (response) {
+                        if (response && response.code == 0) {
+                            $scope.isLoading = false;
+                            $scope.getVideoList();
+                        }
+                        else if (response && response.code != 0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
+                        }
+                    })
+                .error(
+                    function (e) {
+                        alert('操作失败..');
                         $scope.isLoading = false;
-                        $scope.getVideoList();
-                    }
-                })
-            .error(
-                function (e) {
-                    alert('操作失败..');
-                    $scope.isLoading = false;
-                });
+                    });
+        });
     };
 
     $scope.imgUrl = $rootScope.imgUrl;
 
     $scope.videoList = [];
-    $scope.getVideoList=function(){
-        $scope.isLoading=true;
+    $scope.getVideoList=function() {
+        $scope.isLoading = true;
         var params =
         {
             adminId: $rootScope.loginUser.adminId,
-            cursor:($scope.pageIndex-1) * $scope.pageCount,
+            cursor: ($scope.pageIndex - 1) * $scope.pageCount,
             offset: $scope.pageCount
         };
-        $scope.getDate(params,$rootScope.serviceUrl+'/videoList',function(response){
-            $scope.videoList = response.list;
-            $scope.dataCount = response.count;
-            $scope.pageCalc();
-            $scope.isLoading = false;
-        },function(e){
+        $scope.getDate(params, $rootScope.serviceUrl + '/videoList', function (response) {
+            if (response && response.code == 0) {
+                $scope.videoList = response.list;
+                $scope.dataCount = response.count;
+                $scope.pageCalc();
+                $scope.isLoading = false;
+            }
+            else if (response && response.code != 0) {
+                alert($rootScope.getErMsge(response.code));
+                $scope.isLoading = false;
+                $state.go("login");
+            }
+        }, function (e) {
             alert('数据获取失败.');
             $scope.isLoading = false;
         });
@@ -168,7 +187,7 @@ App.controller("DevicesController",['$rootScope','$scope','$filter','$http','$co
         })
             .success(
                 function (response) {
-                    if (response && response.code == 0 && successFun) {
+                    if (successFun) {
                         successFun(response);
                     }
                 })

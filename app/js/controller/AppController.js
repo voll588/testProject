@@ -125,7 +125,7 @@ App.controller('AppController',
 
             $scope.quit=function(){
                 ngDialog.openConfirm({
-                    template: "<p>确定退出后台管理系统?</p><div><button type='button' class='btn btn-default' ng-click='closeThisDialog(0)'>取消<button type='button' class='btn btn-primary' ng-click='confirm(1)'>确定</button></div>",
+                    template: "<p>确定退出后台管理系统?</p><div><button type='button' class='btn btn-default btn-confirm' ng-click='closeThisDialog(0)'>取消</button><button type='button' class='btn btn-primary' ng-click='confirm(1)'>确定</button></div>",
                     plain: true,
                     className: 'ngdialog-theme-default'
                 }).then(function (value) {

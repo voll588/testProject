@@ -9,7 +9,7 @@ App.controller("AdminAddController",['$rootScope','$scope','$filter','$http','$c
 
     //角色
     $scope.role=[];
-    $scope.roleList=[{"name":"超级管理员","value":1},{"name":"园长","value":2},{"name":"老师","value":3},{"name":"财务","value":4}];
+    $scope.roleList=[{"name":"园长","value":2},{"name":"老师","value":3},{"name":"财务","value":4}];
     $scope.role.selected = $filter('filter')($scope.roleList,$scope.admin.adminRoleId,'value')[0];
 
 
@@ -35,12 +35,15 @@ App.controller("AdminAddController",['$rootScope','$scope','$filter','$http','$c
                 }
             })
                 .success(
-                    function(respon) {
-                        if (respon&&respon.code == 0) {
+                    function(response) {
+                        if (response&&response.code == 0) {
+                            $scope.isLoading = false;
                             $scope.goBack();
                         }
-                        else{
-                            alert(code);
+                        else if(response&& response.code!=0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
                         }
                         $scope.isLoading = false;
                     })

@@ -28,6 +28,12 @@ App.controller("InterestAddController",['$rootScope','$scope','$filter','$http',
                         //$scope.teacher.selected = $filter('filter')($scope.teacherList,$scope.interest.teacherId,'value')[0];
                         $scope.isLoading = false;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
+                    $scope.isLoading = false;
                 })
             .error(
                 function(e){
@@ -57,6 +63,12 @@ App.controller("InterestAddController",['$rootScope','$scope','$filter','$http',
                         //$scope.teacher.selected = $filter('filter')($scope.teacherList,$scope.interest.teacherId,'value')[0];
                         $scope.isLoading = false;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
+                    $scope.isLoading = false;
                 })
             .error(
                 function(e){
@@ -88,10 +100,13 @@ App.controller("InterestAddController",['$rootScope','$scope','$filter','$http',
               .success(
                   function(response) {
                       if (response && response.code == 0) {
+                          $scope.isLoading = false;
                           $scope.goBack();
                       }
-                      else{
-                          alert(code);
+                      else if (response && response.code != 0) {
+                          alert($rootScope.getErMsge(response.code));
+                          $scope.isLoading = false;
+                          $state.go("login");
                       }
                       $scope.isLoading = false;
                   })

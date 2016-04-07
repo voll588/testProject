@@ -44,6 +44,11 @@ App.controller('TeacherEditController',['$rootScope','$scope','$stateParams','$h
                         $scope.teacher = response.list[0];
                         $scope.isLoading = false;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
                 })
             .error(
                 function (e) {
@@ -69,7 +74,13 @@ App.controller('TeacherEditController',['$rootScope','$scope','$stateParams','$h
                 .success(
                     function (response) {
                         if (response && response.code == 0) {
+                            $scope.isLoading = false;
                             $scope.goBack();
+                        }
+                        else if (response && response.code != 0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
                         }
                     })
                 .error(

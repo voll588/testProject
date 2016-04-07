@@ -5,3 +5,6 @@
 input[type="number"]{
     -moz-appearance:textfield;
 }
+.btn-confirm{
+    margin-right: 5px;
+}

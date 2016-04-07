@@ -23,6 +23,12 @@ App.controller("FoodController",['$rootScope','$scope','$http','$cookieStore','$
                         getFoodList($scope.food);
                         $scope.isLoading = false;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
+                    $scope.isLoading = false;
                 }
             )
             .error(
@@ -52,6 +58,12 @@ App.controller("FoodController",['$rootScope','$scope','$http','$cookieStore','$
                     if (response && response.code == 0) {
                         $scope.isLoading = false;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
+                    $scope.isLoading = false;
                 }
             )
             .error(
@@ -61,12 +73,6 @@ App.controller("FoodController",['$rootScope','$scope','$http','$cookieStore','$
                 }
             )
     };
-
-    $scope.foodMonB='';    $scope.foodMonL='';    $scope.foodMonD='';
-    $scope.foodTueB='';    $scope.foodTueL='';    $scope.foodTueD='';
-    $scope.foodWedB='';    $scope.foodWedL='';    $scope.foodWedD='';
-    $scope.foodThuB='';    $scope.foodThuL='';    $scope.foodThuD='';
-    $scope.foodFriB='';    $scope.foodFriL='';    $scope.foodFriD='';
 
     $scope.foodList=[];
 

@@ -39,7 +39,7 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
     //$rootScope.serviceUrl = "http://192.168.1.105:8080/NJService/api/admin";
     //$rootScope.serviceUrl = "http://voll588.imwork.net:32635/NJService/api/admin";
     $rootScope.serviceUrl = "http://voll588.imwork.net:18213/NJService/api/admin";
-    $rootScope.imgUrl="http://voll588.imwork.net:32635/NJService/";
+    $rootScope.imgUrl="http://voll588.imwork.net:18213/NJService/";
     //$rootScope.imaUrl="http://192.168.1.105:8080/NJService/";
     // Scope Globals
     // ----------------------------------- 
@@ -144,7 +144,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url:'/admin',
         title:"Admin",
         templateUrl:helper.basepath('admin/adminList.html'),
-        resolve: helper.resolveFor('xeditable','loaders.css')
+        resolve: helper.resolveFor('xeditable','loaders.css','ngDialog')
       })
       .state('app.adminAdd',{
           url:'/admin/add',
@@ -168,7 +168,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           url:'/class',
           title:'class',
           templateUrl:helper.basepath('class/classList.html'),
-          resolve: helper.resolveFor('loaders.css')
+          resolve: helper.resolveFor('loaders.css','ngDialog')
       })
       .state('app.classAdd',{
           url:'/class/add',
@@ -186,7 +186,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           url:'/teacher',
           title:'teacher',
           templateUrl:helper.basepath('teacher/teacherList.html'),
-          resolve: helper.resolveFor('loaders.css')
+          resolve: helper.resolveFor('loaders.css','ngDialog')
       })
       .state('app.teacherEdit',{
           url:'/teacher/edit/{teacherName}/',
@@ -234,7 +234,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           url:'/devices',
           title:'devices',
           templateUrl:helper.basepath('devices/devicesList.html'),
-          resolve: helper.resolveFor('loaders.css')
+          resolve: helper.resolveFor('loaders.css','ngDialog')
       })
       .state('app.devicesAdd',{
           url:'/devices/Add',
@@ -252,7 +252,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
           url:'/fee',
           title:'fee',
           templateUrl:helper.basepath('fee/feeList.html'),
-          resolve: helper.resolveFor('loaders.css')
+          resolve: helper.resolveFor('loaders.css','ngDialog')
       })
       .state('app.feeAdd',{
           url:'/fee/add',

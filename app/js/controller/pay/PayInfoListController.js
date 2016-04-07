@@ -54,9 +54,17 @@ App.controller("PayInfoListController",['$rootScope','$scope','$filter','$http',
 
         $scope.isLoading = true;
         $scope.getDate(params,$scope.serviceUrl,function(response){
-            $scope.payInfoList =response.list;
-            $scope.dataCount = response.count;
-            $scope.pageCalc();
+            if(response && response.code == 0) {
+                $scope.payInfoList = response.list;
+                $scope.dataCount = response.count;
+                $scope.pageCalc();
+                $scope.isLoading = false;
+            }
+            else if (response && response.code != 0) {
+                alert($rootScope.getErMsge(response.code));
+                $scope.isLoading = false;
+                $state.go("login");
+            }
             $scope.isLoading = false;
         },function(e){
             alert('数据获取失败.');
@@ -173,7 +181,7 @@ App.controller("PayInfoListController",['$rootScope','$scope','$filter','$http',
         })
             .success(
                 function (response) {
-                    if (response && response.code == 0 && successFun) {
+                    if (successFun) {
                         successFun(response);
                     }
                 })
