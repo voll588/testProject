@@ -65,9 +65,17 @@ App.controller("NoticeListController",['$rootScope','$scope','$filter','$http','
             offset: $scope.pageCount
         };
         $scope.getDate(params,$scope.serviceUrl,function(response){
-            $scope.noticeList = response.list;
-            $scope.dataCount = response.count;
-            $scope.pageCalc();
+            if(reponse && response.code == 0) {
+                $scope.noticeList = response.list;
+                $scope.dataCount = response.count;
+                $scope.pageCalc();
+                $scope.isLoading = false;
+            }
+            else if (response && response.code != 0) {
+                alert($rootScope.getErMsge(response.code));
+                $scope.isLoading = false;
+                $state.go("login");
+            }
             $scope.isLoading = false;
         },function(e){
             alert('数据获取失败.');
@@ -191,7 +199,7 @@ App.controller("NoticeListController",['$rootScope','$scope','$filter','$http','
         })
             .success(
                 function (response) {
-                    if (response && response.code == 0 && successFun) {
+                    if (successFun) {
                         successFun(response);
                     }
                 })

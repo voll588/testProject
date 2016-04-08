@@ -30,6 +30,11 @@ App.controller("NoticeAddController",['$rootScope','$scope','$filter','$http','$
                     if (response && response.code == 0) {
                         $scope.classList = response.list;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
                 })
             .error(
                 function (e) {
@@ -64,12 +69,18 @@ App.controller("NoticeAddController",['$rootScope','$scope','$filter','$http','$
                                 '<em class="fa fa-check"></em>通知发送成功!',
                                 {status: 'info', pos:'bottom-center'}
                             );
+                            $scope.isLoading = false;
                             $scope.goBack();
                         }else if(response.code == 1){
                             Notify.alert(
-                                '<em class="fa fa-check"></em>'+response.errorMessage,
+                                '<em class="fa fa-check"></em>'+$rootScope.getErMsge(response.code),
                                 {status: 'info', pos:'bottom-center'}
                             );
+                        }
+                        else if (response && response.code != 0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
                         }
 
                         $scope.isLoading =false;

@@ -1,7 +1,7 @@
 /**
  * Created by lost on 2016/3/26.
  */
-App.controller("FeeListController",['$rootScope','$scope','$filter','$http','$cookieStore','$state',function($rootScope,$scope,$filter,$http,$cookieStore,$state) {
+App.controller("FeeListController",['$rootScope','$scope','$filter','$http','$cookieStore','$state','ngDialog',function($rootScope,$scope,$filter,$http,$cookieStore,$state,ngDialog) {
 
     $rootScope.checkUser();
 
@@ -17,50 +17,67 @@ App.controller("FeeListController",['$rootScope','$scope','$filter','$http','$co
     };
     
     $scope.del= function (fee) {
-        $scope.isLoading = true;
-        $http({
-            headers: {token: $rootScope.loginUser.token},
-            method: 'POST',
-            url: $rootScope.serviceUrl+'/feeMge',
-            params: {
-                adminId: $rootScope.loginUser.adminId,
-                psEntity: fee,
-                opType: 'del'
-            }
-        })
-            .success(
-                function(response) {
-                    if (response && response.code == 0) {
+
+        ngDialog.openConfirm({
+            template: "<p>确定要删除所选费用?</p><div><button type='button' class='btn btn-default btn-confirm' ng-click='closeThisDialog(0)'>取消</button><button type='button' class='btn btn-primary' ng-click='confirm(1)'>确定</button></div>",
+            plain: true,
+            className: 'ngdialog-theme-default'
+        }).then(function (value) {
+            $scope.isLoading = true;
+            $http({
+                headers: {token: $rootScope.loginUser.token},
+                method: 'POST',
+                url: $rootScope.serviceUrl + '/feeMge',
+                params: {
+                    adminId: $rootScope.loginUser.adminId,
+                    psEntity: fee,
+                    opType: 'del'
+                }
+            })
+                .success(
+                    function (response) {
+                        if (response && response.code == 0) {
+                            $scope.isLoading = false;
+                            $scope.getFeeList();
+                        }
+                        else if (response && response.code != 0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
+                        }
                         $scope.isLoading = false;
-                        $scope.getFeeList();
-                    }
-                    else{
-                        alert(code);
-                    }
-                    $scope.isLoading = false;
-                })
-            .error(
-                function(e){
-                    alert('操作失败.');
-                    $scope.isLoading = false;
-                });
+                    })
+                .error(
+                    function (e) {
+                        alert('操作失败.');
+                        $scope.isLoading = false;
+                    });
+        });
     };
 
-    $scope.getFeeList=function(){
+    $scope.getFeeList=function() {
         $scope.isLoading = true;
 
         var params =
         {
             adminId: $rootScope.loginUser.adminId,
-            cursor:($scope.pageIndex-1) * $scope.pageCount,
+            cursor: ($scope.pageIndex - 1) * $scope.pageCount,
             offset: $scope.pageCount
         };
-        $scope.getDate(params,$rootScope.serviceUrl+'/feeList',function(response){
-            $scope.feeList = response.list;
-            $scope.dataCount = response.count;
-            $scope.pageCalc();
+        $scope.getDate(params, $rootScope.serviceUrl + '/feeList', function (response) {
+            if (response && response.code == 0) {
+                $scope.feeList = response.list;
+                $scope.dataCount = response.count;
+                $scope.pageCalc();
+                $scope.isLoading = false;
+            }
+            else if (response && response.code != 0) {
+                alert($rootScope.getErMsge(response.code));
+                $scope.isLoading = false;
+                $state.go("login");
+            }
             $scope.isLoading = false;
-        },function(e){
+        }, function (e) {
             alert('数据获取失败.');
             $scope.isLoading = false;
         });
@@ -192,7 +209,7 @@ App.controller("FeeListController",['$rootScope','$scope','$filter','$http','$co
         })
             .success(
                 function (response) {
-                    if (response && response.code == 0 && successFun) {
+                    if (successFun) {
                         successFun(response);
                     }
                 })

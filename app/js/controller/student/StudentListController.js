@@ -26,6 +26,11 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
                         $scope.studentList = response.list;
                         $scope.isLoading = false;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
                 })
             .error(
                 function (e) {
@@ -53,6 +58,11 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
                         $scope.allClass = response.list;
                         $scope.isLoading = false;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
                 })
             .error(
                 function (e) {
@@ -78,27 +88,38 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
             alert('数据错误');
             return;
         }
+        ngDialog.openConfirm({
+            template: "<p>确定要注销所选学生?</p><div><button type='button' class='btn btn-default btn-confirm' ng-click='closeThisDialog(0)'>取消</button><button type='button' class='btn btn-primary' ng-click='confirm(1)'>确定</button></div>",
+            plain: true,
+            className: 'ngdialog-theme-default'
+        }).then(function (value) {
 
-        $http({
-            headers: {token: $rootScope.loginUser.token},
-            method: 'POST',
-            url: $rootScope.serviceUrl+'/studentMge',
-            params: {
-                adminId: $rootScope.loginUser.adminId,
-                studentEntity:stu,
-                opType:'del'
-            }
-        })
-            .success(
-                function (response) {
-                    if (response && response.code == 0) {
-                        $scope.searchStu();
-                    }
-                })
-            .error(
-                function (e) {
-                    alert('操作失败..');
-                });
+            $http({
+                headers: {token: $rootScope.loginUser.token},
+                method: 'POST',
+                url: $rootScope.serviceUrl + '/studentMge',
+                params: {
+                    adminId: $rootScope.loginUser.adminId,
+                    studentEntity: stu,
+                    opType: 'del'
+                }
+            })
+                .success(
+                    function (response) {
+                        if (response && response.code == 0) {
+                            $scope.searchStu();
+                        }
+                        else if (response && response.code != 0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
+                        }
+                    })
+                .error(
+                    function (e) {
+                        alert('操作失败..');
+                    });
+        });
     };
 
     //休学
@@ -189,10 +210,17 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
 
         $scope.isLoading = true;
         $scope.getDate(params,$scope.serviceUrl,function(response){
-            $scope.studentList =response.list;
-            $scope.dataCount = response.count;
-            $scope.pageCalc();
-            $scope.isLoading = false;
+            if(response && response.code == 0) {
+                $scope.studentList = response.list;
+                $scope.dataCount = response.count;
+                $scope.pageCalc();
+                $scope.isLoading = false;
+            }
+            else if (response && response.code != 0) {
+                alert($rootScope.getErMsge(response.code));
+                $scope.isLoading = false;
+                $state.go("login");
+            }
         },function(e){
             alert('数据获取失败.');
             $scope.isLoading = false;
@@ -226,32 +254,6 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
         ngDialog.open({
             template:'studentParents',
             controller:['$rootScope','$scope','$http',function($rootScope,$scope,$http){
-               /* var parents=[
-                    {
-                        parentId:1,
-                        parentName:'王爸爸',
-                        parentRelation:'爸爸',
-                        parentPhone:'13813813838'
-                    },
-                    {
-                        parentId:1,
-                        parentName:'王妈妈',
-                        parentRelation:'妈妈',
-                        parentPhone:'13813813838'
-                    },
-                    {
-                        parentId:1,
-                        parentName:'王爷爷',
-                        parentRelation:'爷爷',
-                        parentPhone:'13813813838'
-                    },
-                    {
-                        parentId:1,
-                        parentName:'王奶奶',
-                        parentRelation:'奶奶',
-                        parentPhone:'13813813838'
-                    }
-                ];*/
                 $http({
                     headers: {token: $rootScope.loginUser.token},
                     method: 'POST',
@@ -265,6 +267,11 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
                         function (response) {
                             if (response && response.code == 0) {
                                 $scope.parentsList = response.list;
+                            }
+                            else if (response && response.code != 0) {
+                                alert($rootScope.getErMsge(response.code));
+                                $scope.isLoading = false;
+                                $state.go("login");
                             }
                         });
             }]
@@ -329,6 +336,11 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
                             if (response && response.code == 0) {
                                 $scope.stuInviteCode = response.inkey;
                             }
+                            else if (response && response.code != 0) {
+                                alert($rootScope.getErMsge(response.code));
+                                $scope.isLoading = false;
+                                $state.go("login");
+                            }
                         })
                     .error(
                         function (e) {
@@ -337,7 +349,6 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
 
 
             }]
-            //className:'ngdialog-theme-default'
         });
 
     };
@@ -448,7 +459,7 @@ App.controller("StudentListController",['$rootScope','$scope','$filter','$http',
         })
             .success(
                 function (response) {
-                    if (response && response.code == 0 && successFun) {
+                    if (successFun) {
                         successFun(response);
                     }
                 })

@@ -27,15 +27,22 @@ App.controller("AdviceListController",['$rootScope','$scope','$filter','$http','
         var params =
         {
             adminId: $rootScope.loginUser.adminId,
-            cursor:($scope.pageIndex-1) * $scope.pageCount,
+            cursor: ($scope.pageIndex - 1) * $scope.pageCount,
             offset: $scope.pageCount
         };
-        $scope.getDate(params,$rootScope.serviceUrl+'/adviceList',function(response){
-            $scope.adviceList = response.list;
-            $scope.dataCount = response.count;
-            $scope.pageCalc();
-            $scope.isLoading = false;
-        },function(e){
+        $scope.getDate(params, $rootScope.serviceUrl + '/adviceList', function (response) {
+            if (response && response.code == 0) {
+                $scope.adviceList = response.list;
+                $scope.dataCount = response.count;
+                $scope.pageCalc();
+                $scope.isLoading = false;
+            }
+            else if (response && response.code != 0) {
+                alert($rootScope.getErMsge(response.code));
+                $scope.isLoading = false;
+                $state.go("login");
+            }
+        }, function (e) {
             alert('数据获取失败.');
             $scope.isLoading = false;
         });
@@ -148,7 +155,7 @@ App.controller("AdviceListController",['$rootScope','$scope','$filter','$http','
         })
             .success(
                 function (response) {
-                    if (response && response.code == 0 && successFun) {
+                    if (successFun) {
                         successFun(response);
                     }
                 })

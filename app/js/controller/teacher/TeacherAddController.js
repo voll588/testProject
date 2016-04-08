@@ -27,6 +27,11 @@ App.controller('TeacherAddController',['$rootScope','$scope','$state','$http','F
                             $scope.isLoading =false;
                             $scope.goBack();
                         }
+                        else if (response && response.code != 0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
+                        }
                     })
                 .error(
                     function (e) {

@@ -1,7 +1,7 @@
 /**
  * Created by lost on 2016/3/15.
  */
-App.controller("TeacherListController",['$rootScope','$scope','$filter','$http','$cookieStore','$state',function($rootScope,$scope,$filter,$http,$cookieStore,$state){
+App.controller("TeacherListController",['$rootScope','$scope','$filter','$http','$cookieStore','$state','ngDialog',function($rootScope,$scope,$filter,$http,$cookieStore,$state,ngDialog){
 
     $rootScope.checkUser();
 
@@ -25,6 +25,11 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
                         $scope.teacherList = response.list;
                         $scope.isLoading = false;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
                 })
             .error(
                 function (e) {
@@ -38,31 +43,43 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
     };
 
     $scope.delTeacher=function(teacher){
-        $scope.isLoading = true;
-        $http({
-            headers: {token: $rootScope.loginUser.token},
-            method: 'POST',
-            url: $rootScope.serviceUrl+'/teacherMge',
-            params: {
-                adminId: $rootScope.loginUser.adminId,
-                teacherEntity:teacher,
-                opType : 'del'
 
-            }
-        })
-            .success(
-                function (response) {
-                    if (response && response.code == 0) {
-                        $scope.teacherList = response.list;
-                        $scope.searchTec();
+        ngDialog.openConfirm({
+            template: "<p>确定要删除所选老师?</p><div><button type='button' class='btn btn-default btn-confirm' ng-click='closeThisDialog(0)'>取消</button><button type='button' class='btn btn-primary' ng-click='confirm(1)'>确定</button></div>",
+            plain: true,
+            className: 'ngdialog-theme-default'
+        }).then(function (value) {
+            $scope.isLoading = true;
+            $http({
+                headers: {token: $rootScope.loginUser.token},
+                method: 'POST',
+                url: $rootScope.serviceUrl + '/teacherMge',
+                params: {
+                    adminId: $rootScope.loginUser.adminId,
+                    teacherEntity: teacher,
+                    opType: 'del'
+
+                }
+            })
+                .success(
+                    function (response) {
+                        if (response && response.code == 0) {
+                            $scope.teacherList = response.list;
+                            $scope.searchTec();
+                            $scope.isLoading = false;
+                        }
+                        else if (response && response.code != 0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
+                        }
+                    })
+                .error(
+                    function (e) {
+                        alert(e);
                         $scope.isLoading = false;
-                    }
-                })
-            .error(
-                function (e) {
-                    alert(e);
-                    $scope.isLoading = false;
-                });
+                    });
+        });
     };
 
     $scope.addStud=function(){
@@ -70,32 +87,40 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
     };
 
     //搜索
-    $scope.searchTec=function(){
+    $scope.searchTec=function() {
         var params = '';
 
-        if($scope.searchContent){
+        if ($scope.searchContent) {
             params = {
                 adminId: $rootScope.loginUser.adminId,
-                teacherName:$scope.searchContent,
-                cursor:($scope.pageIndex-1) * $scope.pageCount,
-                offset:$scope.pageCount
+                teacherName: $scope.searchContent,
+                cursor: ($scope.pageIndex - 1) * $scope.pageCount,
+                offset: $scope.pageCount
             };
         }
-        else{
-            params = {adminId: $rootScope.loginUser.adminId,
-                cursor:($scope.pageIndex-1) * $scope.pageCount,
+        else {
+            params = {
+                adminId: $rootScope.loginUser.adminId,
+                cursor: ($scope.pageIndex - 1) * $scope.pageCount,
                 offset: $scope.pageCount
             };
         }
 
         $scope.isLoading = true;
 
-        $scope.getDate(params,$scope.serviceUrl,function(response){
-            $scope.teacherList = response.list;
-            $scope.dataCount = response.count;
-            $scope.pageCalc();
-            $scope.isLoading = false;
-        },function(e){
+        $scope.getDate(params, $scope.serviceUrl, function (response) {
+            if (response && response.code == 0) {
+                $scope.teacherList = response.list;
+                $scope.dataCount = response.count;
+                $scope.pageCalc();
+                $scope.isLoading = false;
+            }
+            else if (response && response.code != 0) {
+                alert($rootScope.getErMsge(response.code));
+                $scope.isLoading = false;
+                $state.go("login");
+            }
+        }, function (e) {
             alert('数据获取失败.');
             $scope.isLoading = false;
         });
@@ -208,7 +233,7 @@ App.controller("TeacherListController",['$rootScope','$scope','$filter','$http',
         })
             .success(
                 function (response) {
-                    if (response && response.code == 0 && successFun) {
+                    if (successFun) {
                         successFun(response);
                     }
                 })

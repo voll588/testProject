@@ -2,7 +2,7 @@
  * Created by lost on 2016/3/5.
  */
 
-App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$cookieStore','Notify','$state',function($rootScope,$scope,$filter,$http,$cookieStore,Notify,$state){
+App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$cookieStore','Notify','$state','ngDialog',function($rootScope,$scope,$filter,$http,$cookieStore,Notify,$state,ngDialog){
 
 
     $rootScope.checkUser();
@@ -68,13 +68,19 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
             }
         })
             .success(
-                function (respon) {
-                    if (respon.code == 0) {
+                function (response) {
+                    if (response.code == 0) {
                         Notify.alert(
                             '<em class="fa fa-check"></em>更新用户成功!',
                             {status: 'info', pos:'bottom-center'}
                         );
+                        $scope.isLoading = false;
                         $scope.loadUserList();
+                    }
+                    else if(response&& response.code!=0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
                     }
                 })
             .error(
@@ -109,8 +115,8 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
                 }
             })
             .success(
-                function(respon) {
-                    if (respon&&respon.code == 0) {
+                function(response) {
+                    if (response&&response.code == 0) {
                         Notify.alert(
                             '<em class="fa fa-check"></em>新增用户成功!',
                             {status: 'info', pos:'bottom-center'}
@@ -123,10 +129,13 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
                         $scope.newUserForm.adminPwd.$dirty=false;
                         $scope.newUserForm.inputeRole.$dirty=false;
 
+                        $scope.isLoading = false;
                         $scope.loadUserList();
                     }
-                    else{
-                        alert(code);
+                    else if(response&& response.code!=0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
                     }
                 })
             .error(
@@ -149,34 +158,47 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
     //删除
     $scope.removePerson=function(admin) {
 
-        $scope.isLoading = true;
+        ngDialog.openConfirm({
+            template: "<p>确定要删除所选用户?</p><div><button type='button' class='btn btn-default btn-confirm' ng-click='closeThisDialog(0)'>取消</button><button type='button' class='btn btn-primary' ng-click='confirm(1)'>确定</button></div>",
+            plain: true,
+            className: 'ngdialog-theme-default'
+        }).then(function (value) {
 
-        $http({
-            headers: {token: $rootScope.loginUser.token},
-            method: 'POST',
-            url: $scope.serviceUrl + '/adminMge',
-            params: {
-                adminId: $rootScope.loginUser.adminId,
-                adminRoleId: $rootScope.loginUser.adminRoleId,
-                adminEntity: admin,
-                opType: 'del'
-            }
-        })
-            .success(
-                function (respon) {
-                    if (respon.code == 0) {
-                        $scope.loadUserList();
-                    }
-                })
-            .error(
-                function (e) {
-                    alert('操作失败.');
-                });
+            $scope.isLoading = true;
+
+            $http({
+                headers: {token: $rootScope.loginUser.token},
+                method: 'POST',
+                url: $scope.serviceUrl + '/adminMge',
+                params: {
+                    adminId: $rootScope.loginUser.adminId,
+                    adminRoleId: $rootScope.loginUser.adminRoleId,
+                    adminEntity: admin,
+                    opType: 'del'
+                }
+            })
+                .success(
+                    function (response) {
+                        if (response.code == 0) {
+                            $scope.isLoading = false;
+                            $scope.loadUserList();
+                        }
+                        else if(response&& response.code!=0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
+                        }
+                    })
+                .error(
+                    function (e) {
+                        alert('操作失败.');
+                    });
+        });
     };
 
 
 
-    $scope.roleSelecter=[{"name":"超级管理员","value":1},{"name":"园长","value":2},{"name":"老师","value":3},{"name":"财务","value":4}];
+    $scope.roleSelecter=[{"name":"园长","value":2},{"name":"老师","value":3},{"name":"财务","value":4}];
     $scope.roleSelected='';
 
     //filter 格式化角色
@@ -206,6 +228,11 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
                     $scope.dataCount = response.count;
                     $scope.pageCalc();
                     $scope.isLoading = false;
+                }
+                else if(response&& response.code!=0) {
+                    alert($rootScope.getErMsge(response.code));
+                    $scope.isLoading = false;
+                    $state.go("login");
                 }
             }, function (e) {
                 alert('数据加载失败.');
@@ -321,7 +348,7 @@ App.controller("AdminListController",['$rootScope','$scope','$filter','$http','$
         })
             .success(
                 function (response) {
-                    if (response && response.code == 0 && successFun) {
+                    if (successFun) {
                         successFun(response);
                     }
                 })

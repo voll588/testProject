@@ -43,6 +43,11 @@ App.controller("DevicesEditController",['$rootScope','$scope','$filter','$http',
                             $scope.videoType.selected=$filter('filter')($scope.videoTypeList,{id:$scope.video.videoType})[0];
                             $scope.isLoading = false;
                         }
+                        else if (response && response.code != 0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
+                        }
                     })
                 .error(
                     function (e) {
@@ -74,7 +79,13 @@ App.controller("DevicesEditController",['$rootScope','$scope','$filter','$http',
                 .success(
                     function (response) {
                         if (response && response.code == 0) {
+                            $scope.isLoading = false;
                             $scope.goBack();
+                        }
+                        else if (response && response.code != 0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
                         }
                     })
                 .error(

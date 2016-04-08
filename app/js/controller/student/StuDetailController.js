@@ -11,6 +11,9 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
 
     $scope.isAdd = false;
 
+    //学生类型
+    $scope.stuType={};
+    $scope.stuTypeList=[{typeId:'01',typeName:'普通'},{typeId:'02',typeName:'业主'}];
 
     if(!$scope.optType || ( $scope.optType=='Edit'&&!$scope.stuId )){
         alert('参数错误.');
@@ -18,6 +21,7 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
     else{
         if($scope.optType =='Add'){
             $scope.isAdd = true;
+            $scope.stuType.selected = {typeId:'01',typeName:'普通'};
         }
     }
 
@@ -49,6 +53,11 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                         $scope.stuType.selected = $filter('filter')($scope.stuTypeList,{typeId:$scope.stu.stuType})[0];
                         $rootScope.isLoading = false;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
                 })
             .error(
                 function (e) {
@@ -71,8 +80,9 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
             $scope.stu.classId = $scope.class.selected.classId;
             if(!$scope.isAdd) {
                 $scope.stu.stuState = $scope.state.selected.value;
-                $scope.stu.stuType = $scope.stuType.selected.typeId;
             }
+
+            $scope.stu.stuType = $scope.stuType.selected.typeId;
 
             $http({
                 headers: {token: $rootScope.loginUser.token},
@@ -89,6 +99,11 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                         if (response && response.code == 0) {
                             $scope.isLoading = false;
                             $scope.goBack();
+                        }
+                        else if (response && response.code != 0) {
+                            alert($rootScope.getErMsge(response.code));
+                            $scope.isLoading = false;
+                            $state.go("login");
                         }
                     })
                 .error(
@@ -127,6 +142,11 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                         }
                         $scope.isLoading = false;
                     }
+                    else if (response && response.code != 0) {
+                        alert($rootScope.getErMsge(response.code));
+                        $scope.isLoading = false;
+                        $state.go("login");
+                    }
                 })
             .error(
                 function (e) {
@@ -134,11 +154,6 @@ App.controller("StuDetailController",['$rootScope','$scope','$filter','$http','$
                     $scope.isLoading = false;
                 });
     };
-
-    //学生类型
-    $scope.stuType={};
-    $scope.stuTypeList=[{typeId:'01',typeName:'普通'},{typeId:'02',typeName:'业主'}];
-
 
     $scope.stu = {};
     $scope.class = {};

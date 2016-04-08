@@ -16,7 +16,7 @@
                 <div class="form-group">
                     <label class="col-lg-2 control-label">类型:</label>
                     <div class="col-sm-2">
-                        <ui-select ng-model="stuType.selected" theme="bootstrap" class="text-left">
+                        <ui-select ng-model="stuType.selected" theme="bootstrap" class="text-left" required>
                             <ui-select-match placeholder="选择状态">{{$select.selected.typeName }}</ui-select-match>
                             <ui-select-choices repeat="stuType in stuTypeList | filter: $select.search">
                                 <span ng-bind-html="stuType.typeName | highlight: $select.search"></span>
@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">班级:</label>
                     <div class="col-sm-3">
-                        <ui-select ng-model="class.selected" theme="bootstrap" class="text-left" required="">
+                        <ui-select ng-model="class.selected" theme="bootstrap" class="text-left" required>
                             <ui-select-match placeholder="选择班级">{{$select.selected.className }}</ui-select-match>
                             <ui-select-choices repeat="class in classList | filter: $select.search">
                                 <span ng-bind-html="class.className | highlight: $select.search"></span>
